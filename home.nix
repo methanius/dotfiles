@@ -8,5 +8,6 @@
         pkgs.starship
         pkgs.sheldon
         pkgs.eza
+        pkgs.bat
     ];
 }

@@ -7,5 +7,6 @@
         pkgs.ripgrep
         pkgs.starship
         pkgs.sheldon
+        pkgs.eza
     ];
 }

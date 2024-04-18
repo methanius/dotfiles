@@ -6,5 +6,6 @@
     home.packages = [
         pkgs.ripgrep
         pkgs.starship
+        pkgs.sheldon
     ];
 }

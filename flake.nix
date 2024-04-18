@@ -9,15 +9,14 @@
         };
     };
 
-    outputs = inputs@{ nixpkgs, home-manager, ... }: {
+    outputs = { nixpkgs, home-manager, ... }: { 
         defaultPackage.x86_64-linux = home-manager.defaultPackage.x86_64-linux;
 
         homeConfigurations = {
-            "claus" = inputs.home-manager.lib.homeManagerConfiguration { 
-                system = "x86_64-linux";
-                homeDirectory = "/home/claus";
-                username = "claus";
-                configuration.imports = [ ./home.nix ];
+            "claus" = home-manager.lib.homeManagerConfiguration {
+                pkgs = import nixpkgs { system = "x86_64-linux"; };
+
+                modules = [ ./home.nix ];
             };
         };
     };

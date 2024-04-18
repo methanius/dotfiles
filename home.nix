@@ -9,5 +9,6 @@
         pkgs.sheldon
         pkgs.eza
         pkgs.bat
+        pkgs.fzf
     ];
 }

@@ -11,4 +11,9 @@
         pkgs.bat
         pkgs.fzf
     ];
+    programs = {
+        atuin = {
+            enable = true;
+        };
+    };
 }

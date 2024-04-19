@@ -14,6 +14,27 @@
     programs = {
         zsh = {
             enable = true;
+            autosuggestion = {
+                enable = true;
+            };
+            completionInit = "autoload -Uz compinit";
+            defaultKeymap = "vicmd";
+            history = {
+                expireDuplicatesFirst = true;
+                extended = true;
+                ignoreDups = true;
+                ignoreSpace = true;
+                save = 100000;
+                share = true;
+                size = 100000;
+            };
+            shellAliases = {
+                vi = "nvim";
+                vim = "nvim";
+                go = "xdg-open";
+                ls = "eza";
+                cat = "bat";
+            };
         };
         atuin = {
             enable = true;

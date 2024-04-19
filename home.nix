@@ -9,10 +9,12 @@
         pkgs.sheldon
         pkgs.eza
         pkgs.bat
-        pkgs.fzf
     ];
     programs = {
         atuin = {
+            enable = true;
+        };
+        fzf = {
             enable = true;
         };
     };

@@ -9,6 +9,7 @@
         pkgs.sheldon
         pkgs.eza
         pkgs.bat
+        pkgs.stylua
     ];
     programs = {
         atuin = {

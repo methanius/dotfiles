@@ -12,6 +12,9 @@
         pkgs.stylua
     ];
     programs = {
+        zsh = {
+            enable = true;
+        };
         atuin = {
             enable = true;
             enableZshIntegration = true;

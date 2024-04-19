@@ -17,6 +17,9 @@
             autosuggestion = {
                 enable = true;
             };
+            syntaxHighlighting = {
+                enable = true;
+            };
             completionInit = "autoload -Uz compinit";
             defaultKeymap = "vicmd";
             history = {
@@ -35,6 +38,17 @@
                 ls = "eza";
                 cat = "bat";
             };
+            plugins = [
+            {
+                name = "zsh-expand";
+                src = pkgs.fetchFromGitHub {
+                    owner = "MenkeTechnologies";
+                    repo = "zsh-expand";
+                    rev = "v5.2.0";
+                    sha256 = "sha256-pcYYTQsh2c57U7kVYgCDMi7Z4lAjncQzapfPpTRgKZI=";
+                };
+            }
+            ];
         };
         atuin = {
             enable = true;

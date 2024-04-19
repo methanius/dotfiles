@@ -6,7 +6,6 @@
     home.stateVersion = "22.11";
     home.packages = [
         pkgs.ripgrep
-        pkgs.starship
         pkgs.sheldon
         pkgs.eza
         pkgs.bat
@@ -22,7 +21,11 @@
             defaultCommand = "fd --type f";
             defaultOptions = [
                 "--preview 'bat --color=always {}'"
-            ];
+                ];
+            };
+        starship = {
+            enable = true;
+            enableZshIntegration = true;
         };
     };
 }

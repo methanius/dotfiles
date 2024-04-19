@@ -33,3 +33,7 @@ then
     echo "$FLAKE_EXPERIMENTAL_LINE" | cat >> "$NIXCONF"
 fi
 
+# Build the damn thing
+nix run . -- build --flake .
+home-manager switch --flake .
+

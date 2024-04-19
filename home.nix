@@ -1,5 +1,6 @@
 {pkgs, ...}: {
     programs.home-manager.enable = true;
+    targets.genericLinux.enable = true;
     home.username = "claus";
     home.homeDirectory = "/home/claus";
     home.stateVersion = "22.11";

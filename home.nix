@@ -1,4 +1,4 @@
-{pkgs, ...}: {
+{pkgs, config, ...}: {
     programs.home-manager.enable = true;
     targets.genericLinux.enable = true;
     home.username = "claus";
@@ -10,6 +10,7 @@
         pkgs.eza
         pkgs.bat
         pkgs.stylua
+        pkgs.neovim
     ];
     programs = {
         zsh = {
@@ -68,4 +69,9 @@
             enableZshIntegration = true;
         };
     };
-}
+    home.file = {
+        ".config/nvim" = {
+            source = config.lib.file.mkOutOfStoreSymlink "/home/claus/dotfiles/config/nvim";
+        recursive=true; };
+    };
+    }

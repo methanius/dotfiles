@@ -10,6 +10,7 @@ in
         inherit username;
         inherit homeDirectory;
         stateVersion = "22.11";
+        sessionVariables.EDITOR = "nvim";
         packages = [
             pkgs.ripgrep
             pkgs.sheldon

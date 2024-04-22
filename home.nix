@@ -1,17 +1,24 @@
-{pkgs, config, ...}: {
+{pkgs, config, ...}:
+let 
+    username = "claus";
+    homeDirectory = "/home/${username}";
+in
+    {
     programs.home-manager.enable = true;
     targets.genericLinux.enable = true;
-    home.username = "claus";
-    home.homeDirectory = "/home/claus";
-    home.stateVersion = "22.11";
-    home.packages = [
-        pkgs.ripgrep
-        pkgs.sheldon
-        pkgs.eza
-        pkgs.bat
-        pkgs.stylua
-        pkgs.neovim
-    ];
+    home = {
+        inherit username;
+        inherit homeDirectory;
+        stateVersion = "22.11";
+        packages = [
+            pkgs.ripgrep
+            pkgs.sheldon
+            pkgs.eza
+            pkgs.bat
+            pkgs.stylua
+            pkgs.neovim
+        ];
+    };
     programs = {
         zsh = {
             enable = true;

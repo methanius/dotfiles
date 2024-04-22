@@ -22,6 +22,7 @@
             };
             completionInit = "autoload -Uz compinit";
             defaultKeymap = "vicmd";
+            autocd = true;
             history = {
                 expireDuplicatesFirst = true;
                 extended = true;

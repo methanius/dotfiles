@@ -17,7 +17,7 @@ in
             pkgs.eza
             pkgs.bat
             pkgs.stylua
-            pkgs.neovim
+            pkgs.neovim-nightly
         ];
     };
     programs = {

@@ -60,10 +60,6 @@ in
             }
             ];
         };
-        atuin = {
-            enable = true;
-            enableZshIntegration = true;
-        };
         fzf = {
             enable = true;
             enableZshIntegration = true;
@@ -73,6 +69,10 @@ in
                 ];
             };
         starship = {
+            enable = true;
+            enableZshIntegration = true;
+        };
+        atuin = {
             enable = true;
             enableZshIntegration = true;
         };

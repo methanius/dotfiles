@@ -5,9 +5,14 @@ echo "Starting setup scripts!"
 # Make sure nix is installed
 if nix --help >/dev/null 2>&1; then
     echo "Nix is already installed! Moving on."
+    nix-channel --update
+    . /home/claus/.nix-profile/etc/profile.d/nix.sh
 else
     curl -L https://nixos.org/nix/install -o install.sh
     sh install.sh
+    nix-channel --add https://github.com/nix-community/home-manager/archive/master.tar.gz home-manager
+    nix-channel --add https://nixos.org/channels/nixpkgs-unstable unstable
+    nix-channel --update
     . /home/claus/.nix-profile/etc/profile.d/nix.sh
 fi
 

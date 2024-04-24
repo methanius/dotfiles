@@ -18,6 +18,7 @@ in
             pkgs.bat
             pkgs.stylua
             pkgs.neovim-nightly
+            pkgs.rustup
         ];
     };
     programs = {

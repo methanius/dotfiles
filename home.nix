@@ -19,6 +19,7 @@ in
             pkgs.stylua
             pkgs.neovim-nightly
             pkgs.rustup
+            pkgs.nerdfonts
         ];
     };
     programs = {

@@ -8,7 +8,6 @@
         syntaxHighlighting = {
             enable = true;
         };
-        completionInit = "autoload -Uz compinit";
         defaultKeymap = "vicmd";
         autocd = true;
         history = {

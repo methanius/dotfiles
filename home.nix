@@ -53,4 +53,5 @@ in
         };
         ".config/starship.toml".source = config.lib.file.mkOutOfStoreSymlink "/home/claus/dotfiles/config/starship.toml";
     };
+    xdg.configFile."zsh/completions/nix.zsh".source = "${pkgs.nix}/share/zsh/vendor_completions.d/nix.zsh";
 }

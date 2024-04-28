@@ -51,7 +51,6 @@ in
     home.file = {
         ".config/nvim" = {
             source = config.lib.file.mkOutOfStoreSymlink "/home/claus/dotfiles/config/nvim";
-        recursive=true;
         };
         ".config/starship.toml".source = config.lib.file.mkOutOfStoreSymlink "/home/claus/dotfiles/config/starship.toml";
     };

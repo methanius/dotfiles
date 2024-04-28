@@ -21,6 +21,7 @@ in
             pkgs.nerdfonts
             pkgs.tree-sitter
             pkgs.nodejs
+            pkgs.glow
         ];
     };
     imports = [./apps/zsh.nix];

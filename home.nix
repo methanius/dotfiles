@@ -19,6 +19,7 @@ in
             pkgs.stylua
             pkgs.neovim-nightly
             pkgs.nerdfonts
+            pkgs.tree-sitter
         ];
     };
     imports = [./apps/zsh.nix];

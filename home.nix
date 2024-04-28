@@ -20,6 +20,7 @@ in
             pkgs.neovim-nightly
             pkgs.nerdfonts
             pkgs.tree-sitter
+            pkgs.nodejs
         ];
     };
     imports = [./apps/zsh.nix];

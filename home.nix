@@ -22,6 +22,7 @@ in
             pkgs.tree-sitter
             pkgs.nodejs
             pkgs.glow
+            pkgs.neofetch
         ];
     };
     imports = [./apps/zsh.nix];

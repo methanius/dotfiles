@@ -23,6 +23,7 @@ in
             pkgs.nodejs
             pkgs.glow
             pkgs.neofetch
+            pkgs.du-dust
         ];
     };
     imports = [./apps/zsh.nix];

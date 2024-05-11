@@ -24,6 +24,7 @@ in
             pkgs.glow
             pkgs.neofetch
             pkgs.du-dust
+            pkgs.selene
         ];
     };
     imports = [./apps/zsh.nix];

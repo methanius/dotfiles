@@ -29,6 +29,7 @@ in
             pkgs.cargo
             pkgs.go
             pkgs.perl
+            pkgs.htop
         ];
     };
     imports = [./apps/zsh.nix];

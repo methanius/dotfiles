@@ -27,6 +27,8 @@ in
             pkgs.fd
             pkgs.tree
             pkgs.cargo
+            pkgs.go
+            pkgs.perl
         ];
     };
     imports = [./apps/zsh.nix];

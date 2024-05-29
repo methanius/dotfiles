@@ -26,6 +26,7 @@ in
             pkgs.delta
             pkgs.fd
             pkgs.tree
+            pkgs.cargo
         ];
     };
     imports = [./apps/zsh.nix];

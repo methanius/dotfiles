@@ -30,6 +30,7 @@ in
             pkgs.go
             pkgs.perl
             pkgs.htop
+            pkgs.shellcheck
         ];
     };
     imports = [./apps/zsh.nix];

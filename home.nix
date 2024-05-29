@@ -1,6 +1,6 @@
 {pkgs, config, ...}:
 let 
-    username = "claus";
+    username = builtins.replaceStrings ["\n"] [""] (builtins.readFile ./username.nix);
     homeDirectory = "/home/${username}";
 in
     {

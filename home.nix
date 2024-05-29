@@ -20,7 +20,7 @@ in
             pkgs.tree-sitter
             pkgs.nodejs
             pkgs.glow
-            pkgs.neofetch
+            pkgs.fastfetch
             pkgs.du-dust
             pkgs.selene
         ];

@@ -31,6 +31,7 @@ in
             pkgs.perl
             pkgs.htop
             pkgs.shellcheck
+            pkgs.ripdrag
         ];
     };
     imports = [./apps/zsh.nix];

@@ -1,19 +1,25 @@
-#!/bin/sh
+#!/bin/bash
 
 echo "Starting setup scripts!"
+if curl --help >/dev/null 2>&1; then
+    echo "Curl already exists."
+else
+    sudo apt install curl
+fi
 
 # Make sure nix is installed
 if nix --help >/dev/null 2>&1; then
     echo "Nix is already installed! Moving on."
-    nix-channel --update
-    . /home/claus/.nix-profile/etc/profile.d/nix.sh
-else
-    curl -L https://nixos.org/nix/install -o install.sh
-    sh install.sh
     nix-channel --add https://github.com/nix-community/home-manager/archive/master.tar.gz home-manager
     nix-channel --add https://nixos.org/channels/nixpkgs-unstable unstable
     nix-channel --update
-    . /home/claus/.nix-profile/etc/profile.d/nix.sh
+    . /home/$(cat username.nix)/.nix-profile/etc/profile.d/nix.sh
+else
+    sh <(curl -L https://nixos.org/nix/install) --no-daemon 
+    . /home/$(cat username.nix)/.nix-profile/etc/profile.d/nix.sh
+    nix-channel --add https://github.com/nix-community/home-manager/archive/master.tar.gz home-manager
+    nix-channel --add https://nixos.org/channels/nixpkgs-unstable unstable
+    nix-channel --update
 fi
 
 # Check Nix config file exists
@@ -38,7 +44,11 @@ then
     echo "$FLAKE_EXPERIMENTAL_LINE" | cat >> "$NIXCONF"
 fi
 
+nix-env -iA cachix -f https://cachix.org/api/v1/install
+cachix use nix-community
+
+
 # Build the damn thing
 nix run . -- build --flake .
+./result/activate
 home-manager switch --flake .
-

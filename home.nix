@@ -9,7 +9,7 @@ in
     home = {
         inherit username;
         inherit homeDirectory;
-        stateVersion = "22.11";
+        stateVersion = "23.11";
         sessionVariables.EDITOR = "nvim";
         packages = [
             pkgs.ripgrep

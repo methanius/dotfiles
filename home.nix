@@ -23,6 +23,7 @@ in
             pkgs.fastfetch
             pkgs.du-dust
             pkgs.selene
+            pkgs.delta
         ];
     };
     imports = [./apps/zsh.nix];

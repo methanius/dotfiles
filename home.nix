@@ -14,7 +14,6 @@ in
         packages = [
             pkgs.ripgrep
             pkgs.sheldon
-            pkgs.eza
             pkgs.bat
             pkgs.stylua
             pkgs.neovim-nightly
@@ -49,6 +48,13 @@ in
             enable = true;
             enableZshIntegration = true;
             nix-direnv.enable = true;
+        };
+        eza = {
+            enable = true;
+            enableBashIntegration = true;
+            enableZshIntegration = true;
+            git = true;
+            icons = true;
         };
     };
     home.file = {

@@ -13,7 +13,6 @@ in
         sessionVariables.EDITOR = "nvim";
         packages = [
             pkgs.ripgrep
-            pkgs.sheldon
             pkgs.bat
             pkgs.stylua
             pkgs.neovim-nightly

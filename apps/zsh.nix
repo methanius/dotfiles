@@ -8,7 +8,7 @@
         syntaxHighlighting = {
             enable = true;
         };
-        defaultKeymap = "vicmd";
+        defaultKeymap = "viins";
         autocd = true;
         history = {
             expireDuplicatesFirst = true;

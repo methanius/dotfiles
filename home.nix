@@ -24,6 +24,8 @@ in
             pkgs.du-dust
             pkgs.selene
             pkgs.delta
+            pkgs.fd
+            pkgs.tree
         ];
     };
     imports = [./apps/zsh.nix];
@@ -32,10 +34,11 @@ in
             enable = true;
             enableZshIntegration = true;
             defaultCommand = "fd --type f";
-            defaultOptions = [
-                "--preview 'bat --color=always {}'"
-                ];
-            };
+            fileWidgetCommand = "fd --type f";
+            fileWidgetOptions = [ "--preview 'bat --color=always {}'" ];
+            changeDirWidgetCommand = "fd --type d";
+            changeDirWidgetOptions = [ "--preview 'tree -C {} | head -200'"];
+        };
         starship = {
             enable = true;
             enableZshIntegration = true;

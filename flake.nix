@@ -14,12 +14,11 @@
     outputs = { nixpkgs, home-manager, neovim-nightly-overlay, ... }:
     let
         system = "x86_64-linux";
+        username = builtins.replaceStrings ["\n"] [""] (builtins.readFile ./username.nix);
     in
         {
-            defaultPackage.${system} = home-manager.defaultPackage.${system};
-
-            homeConfigurations = {
-                "claus" = home-manager.lib.homeManagerConfiguration {
+            packages.${system}.default = home-manager.defaultPackage.${system};
+            homeConfigurations.${username} = home-manager.lib.homeManagerConfiguration {
                     pkgs = import nixpkgs { inherit system;
                         overlays = [
                             neovim-nightly-overlay.overlay
@@ -27,6 +26,5 @@
                         };
                     modules = [ ./home.nix ];
                 };
-            };
         };
 }

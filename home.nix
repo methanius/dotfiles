@@ -32,7 +32,8 @@ in
             pkgs.htop
             pkgs.shellcheck
             pkgs.ripdrag
-	    pkgs.tldr
+            pkgs.tldr
+            pkgs.btop
         ];
     };
     imports = [./apps/zsh.nix];

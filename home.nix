@@ -15,7 +15,7 @@ in
             pkgs.ripgrep
             pkgs.bat
             pkgs.stylua
-            pkgs.neovim-nightly
+            pkgs.neovim
             pkgs.nerdfonts
             pkgs.tree-sitter
             pkgs.nodejs

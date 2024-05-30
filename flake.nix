@@ -21,7 +21,7 @@
             homeConfigurations.${username} = home-manager.lib.homeManagerConfiguration {
                     pkgs = import nixpkgs { inherit system;
                         overlays = [
-                            neovim-nightly-overlay.overlay
+                            neovim-nightly-overlay.overlays.default
                             ];
                         };
                     modules = [ ./home.nix ];

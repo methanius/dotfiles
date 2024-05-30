@@ -32,7 +32,6 @@ in
             pkgs.htop
             pkgs.shellcheck
             pkgs.ripdrag
-            pkgs.yazi
         ];
     };
     imports = [./apps/zsh.nix];
@@ -65,6 +64,16 @@ in
             enableZshIntegration = true;
             git = true;
             icons = true;
+        };
+        yazi = {
+            enable = true;
+            enableBashIntegration = true;
+            enableZshIntegration = true;
+        };
+        zoxide = {
+            enable = true;
+            enableBashIntegration = true;
+            enableZshIntegration = true;
         };
     };
     home.file = {

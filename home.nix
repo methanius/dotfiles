@@ -78,9 +78,12 @@ in
         };
     };
     home.file = {
-        # ".config/nvim" = {
-        #     source = config.lib.file.mkOutOfStoreSymlink "/home/claus/dotfiles/config/nvim";
-        # };
+        ".config/nvim" = {
+            source = config.lib.file.mkOutOfStoreSymlink "./config/nvim";
+        };
+	".config/wezterm" = {
+	    source = config.lib.file.mkOutOfStoreSymlink ".config/wezterm";
+	};
         ".config/starship.toml".source = config.lib.file.mkOutOfStoreSymlink "/home/claus/dotfiles/config/starship.toml";
     };
     xdg.configFile."zsh/completions/nix.zsh".source = "${pkgs.nix}/share/zsh/vendor_completions.d/nix.zsh";

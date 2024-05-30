@@ -1,0 +1,5 @@
+#!/bin/sh
+if $(pwd -P | grep -q "^\/mnt\/c\/*"); then
+    echo "Copying wezterm.lua to windows partition"
+    cp wezterm.lua /mnt/c/Users/cnm/.wezterm.lua
+fi

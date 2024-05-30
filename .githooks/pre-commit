@@ -1,0 +1,6 @@
+#!/bin/bash
+stylua wezterm.lua
+if [[ $(findmnt -M "/mnt/c/") ]]; then
+    echo "Copying wezterm.lua to windows partition"
+    cp wezterm.lua /mnt/c/Users/cnm/.wezterm.lua
+fi

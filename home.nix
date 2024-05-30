@@ -77,14 +77,8 @@ in
             enableZshIntegration = true;
         };
     };
-    home.file = {
-        ".config/nvim" = {
-            source = config.lib.file.mkOutOfStoreSymlink "./config/nvim";
-        };
-	".config/wezterm" = {
-	    source = config.lib.file.mkOutOfStoreSymlink ".config/wezterm";
-	};
-        ".config/starship.toml".source = config.lib.file.mkOutOfStoreSymlink "/home/claus/dotfiles/config/starship.toml";
-    };
+    xdg.configFile."starship.toml".source = ./config/starship.toml;
+    xdg.configFile."nvim".source = ./config/nvim;
+    xdg.configFile."wezterm".source = ./config/wezterm;
     xdg.configFile."zsh/completions/nix.zsh".source = "${pkgs.nix}/share/zsh/vendor_completions.d/nix.zsh";
 }

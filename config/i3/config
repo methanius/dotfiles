@@ -46,10 +46,9 @@ bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOU
 exec_always "setxkbmap -layout us,dk"
 
 # Startup execs
-exec --no-startup-id picom
+exec_always --no-startup-id picom -i 0.9 -b
 exec_always --no-startup-id killall polybar
 exec_always --no-startup-id ~/.config/polybar/start_polybar.sh
-exec_always --no-startup-id picom -f -i 0.1
 exec_always --no-startup-id feh --bg-scale --slideshow-delay 900 ~/Pictures/state_park_wallpapers/
 exec_always --no-startup-id nm-applet
 bindsym $mod+d exec rofi -show combi

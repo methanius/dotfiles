@@ -1,5 +1,10 @@
 #!/bin/bash
 
+if ! cat ./username.nix >/dev/null 2>&1; then  
+    echo "No username.nix present, please create one with your system username!"
+    exit 1
+fi
+
 echo "Starting setup scripts!"
 if curl --help >/dev/null 2>&1; then
     echo "Curl already exists."
@@ -49,6 +54,8 @@ cachix use nix-community
 
 
 # Build the damn thing
+git add username.nix
 nix run . -- build --flake .
 ./result/activate
 home-manager switch --flake .
+git restore --staged username.nix

@@ -49,7 +49,7 @@ exec_always "setxkbmap -layout us,dk"
 exec_always --no-startup-id picom -i 0.9 -b
 exec_always --no-startup-id killall polybar
 exec_always --no-startup-id ~/.config/polybar/start_polybar.sh
-exec_always --no-startup-id feh --bg-scale --slideshow-delay 900 ~/Pictures/state_park_wallpapers/
+exec_always --no-startup-id ~/.config/rotating_wallpapers.sh
 exec_always --no-startup-id nm-applet
 bindsym $mod+d exec rofi -show combi
 bindsym Mod4+l exec i3lock

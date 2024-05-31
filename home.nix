@@ -85,4 +85,5 @@ in
     xdg.configFile."polybar".source = ./config/polybar;
     xdg.configFile."picom".source = ./config/picom;
     xdg.configFile."i3".source = ./config/i3;
+    xdg.configFile."rofi".source = ./config/rofi;
 }

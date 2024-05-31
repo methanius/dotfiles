@@ -83,4 +83,5 @@ in
     xdg.configFile."wezterm".source = ./config/wezterm;
     xdg.configFile."zsh/completions/nix.zsh".source = "${pkgs.nix}/share/zsh/vendor_completions.d/nix.zsh";
     xdg.configFile."polybar".source = ./config/polybar;
+    xdg.configFile."picom".source = ./config/picom;
 }

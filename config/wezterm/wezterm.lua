@@ -125,20 +125,21 @@ end
 if wezterm.target_triple == "x86_64-unknown-linux-gnu" then
     config.default_cwd = wezterm.home_dir
     -- Appearance background
-    config.background = {
-        {
-            source = {
-                File = "/usr/share/backgrounds/warty-final-ubuntu.png",
-            },
-            hsb = { brightness = 0.35 },
-            horizontal_align = "Center",
-            vertical_align = "Middle",
-            repeat_x = "NoRepeat",
-            repeat_y = "NoRepeat",
-            height = "Cover",
-            width = "Cover",
-        },
-    }
+    config.window_background_opacity=0.7
+    -- config.background = {
+    --     {
+    --         source = {
+    --             File = "/usr/share/backgrounds/warty-final-ubuntu.png",
+    --         },
+    --         hsb = { brightness = 0.35 },
+    --         horizontal_align = "Center",
+    --         vertical_align = "Middle",
+    --         repeat_x = "NoRepeat",
+    --         repeat_y = "NoRepeat",
+    --         height = "Cover",
+    --         width = "Cover",
+    --     },
+    -- }
     -- WebGpu was painfully slow on my linux box for whatever reason!
     config.front_end = "OpenGL"
   -- local gpus = wezterm.gui.enumerate_gpus()

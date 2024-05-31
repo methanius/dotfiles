@@ -125,7 +125,7 @@ end
 if wezterm.target_triple == "x86_64-unknown-linux-gnu" then
     config.default_cwd = wezterm.home_dir
     -- Appearance background
-    config.window_background_opacity=0.7
+    config.window_background_opacity=0.8
     -- config.background = {
     --     {
     --         source = {

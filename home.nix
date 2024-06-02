@@ -36,6 +36,7 @@ in
             pkgs.btop
             pkgs.rofi
             pkgs.polybar
+            pkgs.picom
         ];
     };
     imports = [./apps/zsh.nix];

@@ -34,6 +34,7 @@ in
             pkgs.ripdrag
             pkgs.tldr
             pkgs.btop
+            pkgs.rofi
         ];
     };
     imports = [./apps/zsh.nix];

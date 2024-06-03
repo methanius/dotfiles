@@ -42,8 +42,7 @@ config.font_rules = {
     },
 }
 
-config.harfbuzz_features = {"zero"}
-
+config.harfbuzz_features = { "zero" }
 
 -- Appearance
 config.adjust_window_size_when_changing_font_size = false
@@ -124,28 +123,14 @@ end
 -- Configs for linux only
 if wezterm.target_triple == "x86_64-unknown-linux-gnu" then
     config.default_cwd = wezterm.home_dir
+
     -- Appearance background
-    config.window_background_opacity=0.8
-    -- config.background = {
-    --     {
-    --         source = {
-    --             File = "/usr/share/backgrounds/warty-final-ubuntu.png",
-    --         },
-    --         hsb = { brightness = 0.35 },
-    --         horizontal_align = "Center",
-    --         vertical_align = "Middle",
-    --         repeat_x = "NoRepeat",
-    --         repeat_y = "NoRepeat",
-    --         height = "Cover",
-    --         width = "Cover",
-    --     },
-    -- }
+    config.window_background_opacity = 0.8
+
     -- WebGpu was painfully slow on my linux box for whatever reason!
-    config.front_end = "OpenGL"
-  -- local gpus = wezterm.gui.enumerate_gpus()
-  -- config.front_end = "WebGpu"
-  config.enable_wayland = false
-  -- config.webgpu_preferred_adapter = gpus[1]
+    config.front_end = "WebGpu"
+    config.enable_wayland = false
+    config.color_scheme = "tokyonight"
 end
 
 -- and finally, return the configuration to wezterm

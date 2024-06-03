@@ -59,3 +59,4 @@ nix run . -- build --flake .
 ./result/activate
 home-manager switch --flake .
 git restore --staged username.nix
+chmod u+rw ~/.config/nvim --recursive

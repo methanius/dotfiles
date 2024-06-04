@@ -53,6 +53,7 @@ exec_always --no-startup-id ~/.config/rotating_wallpapers.sh
 exec_always --no-startup-id nm-applet
 bindsym $mod+d exec rofi -show combi
 bindsym Mod4+l exec i3lock
+bindsym $mod+n move workspace to output left
 
 # Appearance
 default_border pixel 3

@@ -130,7 +130,7 @@ if wezterm.target_triple == "x86_64-unknown-linux-gnu" then
     -- WebGpu was painfully slow on my linux box for whatever reason!
     config.front_end = "WebGpu"
     config.enable_wayland = false
-    config.color_scheme = "tokyonight"
+    config.color_scheme = "Ef-Bio"
 end
 
 -- and finally, return the configuration to wezterm

@@ -35,6 +35,7 @@ return {
       ["<leader>p"] = { name = "+project" },
       ["<leader>g"] = { name = "+git" },
       ["<leader>t"] = { name = "+toggle" },
+      ["<leader>n"] = { name = "+neogen" },
     })
   end,
 }

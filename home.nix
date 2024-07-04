@@ -81,6 +81,9 @@ in
             enableBashIntegration = true;
             enableZshIntegration = true;
         };
+        pandoc = {
+            enable = true;
+        };
     };
     xdg.configFile."starship.toml".source = ./config/starship.toml;
     xdg.configFile."nvim".source = ./config/nvim;

@@ -59,4 +59,5 @@ nix run . -- build --flake .
 ./result/activate
 home-manager switch --flake .
 git restore --staged username.nix
+echo "Making nvim config dir writable"
 chmod u+rw ~/.config/nvim --recursive

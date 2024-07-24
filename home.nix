@@ -20,7 +20,6 @@ in
             pkgs.tree-sitter
             pkgs.nodejs
             pkgs.glow
-            pkgs.fastfetch
             pkgs.du-dust
             pkgs.selene
             pkgs.delta
@@ -35,7 +34,6 @@ in
             pkgs.tldr
             pkgs.btop
             pkgs.rofi
-            pkgs.polybar
             pkgs.picom
             pkgs.feh
         ];
@@ -82,6 +80,9 @@ in
             enableZshIntegration = true;
         };
         pandoc = {
+            enable = true;
+        };
+        fastfetch = {
             enable = true;
         };
     };

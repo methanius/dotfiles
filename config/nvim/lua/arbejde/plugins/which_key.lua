@@ -3,40 +3,24 @@ return {
   event = "VeryLazy",
   dependencies = {
     "nvim-telescope/telescope.nvim",
+    "echasnovski/mini.icons",
   },
   -- init = function()
   --   vim.o.timeout = true
   --   vim.o.timeoutlen = 500
   -- end,
-  opts = {
-    -- your configuration comes here
-    -- or leave it empty to use the default settings
-    -- refer to the configuration section below
-  },
+  opts = {},
   config = function()
     local wk = require("which-key")
-    wk.setup({
-      key_labels = {
-        ["<leader>"] = "SPC",
-        ["<space>"] = "SPC",
-        ["<cr>"] = "RET",
-        ["<tab>"] = "TAB",
-      },
-      window = {
-        winblend = 20,
-      },
-    })
-    wk.register({
+    wk.add({
       mode = { "n", "v" },
-      ["g"] = { name = "+goto" },
-      ["]"] = { name = "+next" },
-      ["["] = { name = "+prev" },
-      ["<leader>f"] = { name = "+find" },
-      ["<leader>p"] = { name = "+project" },
-      ["<leader>g"] = { name = "+git" },
-      ["<leader>t"] = { name = "+toggle" },
-      ["<leader>h"] = { name = "+git hunk" },
-      ["<leader>n"] = { name = "+neogen" },
+      { "<leader>f", "find" },
+      { "<leader>p", "project" },
+      { "<leader>g", "git" },
+      { "<leader>t", "toggle" },
+      { "<leader>h", "git hunk" },
+      { "<leader>n", "neogen" },
+      { "<leader>w", proxy = "<c-w>", group = "windows" },
     })
   end,
 }

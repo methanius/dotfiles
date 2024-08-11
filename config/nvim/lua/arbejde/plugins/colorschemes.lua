@@ -28,6 +28,7 @@ return {
     config = function()
       require("tokyonight").setup({
         transparent = true,
+        plugins = "all",
       })
     end,
   },

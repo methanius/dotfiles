@@ -79,6 +79,9 @@ in
             enableBashIntegration = true;
             enableZshIntegration = true;
         };
+        lazygit = {
+            enable = true;
+        };
         pandoc = {
             enable = true;
         };

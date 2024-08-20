@@ -86,7 +86,7 @@ return {
     },
     fmt(
       [[
-          raise AssertionError("Not yet implemented!")
+          raise NotImplementedError
           ]],
       {}
     )

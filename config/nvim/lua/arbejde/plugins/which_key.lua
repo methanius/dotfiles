@@ -1,3 +1,6 @@
+vim.keymap.del("n", "grn")
+vim.keymap.del({"n", "v"}, "gra")
+vim.keymap.del("n", "grr")
 return {
   "folke/which-key.nvim",
   dependencies = {

@@ -32,7 +32,7 @@ return {
           vim.keymap.set("n", "<leader>gb", function()
             gitsigns.blame_line({ full = true })
           end, { desc = "Git blame line" })
-          vim.keymap.set("n", "<leader>tb", gitsigns.toggle_current_line_blame, { desc = "Toggle git blame line"})
+          vim.keymap.set("n", "<leader>tlb", gitsigns.toggle_current_line_blame, { desc = "Toggle git blame line"})
           vim.keymap.set("n", "<leader>hd", gitsigns.diffthis, { desc = "Git diff this"})
           vim.keymap.set("n", "<leader>hD", function()
             gitsigns.diffthis("~")

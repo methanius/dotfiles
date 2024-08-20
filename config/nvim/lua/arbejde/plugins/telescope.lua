@@ -46,7 +46,7 @@ return {
     {
       "<leader>fs",
       function()
-        require("telescope.builtin").grep_string({ search = vim.fn.input("Grep > ") })
+        require("telescope.builtin").lsp_document_symbols()
       end,
       desc = "Search for string via ripgrep",
     },

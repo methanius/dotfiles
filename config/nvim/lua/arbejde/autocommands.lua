@@ -24,15 +24,9 @@ autocmd("FileType", {
   callback = function(args)
     local opts = { buffer = args.buf }
     vim.keymap.set(
-      "n",
+      {"n", "i"},
       "<F5>",
-      ":w <bar> exec '!python '.shellescape('%')<CR>",
-      mergeBintoA(opts, { desc = "Save and run Python file" })
-    )
-    vim.keymap.set(
-      "i",
-      "<F5>",
-      "<esc> :w <bar> exec '!python '.shellescape('%')<CR>",
+      "<Cmd>w <bar> exec '!python '.shellescape('%')<CR>",
       mergeBintoA(opts, { desc = "Save and run Python file" })
     )
   end,

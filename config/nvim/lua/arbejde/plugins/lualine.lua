@@ -11,11 +11,18 @@ local clients_lsp = function()
   return "\u{f085} " .. table.concat(c, "|")
 end
 
+local arrowline = function ()
+  local arrow = require("arrow.statusline")
+  return arrow.text_for_statusline_with_icons()
+end
+
+
 return {
   "nvim-lualine/lualine.nvim",
   event = "VeryLazy",
   dependencies = {
     { "nvim-tree/nvim-web-devicons", opt = true },
+    "otavioschwanck/arrow.nvim",
   },
   config = true,
   opts = {
@@ -50,8 +57,7 @@ return {
           path = 0,
         },
         {
-          indicators = { "h", "j", "k", "l" },
-          active_indicators = { "[h]", "[j]", "[k]", "[l]" },
+          arrowline
         },
       },
       lualine_x = { "encoding", "fileformat", "filetype" },

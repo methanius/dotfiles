@@ -16,13 +16,6 @@ return {
   event = "VeryLazy",
   dependencies = {
     { "nvim-tree/nvim-web-devicons", opt = true },
-    {
-      "letieu/harpoon-lualine",
-      dependencies = {
-        "ThePrimeagen/harpoon",
-        branch = "harpoon2",
-      },
-    },
   },
   config = true,
   opts = {
@@ -57,7 +50,6 @@ return {
           path = 0,
         },
         {
-          "harpoon2",
           indicators = { "h", "j", "k", "l" },
           active_indicators = { "[h]", "[j]", "[k]", "[l]" },
         },

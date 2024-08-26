@@ -11,11 +11,10 @@ local clients_lsp = function()
   return "\u{f085} " .. table.concat(c, "|")
 end
 
-local arrowline = function ()
+local arrowline = function()
   local arrow = require("arrow.statusline")
   return arrow.text_for_statusline_with_icons()
 end
-
 
 return {
   "nvim-lualine/lualine.nvim",
@@ -57,8 +56,9 @@ return {
           path = 0,
         },
         {
-          arrowline
+          arrowline,
         },
+        { "aerial", sep = " >" },
       },
       lualine_x = { "encoding", "fileformat", "filetype" },
       lualine_y = {},

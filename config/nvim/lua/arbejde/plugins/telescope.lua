@@ -44,13 +44,6 @@ return {
       desc = "Search for word under cursor via ripgrep",
     },
     {
-      "<leader>fs",
-      function()
-        require("telescope.builtin").lsp_document_symbols()
-      end,
-      desc = "Search for string via ripgrep",
-    },
-    {
       "<leader>fl",
       function()
         require("telescope.builtin").live_grep()

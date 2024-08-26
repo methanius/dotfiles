@@ -16,7 +16,6 @@ return {
       "williamboman/mason-lspconfig.nvim",
       "p00f/clangd_extensions.nvim",
       "ckipp01/stylua-nvim",
-      "folke/lazydev.nvim",
       "hrsh7th/nvim-cmp",
       "L3MON4D3/LuaSnip", -- Snippet engine
       "hrsh7th/cmp-nvim-lsp",

@@ -74,10 +74,10 @@ autocmd("LspAttach", {
       require("clangd_extensions.inlay_hints").set_inlay_hints()
     end
 
-    -- Ruff_lsp settings
-    if client ~= nil and client.name == "ruff" and client.server_capabilities then
-      client.server_capabilities.hoverProvider = false
-    end
+    -- -- Ruff_lsp settings
+    -- if client ~= nil and client.name == "ruff" and client.server_capabilities then
+    --   client.server_capabilities.hoverProvider = false
+    -- end
 
     -- Rustaceanvim specific
     if client ~= nil and client.name == "rust-analyzer" and client.server_capabilities then

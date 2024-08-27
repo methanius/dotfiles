@@ -24,8 +24,7 @@ return {
       "onsails/lspkind.nvim",
       {
         "ckipp01/stylua-nvim",
-        build =
-        "cargo install stylua; cargo install stylua --features lua52; cargo install stylua --features lua53; cargo install stylua --features lua54; cargo install stylua --features luau;",
+        build = "cargo install stylua; cargo install stylua --features lua52; cargo install stylua --features lua53; cargo install stylua --features lua54; cargo install stylua --features luau;",
       },
       {
         "j-hui/fidget.nvim",
@@ -36,6 +35,25 @@ return {
       local handlers = {
         function(server_name)
           require("lspconfig")[server_name].setup({})
+        end,
+        ["pylsp"] = function()
+          local lspconfig = require("lspconfig")
+          lspconfig.pylsp.setup({
+            settings = {
+              pylsp = {
+                plugins = {
+                  ruff = {
+                    enabled = true,
+                    formatEnabled = true,
+                    preview = true,
+                  },
+                  pylsp_mypy = {
+                    live_mode = true,
+                  },
+                },
+              },
+            },
+          })
         end,
       }
       require("mason").setup({
@@ -48,7 +66,7 @@ return {
         },
       })
       require("mason-lspconfig").setup({
-        ensure_installed = { "bashls", "clangd", "jedi_language_server", "ruff", "taplo", "neocmake", "lua_ls" },
+        ensure_installed = { "bashls", "clangd", "pylsp", "taplo", "neocmake", "lua_ls" },
         handlers = handlers,
       })
 
@@ -93,8 +111,8 @@ return {
         },
         sources = cmp.config.sources({
           { name = "nvim_lsp" }, -- LSP
-          { name = "luasnip" },  -- luasnip snippets
-          { name = "path" },     -- filesystem paths
+          { name = "luasnip" }, -- luasnip snippets
+          { name = "path" }, -- filesystem paths
         }),
         mapping = {
           ["<C-Space>"] = cmp.mapping.complete(),
@@ -127,7 +145,7 @@ return {
           end, { "i", "s" }),
         },
         formatting = {
-          format = require("lspkind").cmp_format({});
+          format = require("lspkind").cmp_format({}),
         },
       })
     end,

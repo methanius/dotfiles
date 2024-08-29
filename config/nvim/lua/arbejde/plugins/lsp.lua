@@ -42,8 +42,23 @@ return {
             settings = {
               pylsp = {
                 plugins = {
+                  pycodestyle = {
+                    enabled = false,
+                  },
+                  pyflakes = {
+                    enabled = false,
+                  },
+                  mccabe = {
+                    enabled = false,
+                  },
+                  autopep8 = {
+                    enabled = false,
+                  },
+                  yapf = {
+                    enabled = false,
+                  },
                   ruff = {
-                    enabled = true,
+                    enabled = false,
                     formatEnabled = true,
                     preview = true,
                   },
@@ -66,7 +81,7 @@ return {
         },
       })
       require("mason-lspconfig").setup({
-        ensure_installed = { "bashls", "clangd", "pylsp", "taplo", "neocmake", "lua_ls" },
+        ensure_installed = { "bashls", "clangd", "pylsp", "ruff", "taplo", "neocmake", "lua_ls" },
         handlers = handlers,
       })
 

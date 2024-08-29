@@ -74,11 +74,6 @@ autocmd("LspAttach", {
       require("clangd_extensions.inlay_hints").set_inlay_hints()
     end
 
-    -- Ruff_lsp settings
-    if client ~= nil and client.name == "ruff" and client.server_capabilities then
-      client.server_capabilities.hoverProvider = false
-    end
-
     if client~= nil and client.name == "pylsp" and client.server_capabilities then
       client.server_capabilities.documentFormattingProvider = false
     end

@@ -12,30 +12,30 @@ in
         stateVersion = "23.11";
         sessionVariables.EDITOR = "nvim";
         packages = [
-            pkgs.ripgrep
             pkgs.bat
-            pkgs.stylua
+            pkgs.btop
+            pkgs.cargo
+            pkgs.delta
+            pkgs.du-dust
+            pkgs.fd
+            pkgs.feh
+            pkgs.glow
+            pkgs.go
+            pkgs.htop
             pkgs.neovim
             pkgs.nerdfonts
-            pkgs.tree-sitter
             pkgs.nodejs
-            pkgs.glow
-            pkgs.du-dust
-            pkgs.selene
-            pkgs.delta
-            pkgs.fd
-            pkgs.tree
-            pkgs.cargo
-            pkgs.go
             pkgs.perl
-            pkgs.htop
-            pkgs.shellcheck
-            pkgs.ripdrag
-            pkgs.tldr
-            pkgs.btop
-            pkgs.rofi
             pkgs.picom
-            pkgs.feh
+            pkgs.ripdrag
+            pkgs.ripgrep
+            pkgs.rofi
+            pkgs.selene
+            pkgs.shellcheck
+            pkgs.stylua
+            pkgs.tldr
+            pkgs.tree
+            pkgs.tree-sitter
         ];
     };
     imports = [./apps/zsh.nix];

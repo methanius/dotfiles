@@ -1,7 +1,6 @@
 return {
   "nvim-treesitter/nvim-treesitter-context",
   opts = {
-
     enable = true, -- Enable this plugin (Can be enabled/disabled later via commands)
     max_lines = 0, -- How many lines the window should span. Values <= 0 mean no limit.
     min_window_height = 0, -- Minimum editor window height to enable context. Values <= 0 mean no limit.
@@ -16,14 +15,4 @@ return {
     on_attach = nil, -- (fun(buf: integer): boolean) return false to disable attaching
   },
   config = true,
-  keys = {
-    {
-      "[c",
-      function()
-        require("treesitter-context").go_to_context()
-      end,
-      { "n" },
-      { silent = true, desc = "Jump to treesitter context" },
-    },
-  },
 }

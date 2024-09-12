@@ -115,13 +115,10 @@ return {
       "p00f/clangd_extensions.nvim",
       "ckipp01/stylua-nvim",
       "onsails/lspkind.nvim",
+      {"smjonas/inc-rename.nvim", opts = {},},
       {
         "ckipp01/stylua-nvim",
         build = "cargo install stylua; cargo install stylua --features lua52; cargo install stylua --features lua53; cargo install stylua --features lua54; cargo install stylua --features luau;",
-      },
-      {
-        "j-hui/fidget.nvim",
-        config = true,
       },
     },
     config = function()
@@ -192,16 +189,16 @@ return {
       })
       require("lspconfig").futhark_lsp.setup({})
 
-      -- Change border of documentation hover window
-      vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
-        border = "rounded",
-      })
-      -- Border around signature help
-      vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.hover, {
-        border = "rounded",
-      })
+      -- -- Change border of documentation hover window
+      -- vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
+      --   border = "rounded",
+      -- })
+      -- -- Border around signature help
+      -- vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.hover, {
+      --   border = "rounded",
+      -- })
       -- Border around :LspInfo
-      require("lspconfig.ui.windows").default_options.border = "single"
+      -- require("lspconfig.ui.windows").default_options.border = "single"
     end,
   },
 }

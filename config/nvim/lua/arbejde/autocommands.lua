@@ -47,8 +47,8 @@ autocmd("LspAttach", {
     end, mergeBintoA(opts, { desc = "LSP code action" }))
 
     vim.keymap.set("n", "<F2>", function()
-      vim.lsp.buf.rename()
-    end, mergeBintoA(opts, { desc = "LSP rename symbol under cursor" }))
+      return ":IncRename " .. vim.fn.expand("<cword>")
+    end, mergeBintoA(opts, { desc = "LSP rename symbol under cursor", expr = true, }))
 
     -- Format using LSP
     vim.keymap.set("n", "<leader>f", vim.lsp.buf.format, mergeBintoA(opts, { desc = "LSP format buffer" }))

@@ -1,6 +1,3 @@
--- vim.keymap.del("n", "grn")
--- vim.keymap.del({"n", "v"}, "gra")
--- vim.keymap.del("n", "grr")
 return {
   "folke/which-key.nvim",
   dependencies = {
@@ -47,33 +44,6 @@ return {
         desc = "Go to next item in the quickfix list and center cursor",
         mode = "n",
       },
-      {
-        "<leader>k",
-        "<cmd>lnext<CR>zz",
-        desc = "Go to next item in the file local quickfist list and center cursor",
-        mode = "n",
-      },
-      {
-        "<leader>j",
-        "<cmd>lprev<CR>zz",
-        desc = "Go to prev item in the file local quickfist list and center cursor",
-        mode = "n",
-      },
-
-      {
-        "<leader>sr",
-        [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]],
-        desc = "Regex find replace word under cursor",
-        mode = "n",
-      },
-      {
-        "<leader>x",
-        "<cmd>!chmod +x %<CR>",
-        silent = true,
-        desc = "Make current file executable (if on Linux)",
-        mode = "n",
-      },
-
       {
         "<leader><leader>",
         function()

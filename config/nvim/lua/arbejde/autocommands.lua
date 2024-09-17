@@ -24,7 +24,7 @@ autocmd("FileType", {
   callback = function(args)
     local opts = { buffer = args.buf }
     vim.keymap.set(
-      {"n", "i"},
+      { "n", "i" },
       "<F5>",
       "<Cmd>w <bar> exec '!python '.shellescape('%')<CR>",
       mergeBintoA(opts, { desc = "Save and run Python file" })
@@ -51,7 +51,10 @@ autocmd("LspAttach", {
     end, mergeBintoA(opts, { desc = "LSP rename symbol under cursor", expr = true, }))
 
     -- Format using LSP
-    vim.keymap.set("n", "<leader>f", vim.lsp.buf.format, mergeBintoA(opts, { desc = "LSP format buffer" }))
+    vim.keymap.set("n", "<leader>f", function()
+        vim.lsp.buf.format({ bufnr = vim.api.nvim_get_current_buf(), async=true})
+      end,
+      mergeBintoA(opts, { desc = "LSP format buffer" }))
 
     -- Signature help is awesome
     vim.keymap.set("i", "<C-h>", function()
@@ -74,7 +77,7 @@ autocmd("LspAttach", {
       require("clangd_extensions.inlay_hints").set_inlay_hints()
     end
 
-    if client~= nil and client.name == "pylsp" and client.server_capabilities then
+    if client ~= nil and client.name == "pylsp" and client.server_capabilities then
       client.server_capabilities.documentFormattingProvider = false
     end
     -- Rustaceanvim specific

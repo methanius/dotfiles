@@ -6,14 +6,20 @@ return {
     { "nvim-tree/nvim-web-devicons", opts = true },
     { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
     "benfowler/telescope-luasnip.nvim",
+    "folke/trouble.nvim",
   },
   event = { "BufReadPre", "BufNewFile" },
   config = function()
     local telescope = require("telescope")
+    local open_with_trouble = require("trouble.sources.telescope").open
     telescope.setup({
       defaults = {
         path_display = {
           truncate = 4,
+        },
+        mappings = {
+          i = { ["<C-t>"] = open_with_trouble },
+          n = { ["<C-t>"] = open_with_trouble },
         },
       }
     })

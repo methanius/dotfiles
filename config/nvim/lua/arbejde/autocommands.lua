@@ -61,13 +61,6 @@ autocmd("LspAttach", {
       vim.lsp.buf.signature_help()
     end, mergeBintoA(opts, { desc = "LSP signature help for symbol under cursor" }))
 
-    -- Lua ls specific settings
-    if client ~= nil and client.name == "lua_ls" and client.server_capabilities then
-      vim.keymap.set("n", "<leader>f", function()
-        require("stylua-nvim").format_file()
-      end, mergeBintoA(opts, { desc = "Format lua using Stylua" }))
-    end
-
     -- Clangd specific settings
     if client ~= nil and client.name == "clangd" and client.server_capabilities then
       vim.keymap.set({ "n", "v" }, "go", function()

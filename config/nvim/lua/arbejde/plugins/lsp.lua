@@ -113,13 +113,8 @@ return {
       "williamboman/mason.nvim",
       "williamboman/mason-lspconfig.nvim",
       "p00f/clangd_extensions.nvim",
-      "ckipp01/stylua-nvim",
       "onsails/lspkind.nvim",
       {"smjonas/inc-rename.nvim", opts = {},},
-      {
-        "ckipp01/stylua-nvim",
-        build = "cargo install stylua; cargo install stylua --features lua52; cargo install stylua --features lua53; cargo install stylua --features lua54; cargo install stylua --features luau;",
-      },
     },
     config = function()
       -- nvim-cmp supports additional completion capabilities, so broadcast that to servers

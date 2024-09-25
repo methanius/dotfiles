@@ -91,7 +91,7 @@ in
     };
     xdg.configFile."starship.toml".source = ./config/starship.toml;
     xdg.configFile."nvim".source = config.lib.file.mkOutOfStoreSymlink (builtins.toPath "${homeDirectory}/dotfiles/config/nvim");
-    xdg.configFile."wezterm".source = ./config/wezterm;
+    xdg.configFile."wezterm".source = config.lib.file.mkOutOfStoreSymlink (builtins.toPath "${homeDirectory}/dotfiles/config/wezterm");
     xdg.configFile."zsh/completions/nix.zsh".source = "${pkgs.nix}/share/zsh/vendor_completions.d/nix.zsh";
     xdg.configFile."polybar".source = ./config/polybar;
     xdg.configFile."picom".source = ./config/picom;

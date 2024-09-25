@@ -49,28 +49,6 @@ config.adjust_window_size_when_changing_font_size = false
 config.hide_tab_bar_if_only_one_tab = false
 config.use_fancy_tab_bar = false
 config.tab_bar_at_bottom = true
-config.colors = {
-    tab_bar = {
-        background = "rgba(0,0,0,0)",
-        active_tab = {
-            bg_color = "rgba(0,0,0,0)",
-            fg_color = "#c0c0c0",
-            italic = true,
-            intensity = "Bold",
-            underline = "Single",
-        },
-        inactive_tab = {
-            fg_color = "#c0c0c0",
-            bg_color = "rgba(0,0,0,0)",
-            italic = true,
-            intensity = "Half",
-        },
-        new_tab = {
-            bg_color = "rgba(0,0,0,0)",
-            fg_color = "#c0c0c0",
-        },
-    },
-}
 config.window_padding = {
     left = 0,
     right = 0,
@@ -130,7 +108,29 @@ if wezterm.target_triple == "x86_64-unknown-linux-gnu" then
     -- WebGpu was painfully slow on my linux box for whatever reason!
     config.front_end = "WebGpu"
     config.enable_wayland = false
-    config.color_scheme = "Ef-Bio"
+    local theme = require("kanagawa")
+    config.colors = theme.colors
+    config.force_reverse_video_cursor = false
+    config.colors.tab_bar = {
+      background = "rgba(0,0,0,0)",
+      active_tab = {
+        bg_color = "rgba(0,0,0,0)",
+        fg_color = "#c0c0c0",
+        italic = true,
+        intensity = "Bold",
+        underline = "Single",
+      },
+      inactive_tab = {
+        fg_color = "#c0c0c0",
+        bg_color = "rgba(0,0,0,0)",
+        italic = true,
+        intensity = "Half",
+      },
+      new_tab = {
+        bg_color = "rgba(0,0,0,0)",
+        fg_color = "#c0c0c0",
+    },
+  }
 end
 
 -- and finally, return the configuration to wezterm

@@ -18,10 +18,10 @@ if nix --help >/dev/null 2>&1; then
     nix-channel --add https://github.com/nix-community/home-manager/archive/master.tar.gz home-manager
     nix-channel --add https://nixos.org/channels/nixpkgs-unstable unstable
     nix-channel --update
-    . /home/$(cat username.nix)/.nix-profile/etc/profile.d/nix.sh
+    . /home/"$(cat username.nix)"/.nix-profile/etc/profile.d/nix.sh
 else
     sh <(curl -L https://nixos.org/nix/install) --no-daemon 
-    . /home/$(cat username.nix)/.nix-profile/etc/profile.d/nix.sh
+    . /home/"$(cat username.nix)"/.nix-profile/etc/profile.d/nix.sh
     nix-channel --add https://github.com/nix-community/home-manager/archive/master.tar.gz home-manager
     nix-channel --add https://nixos.org/channels/nixpkgs-unstable unstable
     nix-channel --update
@@ -49,6 +49,12 @@ then
     echo "$FLAKE_EXPERIMENTAL_LINE" | cat >> "$NIXCONF"
 fi
 
+if home-manager --help >/dev/null 2>&1; then
+    echo "Home manager already installed."
+else 
+    nix-shell '<home-manager>' -A install
+fi
+
 nix-env -iA cachix -f https://cachix.org/api/v1/install
 cachix use nix-community
 
@@ -56,7 +62,6 @@ cachix use nix-community
 # Build the damn thing
 git add username.nix
 nix run . -- build --flake .
-./result/activate
 home-manager switch --flake .
 git restore --staged username.nix
 echo "Making nvim config dir writable"

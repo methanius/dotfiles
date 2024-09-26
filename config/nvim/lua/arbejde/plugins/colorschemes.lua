@@ -2,12 +2,19 @@ return {
   {
     "folke/tokyonight.nvim",
     lazy = true,
-    config = function()
-      require("tokyonight").setup({
-        transparent = true,
-        plugins = "all",
-      })
-    end,
+    opts = {
+      transparent = true,
+      plugins = { auto = true },
+      on_hightlights = function(highlights, colors)
+        local theme = colors.theme
+        highlights.NormalFloat = { bg = "none" }
+        highlights.FloatBorder = { bg = "none" }
+        highlights.FloatTitle = { bg = "none" }
+        highlights.TelescopeTitle = { bg = "none", fg = theme.ui.special, bold = true }
+        highlights.TelescopeBorder = { bg = "none" }
+        highlights.NotifyBackground.background_colour = "#000000"
+      end,
+    },
   },
   {
     "rebelot/kanagawa.nvim",
@@ -41,7 +48,7 @@ return {
         colors = {
           theme = { all = { ui = { bg_gutter = "none" } } },
         },
-        background = { -- map the value of 'background' option to a theme
+        background = {   -- map the value of 'background' option to a theme
           dark = "wave", -- try "dragon" !
           light = "lotus",
         },

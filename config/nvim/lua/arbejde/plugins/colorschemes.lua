@@ -1,28 +1,5 @@
 return {
   {
-    "daschw/leaf.nvim",
-    lazy = true,
-    priority = 1000,
-    config = function()
-      require("leaf").setup({
-        transparent = true,
-        contrast = "medium",
-      })
-      vim.cmd.colorscheme("leaf")
-    end,
-  },
-  {
-    "ellisonleao/gruvbox.nvim",
-    lazy = true,
-    priority = 1000,
-    config = function()
-      require("gruvbox").setup({
-        transparent_mode = true,
-      })
-      vim.cmd.colorscheme("gruvbox")
-    end,
-  },
-  {
     "folke/tokyonight.nvim",
     lazy = true,
     config = function()

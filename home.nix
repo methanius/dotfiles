@@ -93,7 +93,7 @@ in
     xdg.configFile."wezterm".source = config.lib.file.mkOutOfStoreSymlink (builtins.toPath "${homeDirectory}/dotfiles/config/wezterm");
     xdg.configFile."zsh/completions/nix.zsh".source = "${pkgs.nix}/share/zsh/vendor_completions.d/nix.zsh";
     xdg.configFile."polybar".source = ./config/polybar;
-    xdg.configFile."picom".source = ./config/picom;
+    xdg.configFile."picom".source = config.lib.file.mkOutOfStoreSymlink (builtins.toPath "${homeDirectory}/dotfiles/config/picom");
     xdg.configFile."i3".source = ./config/i3;
     xdg.configFile."rofi".source = ./config/rofi;
     xdg.configFile."rotating_wallpapers.sh".source = ./config/rotating_wallpaper.sh;

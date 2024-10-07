@@ -103,7 +103,7 @@ if wezterm.target_triple == "x86_64-unknown-linux-gnu" then
     config.default_cwd = wezterm.home_dir
 
     -- Appearance background
-    config.window_background_opacity = 0.8
+    config.window_background_opacity = 0.9
 
     -- WebGpu was painfully slow on my linux box for whatever reason!
     config.front_end = "WebGpu"

@@ -31,7 +31,6 @@ in
             pkgs.ripgrep
             pkgs.rofi
             pkgs.selene
-            pkgs.shellcheck
             pkgs.stylua
             pkgs.tldr
             pkgs.tree

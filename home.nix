@@ -66,7 +66,7 @@ in
             enableBashIntegration = true;
             enableZshIntegration = true;
             git = true;
-            icons = true;
+            icons = "auto";
         };
         yazi = {
             enable = true;

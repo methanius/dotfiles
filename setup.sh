@@ -61,7 +61,7 @@ cachix use nix-community
 
 # Build the damn thing
 git add username.nix
-nix run . -- build --flake .
+# nix run . -- build --flake .
 home-manager switch --flake .
 git restore --staged username.nix
 echo "Making nvim config dir writable"

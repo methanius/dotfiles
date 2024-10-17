@@ -18,9 +18,6 @@ return {
   },
   {
     "rebelot/kanagawa.nvim",
-    dependencies = {
-      "nvim-telescope/telescope.nvim",
-    },
     lazy = false,
     priority = 1000,
     opts = {

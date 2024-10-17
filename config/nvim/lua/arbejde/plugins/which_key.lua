@@ -1,9 +1,6 @@
 return {
   "folke/which-key.nvim",
-  dependencies = {
-    "nvim-telescope/telescope.nvim",
-    "echasnovski/mini.icons",
-  },
+  event = "VeryLazy",
   opts = {
     spec = {
       { "J", ":m '>+1<CR>gv=gv", desc = "Move selected lines 1 line down", mode = "v" },

@@ -10,6 +10,7 @@ return {
       "hrsh7th/cmp-path", -- source for local filesystem paths
       "hrsh7th/cmp-nvim-lsp-document-symbol", --LSP Document Symbol source
     },
+    event = { "InsertEnter", "CmdlineEnter" },
     config = function()
       local luasnip = require("luasnip")
 

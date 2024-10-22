@@ -41,10 +41,13 @@ autocmd("LspAttach", {
       vim.lsp.buf.hover()
     end, mergeBintoA(opts, { desc = "Show LPS workspace symbol under cursor" }))
 
-    -- Ensure jedi_language_server can refactor in visual and operator mode
-    vim.keymap.set({ "n", "v", "o" }, "<F4>", function()
-      vim.lsp.buf.code_action()
+    vim.keymap.set("n", "<F4>", function()
+      require("fastaction").code_action()
     end, mergeBintoA(opts, { desc = "LSP code action" }))
+
+    vim.keymap.set("v", "<F4>", function()
+      require("fastaction").range_code_action()
+    end, mergeBintoA(opts, { desc = "LSP range code action" }))
 
     vim.keymap.set("n", "<F2>", function()
       return ":IncRename " .. vim.fn.expand("<cword>")
@@ -52,7 +55,7 @@ autocmd("LspAttach", {
 
     -- Format using LSP
     vim.keymap.set("n", "<leader>f", function()
-        vim.lsp.buf.format({ bufnr = vim.api.nvim_get_current_buf(), async=true})
+        vim.lsp.buf.format({ bufnr = vim.api.nvim_get_current_buf(), async = true })
       end,
       mergeBintoA(opts, { desc = "LSP format buffer" }))
 

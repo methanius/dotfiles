@@ -12,7 +12,6 @@ in
         stateVersion = "23.11";
         sessionVariables.EDITOR = "nvim";
         packages = [
-            pkgs.bat
             pkgs.btop
             pkgs.cargo
             pkgs.delta
@@ -92,6 +91,24 @@ in
         };
         fastfetch = {
             enable = true;
+        };
+        bat = {
+            enable = true;
+            themes = 
+                {
+                    kanagawa = {
+                        src = pkgs.fetchFromGitHub {
+                            owner = "rebelot";
+                            repo = "kanagawa.nvim";
+                            rev = "f491b0fe68fffbece7030181073dfe51f45cda81";
+                            sha256 = "sha256-UuKvWCPP4biV2OP18+OAookRxfpKfjBgm+1KMaf1z30=";
+                        };
+                        file = "extras/kanagawa.tmTheme";
+                    };
+                };
+            config = {
+                theme = "kanagawa";
+            };
         };
     };
     xdg.configFile."starship.toml".source = ./config/starship.toml;

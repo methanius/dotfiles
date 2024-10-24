@@ -37,11 +37,12 @@ in
             pkgs.tree-sitter
         ];
     };
-    imports = [./apps/zsh.nix];
+    imports = [./apps/fish.nix ./apps/zsh.nix];
     programs = {
         fzf = {
             enable = true;
             enableZshIntegration = true;
+            enableFishIntegration = true;
             defaultCommand = "fd --type f";
             fileWidgetCommand = "fd --type f";
             fileWidgetOptions = [ "--preview 'bat --color=always {}'" ];
@@ -51,10 +52,12 @@ in
         starship = {
             enable = true;
             enableZshIntegration = true;
+            enableFishIntegration = true;
         };
         atuin = {
             enable = true;
             enableZshIntegration = true;
+            enableFishIntegration = true;
         };
         direnv = {
             enable = true;
@@ -65,6 +68,7 @@ in
             enable = true;
             enableBashIntegration = true;
             enableZshIntegration = true;
+            enableFishIntegration = true;
             git = true;
             icons = "auto";
         };
@@ -72,11 +76,13 @@ in
             enable = true;
             enableBashIntegration = true;
             enableZshIntegration = true;
+            enableFishIntegration = true;
         };
         zoxide = {
             enable = true;
             enableBashIntegration = true;
             enableZshIntegration = true;
+            enableFishIntegration = true;
         };
         lazygit = {
             enable = true;

@@ -4,6 +4,11 @@
         enable = true;
         generateCompletions = true;
         preferAbbrs = true;
+        functions = {
+            fish_greeting = {
+                body = "";
+                };
+            };
         shellAbbrs = { 
             vi = "nvim";
             vim = "nvim";

@@ -44,7 +44,7 @@ color = "0xff5d62"
 
 # I am quite fond of this combo
 [font]
-size = 10
+size = 8
 normal.family = "JetBrainsMono Nerd Font"
 bold = {family = "VictorMono Nerd Font", style = "Bold"}
 italic = {family = "VictorMono Nerd Font", style = "Italic"}

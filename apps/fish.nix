@@ -4,6 +4,7 @@
         enable = true;
         generateCompletions = true;
         preferAbbrs = true;
+        interactiveShellInit = "fish_vi_key_bindings";
         functions = {
             fish_greeting = {
                 body = "";

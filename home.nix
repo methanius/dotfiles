@@ -25,7 +25,6 @@ in
             pkgs.nerdfonts
             pkgs.nodejs
             pkgs.perl
-            pkgs.picom
             pkgs.ripdrag
             pkgs.ripgrep
             pkgs.rofi

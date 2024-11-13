@@ -12,6 +12,16 @@ else
     sudo apt install curl
 fi
 
+# Depencies that use GPU and other stuff that sucks via home manager current
+if ! polybar --help >/dev/null 2>&1; then
+    sudo apt install polybar
+fi
+
+if ! picom --help >/dev/null 2>&1; then
+    sudo apt install picom
+fi
+
+
 # Make sure nix is installed
 if nix --help >/dev/null 2>&1; then
     echo "Nix is already installed! Moving on."

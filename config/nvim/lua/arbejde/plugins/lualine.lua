@@ -5,7 +5,6 @@ return {
     { "nvim-tree/nvim-web-devicons", opt = true },
     "otavioschwanck/arrow.nvim",
     "stevearc/aerial.nvim",
-    "folke/trouble.nvim",
   },
   config = true,
   opts = function()
@@ -80,7 +79,7 @@ return {
       tabline = {},
       winbar = {},
       inactive_winbar = {},
-      extensions = { "mason", "lazy", "oil", "fugitive", "trouble", },
+      extensions = { "mason", "lazy", "oil", "fugitive" },
     }
   end,
 }

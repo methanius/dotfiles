@@ -41,13 +41,7 @@ autocmd("LspAttach", {
       vim.lsp.buf.hover()
     end, mergeBintoA(opts, { desc = "Show LPS workspace symbol under cursor" }))
 
-    vim.keymap.set("n", "<F4>", function()
-      require("fastaction").code_action()
-    end, mergeBintoA(opts, { desc = "LSP code action" }))
-
-    vim.keymap.set("v", "<F4>", function()
-      require("fastaction").range_code_action()
-    end, mergeBintoA(opts, { desc = "LSP range code action" }))
+    vim.keymap.set({ "n", "v" }, "<F4>", vim.lsp.buf.code_action, mergeBintoA(opts, { desc = "LSP code action" }))
 
     vim.keymap.set("n", "<F2>", function()
       return ":IncRename " .. vim.fn.expand("<cword>")

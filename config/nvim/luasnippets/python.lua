@@ -124,4 +124,28 @@ return {
       }
     )
   ),
+  s(
+    {
+      trig = "matplotlib",
+      name = "matplotlib as plt",
+      descr = "Common matplotlib.pyplot as plt import"
+    },
+    fmt(
+      [[
+        import matplotlib.pyplot as plt
+      ]],
+      {}
+    )
+  ),
+  s({
+    trig = "numpy",
+    name = "numpy as np",
+    descr = "Common numpy as np imoprt"
+  }, fmt(
+    [[
+    import numpy as np
+    ]],
+    {}
+  )
+  ),
 }

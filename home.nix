@@ -5,6 +5,7 @@ let
 in
     {
     programs.home-manager.enable = true;
+    fonts.fontconfig.enable = true;
     targets.genericLinux.enable = true;
     home = {
         inherit username;
@@ -22,7 +23,8 @@ in
             pkgs.go
             pkgs.htop
             pkgs.neovim
-            pkgs.nerdfonts
+            pkgs.nerd-fonts.jetbrains-mono
+            pkgs.nerd-fonts.victor-mono
             pkgs.nodejs
             pkgs.perl
             pkgs.ripdrag

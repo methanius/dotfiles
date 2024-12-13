@@ -31,6 +31,9 @@ return {
       { "gn",    function() Snacks.words.jump(vim.v.count1, true) end,  desc = "Jump to next LSP reference", mode = "n" },
       { "gN",    function() Snacks.words.jump(-vim.v.count1, true) end, desc = "Jump to next LSP reference", mode = "n" },
       { "<C-/>", function() Snacks.terminal() end,                      desc = "Toggle terminal",            mode = { "n", "t" } },
+      notifier = {
+        enabled = true,
+      },
     },
     init = function()
       vim.api.nvim_create_autocmd("User", {

@@ -3,12 +3,12 @@ return {
   event = "VeryLazy",
   opts = {
     spec = {
-      { "J", ":m '>+1<CR>gv=gv", desc = "Move selected lines 1 line down", mode = "v" },
-      { "K", ":m '<-2<CR>gv=gv", desc = "Move selected lines 1 line up", mode = "v" },
+      { "J",     ":m '>+1<CR>gv=gv", desc = "Move selected lines 1 line down",           mode = "v" },
+      { "K",     ":m '<-2<CR>gv=gv", desc = "Move selected lines 1 line up",             mode = "v" },
 
-      { "J", "mzJ`z", desc = "Append line below to current line", mode = "n" },
-      { "<C-d>", "<C-d>zz", desc = "Scroll half buffer down and center cursor", mode = "n" },
-      { "<C-u>", "<C-u>zz", desc = "Scroll half buffer up and center cursor", mode = "n" },
+      { "J",     "mzJ`z",            desc = "Append line below to current line",         mode = "n" },
+      { "<C-d>", "<C-d>zz",          desc = "Scroll half buffer down and center cursor", mode = "n" },
+      { "<C-u>", "<C-u>zz",          desc = "Scroll half buffer up and center cursor",   mode = "n" },
       {
         "n",
         "nzzzv",
@@ -23,11 +23,11 @@ return {
       },
 
       -- next greatest remap ever : asbjornHaland
-      { "<leader>y", [["+y]], desc = "Yank selection to system register", mode = { "n", "v" } },
-      { "<leader>Y", [["+Y]], desc = "Yank line to system register", mode = "n" },
-      { "<leader>d", [["_d]], desc = "Delete to void register", mode = { "n", "v" } },
+      { "<leader>y", [["+y]], desc = "Yank selection to system register",        mode = { "n", "v" } },
+      { "<leader>Y", [["+Y]], desc = "Yank line to system register",             mode = "n" },
+      { "<leader>d", [["_d]], desc = "Delete to void register",                  mode = { "n", "v" } },
 
-      { "Q", "<nop>", desc = "I will never need Ex mode, so remove it.", mode = "n" },
+      { "Q",         "<nop>", desc = "I will never need Ex mode, so remove it.", mode = "n" },
 
       {
         "<C-k>",
@@ -58,6 +58,7 @@ return {
         { "<leader>h", "git hunk" },
         { "<leader>n", "neogen" },
         { "<leader>w", proxy = "<c-w>", group = "windows" },
+        { "gs",        "",              desc = "+surround" },
       },
     },
   },

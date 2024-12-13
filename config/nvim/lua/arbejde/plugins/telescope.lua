@@ -89,5 +89,10 @@ return {
       end,
       desc = "Go to type definition of word under cursor if there's only one, otherwise show options in Telescope",
     },
+    {
+      "<leader>gf",
+      require("telescope.builtin").git_bcommits,
+      desc = "Git file commits with Telescope",
+    },
   },
 }

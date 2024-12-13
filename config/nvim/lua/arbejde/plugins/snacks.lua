@@ -46,7 +46,6 @@ return {
       { "<leader>un", function() Snacks.notifier.hide() end,                 desc = "Dismiss All Notifications" },
       { "<leader>gb", function() Snacks.git.blame_line() end,                desc = "Git Blame Line" },
       { "<leader>gl", function() Snacks.lazygit.log() end,                   desc = "Lazygit Log (cwd)" },
-      { "<leader>gf", function() Snacks.lazygit.log_file() end,              desc = "Lazygit Current File History" },
       {
         "<leader>N",
         desc = "Neovim News",

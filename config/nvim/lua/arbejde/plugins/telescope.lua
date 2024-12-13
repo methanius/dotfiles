@@ -3,23 +3,27 @@ return {
   lazy = false,
   dependencies = {
     "nvim-lua/plenary.nvim",
-    { "nvim-tree/nvim-web-devicons", opts = true },
+    { "nvim-tree/nvim-web-devicons",              opts = true },
     { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
     "benfowler/telescope-luasnip.nvim",
   },
   event = { "BufReadPre", "BufNewFile" },
-  config = function()
+  config = function(opts)
     local telescope = require("telescope")
-    telescope.setup({
-      defaults = {
-        path_display = {
-          truncate = 4,
-        },
-      }
-    })
+    telescope.setup({ opts })
     telescope.load_extension("fzf")
     telescope.load_extension("luasnip")
   end,
+  opts = {
+    defaults = {
+      path_display = {
+        truncate = 4,
+      },
+    },
+    extensions = {
+      fzf = {}
+    },
+  },
   --Set keymaps
   keys = {
     {

@@ -28,51 +28,39 @@ return {
   keys = {
     {
       "<leader>ff",
-      function()
-        require("telescope.builtin").find_files()
-      end,
+      require("telescope.builtin").find_files,
       desc = "Fuzzy find files in cwd with telescope",
     },
     {
       "<leader>fg",
-      function()
-        require("telescope.builtin").git_files()
-      end,
+      require("telescope.builtin").git_files,
       desc = "Fuzzy find files in cwd under git revision with telescope",
     },
     {
       "<leader>fw",
-      function()
-        require("telescope.builtin").grep_string()
-      end,
+      require("telescope.builtin").grep_string,
       desc = "Search for word under cursor via ripgrep",
     },
     {
       "<leader>fl",
-      function()
-        require("telescope.builtin").live_grep()
-      end,
+      require("telescope.builtin").live_grep,
       desc = "Live grep with telescope",
     },
     {
       "<leader>fa",
-      function()
-        require("telescope.builtin").resume()
-      end,
+      require("telescope.builtin").resume,
       desc = "Resume latest Telescope search",
     },
     {
       "gr",
       function()
-        require("telescope.builtin").lsp_references()
+        require("telescope.builtin").lsp_references({theme = "ivy"})
       end,
       desc = "Find all LSP references to word under cursor in telescope",
     },
     {
       "gd",
-      function()
-        require("telescope.builtin").lsp_definitions()
-      end,
+      require("telescope.builtin").lsp_definitions,
       desc = "Go to definition or open list of definitions of word under cursoer in telescope",
     },
     {
@@ -84,9 +72,7 @@ return {
     },
     {
       "gt",
-      function()
-        require("telescope.builtin").lsp_type_definitions()
-      end,
+      require("telescope.builtin").lsp_type_definitions,
       desc = "Go to type definition of word under cursor if there's only one, otherwise show options in Telescope",
     },
     {

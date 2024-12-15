@@ -123,4 +123,5 @@ in
     xdg.configFile."rofi".source = ./config/rofi;
     xdg.configFile."rotating_wallpapers.sh".source = ./config/rotating_wallpaper.sh;
     xdg.configFile."wallpapers".source = ./config/wallpapers;
+  xdg.configFile."ghostty".source = config.lib.file.mkOutOfStoreSymlink (builtins.toPath "${homeDirectory}/dotfiles/config/ghostty");
 }

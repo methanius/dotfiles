@@ -1,0 +1,15 @@
+#Fonts
+font-family = "JetBrains Mono"
+font-family-bold = "JetBrains Mono"
+font-family-italic = "VictorMono"
+font-family-bold-italic = "VictorMono"
+font-size = 12
+
+#Theme
+theme = "kanagawabones"
+background-opacity = 0.95
+
+# Window
+window-inherit-font-size = true
+window-decoration = false
+window-new-tab-position = "current"

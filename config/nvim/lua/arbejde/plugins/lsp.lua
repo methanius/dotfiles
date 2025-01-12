@@ -117,7 +117,8 @@ return {
         },
       })
       require("mason-lspconfig").setup({
-        ensure_installed = { "bashls", "clangd", "pylsp", "ruff", "taplo", "neocmake", "lua_ls" },
+        ensure_installed = { "bashls", "clangd", "pylsp", "ruff", "lua_ls" },
+        automatic_installation = true,
         handlers = handlers,
       })
 

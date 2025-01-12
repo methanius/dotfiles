@@ -4,6 +4,7 @@ return {
     dependencies = {
       "nvim-tree/nvim-web-devicons",
     },
+    lazy = false,
     cmd = { "Oil" },
     opts = {
       -- Oil will take over directory buffers (e.g. `vim .` or `:e src/`)

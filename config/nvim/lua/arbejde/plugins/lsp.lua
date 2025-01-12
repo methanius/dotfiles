@@ -64,8 +64,7 @@ return {
     },
     config = function()
       -- nvim-cmp supports additional completion capabilities, so broadcast that to servers
-      local capabilities = vim.lsp.protocol.make_client_capabilities()
-      capabilities = require("blink.cmp").get_lspp_capabiiutues
+      local capabilities = require("blink.cmp").get_lsp_capabilities()
 
       local handlers = {
         function(server_name)

@@ -37,6 +37,7 @@ in {
       pkgs.tldr
       pkgs.tree
       pkgs.tree-sitter
+      pkgs.bluetui
     ];
   };
   imports = [./apps/fish.nix ./apps/zsh.nix];

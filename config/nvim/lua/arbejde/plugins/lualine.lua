@@ -33,7 +33,7 @@ return {
         component_separators = { left = "", right = "" },
         section_separators = { left = "", right = "" },
         disabled_filetypes = {
-          statusline = {},
+          statusline = { "snacks_dashboard" },
           winbar = {},
         },
         ignore_focus = {},
@@ -61,7 +61,7 @@ return {
             arrowline,
           },
           {
-            "aerial",sep = " >",
+            "aerial", sep = " >",
           },
         },
         lualine_x = { "encoding", "fileformat", "filetype" },

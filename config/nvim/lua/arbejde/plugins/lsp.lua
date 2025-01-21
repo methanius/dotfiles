@@ -1,7 +1,7 @@
 return {
   {
     "saghen/blink.cmp",
-    lazy = false,
+    event = { "InsertEnter", "CmdlineEnter" },
     build = "nix run .#build-plugin",
     dependencies = {
       { "L3MON4D3/LuaSnip", version = "v2.*" },
@@ -44,6 +44,14 @@ return {
   },
   {
     "williamboman/mason.nvim",
+    cmd = {
+      "Mason",
+      "MasonInstall",
+      "MasonLog",
+      "MasonUninstall",
+      "MasonUninstallAll",
+      "MasonUpdate",
+    },
     opts = {
       pip = { upgrade_pip = true },
       ui = {

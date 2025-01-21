@@ -1,6 +1,12 @@
 return {
   "mbbill/undotree",
-  lazy = false, -- Setting this explicitly, as the keys property sets it to true implicitly
+  cmd = {
+    "UndotreeToggle",
+    "UndotreeFocus",
+    "UndotreeHide",
+    "UndotreePersistUndo",
+    "UndotreeShow",
+  },
   keys = {
     {
       "<leader>tu",

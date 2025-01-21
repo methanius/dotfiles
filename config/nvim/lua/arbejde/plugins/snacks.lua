@@ -38,14 +38,29 @@ return {
       statuscolumn = {
         enabled = true,
       },
+      picker = {
+        enabled = true,
+      }
     },
     keys = {
-      { "gn",         function() Snacks.words.jump(vim.v.count1, true) end,  desc = "Jump to next LSP reference",  mode = "n" },
-      { "gN",         function() Snacks.words.jump(-vim.v.count1, true) end, desc = "Jump to next LSP reference",  mode = "n" },
-      { "<C-/>",      function() Snacks.terminal() end,                      desc = "Toggle terminal",             mode = { "n", "t" } },
+      { "gn",         function() Snacks.words.jump(vim.v.count1, true) end,  desc = "Jump to next LSP reference", mode = "n" },
+      { "gN",         function() Snacks.words.jump(-vim.v.count1, true) end, desc = "Jump to next LSP reference", mode = "n" },
+      { "<C-/>",      function() Snacks.terminal() end,                      desc = "Toggle terminal",            mode = { "n", "t" } },
       { "<leader>un", function() Snacks.notifier.hide() end,                 desc = "Dismiss All Notifications" },
       { "<leader>gb", function() Snacks.git.blame_line() end,                desc = "Git Blame Line" },
       { "<leader>gl", function() Snacks.lazygit.log() end,                   desc = "Lazygit Log (cwd)" },
+      { "<leader>ff", function() Snacks.picker.files() end,                  desc = "Fuzzy (f)ind (f)iles" },
+      { "<leader>fg", function() Snacks.picker.git_files() end,              desc = "Fuzzy (g)it (f)iles" },
+      { "<leader>fw", function() Snacks.picker.grep_word() end,              desc = "(w)ord under cursor ripgrep" },
+      { "<leader>fl", function() Snacks.picker.grep() end,                   desc = "Live grep" },
+      { "<leader>fh", function() Snacks.picker.help() end,                   desc = "Find help" },
+      { "<leader>fa", function() Snacks.picker.resume() end,                 desc = "Resume search" },
+      { "gr",         function() Snacks.picker.lsp_references() end,         desc = "References",                 nowait = true },
+      { "gd",         function() Snacks.picker.lsp_definitions() end,        desc = "Goto Definition" },
+      { "<leader>fd", function() Snacks.picker.diagnostics() end,            desc = "Diagnostics" },
+      { "<leader>gf", function() Snacks.picker.git_log_file() end,           desc = "(g)it (f)ile history" },
+      { "<leader>fi", function() Snacks.picker.lines() end,                  desc = "(f)ind line (i)nside file" },
+      { "gt",         function() Snacks.picker.lsp_type_definitions() end,   desc = "Go to type defition" },
       {
         "<leader>N",
         desc = "Neovim News",

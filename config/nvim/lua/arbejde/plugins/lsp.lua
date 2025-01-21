@@ -63,7 +63,7 @@ return {
       { "smjonas/inc-rename.nvim", opts = {}, },
     },
     config = function()
-      -- nvim-cmp supports additional completion capabilities, so broadcast that to servers
+      --blink.cmp supports additional completion capabilities, so broadcast that to servers
       local capabilities = require("blink.cmp").get_lsp_capabilities()
 
       local handlers = {

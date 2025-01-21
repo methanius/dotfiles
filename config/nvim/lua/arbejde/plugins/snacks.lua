@@ -60,6 +60,7 @@ return {
       { "<leader>fd", function() Snacks.picker.diagnostics() end,            desc = "Diagnostics" },
       { "<leader>gf", function() Snacks.picker.git_log_file() end,           desc = "(g)it (f)ile history" },
       { "<leader>fi", function() Snacks.picker.lines() end,                  desc = "(f)ind line (i)nside file" },
+      { "<leader>fu", function() Snacks.picker.undo() end,                   desc = "(f)ind (u)ndo" },
       { "gt",         function() Snacks.picker.lsp_type_definitions() end,   desc = "Go to type defition" },
       {
         "<leader>N",

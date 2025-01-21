@@ -1,11 +1,9 @@
 return {
   {
     "stevearc/oil.nvim",
-    dependencies = {
-      "nvim-tree/nvim-web-devicons",
-    },
-    lazy = false,
+    dependencies = { { "echasnovski/mini.icons", opts = {} } },
     cmd = { "Oil" },
+    event = { "VimEnter */*,.*", "BufNew */*,.*" },
     opts = {
       -- Oil will take over directory buffers (e.g. `vim .` or `:e src/`)
       -- Set to false if you still want to use netrw.
@@ -52,7 +50,7 @@ return {
         timeout_ms = 1000,
         -- Set to true to autosave buffers that are updated with LSP willRenameFiles
         -- Set to "unmodified" to only save unmodified buffers
-        autosave_changes = false,
+        autosave_changes = true,
       },
       constrain_cursor = "editable",
       -- Set to true to watch the filesystem for changes and reload oil

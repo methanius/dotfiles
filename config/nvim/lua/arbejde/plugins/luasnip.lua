@@ -1,8 +1,8 @@
 return {
   "L3MON4D3/LuaSnip", -- Snippet engine
   dependencies = {},
+  lazy = true,
   build = "make install_jsregexp",
-  event = "VeryLazy",
   config = function()
     local luasnip = require("luasnip")
     luasnip.config.set_config({

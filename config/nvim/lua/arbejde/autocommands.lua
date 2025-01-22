@@ -80,5 +80,9 @@ autocmd("LspAttach", {
         vim.cmd.RustLsp({ "moveItem", "down" })
       end, mergeBintoA(opts, { desc = "Move item down" }))
     end
+
+    if client ~= nil and client.server_capabilities.documentSymbolProvider then
+      require("nvim-navic").attach(client, args.buf)
+    end
   end,
 })

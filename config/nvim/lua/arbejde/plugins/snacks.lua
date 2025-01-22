@@ -3,6 +3,7 @@ return {
     "folke/snacks.nvim",
     priority = 1000,
     lazy = false,
+    ---@type snacks.Config
     opts = {
       dashboard = {
         enabled = true,
@@ -62,6 +63,7 @@ return {
       { "<leader>fi", function() Snacks.picker.lines() end,                  desc = "(f)ind line (i)nside file" },
       { "<leader>fu", function() Snacks.picker.undo() end,                   desc = "(f)ind (u)ndo" },
       { "gt",         function() Snacks.picker.lsp_type_definitions() end,   desc = "Go to type defition" },
+      { "<leader>fs", function() Snacks.picker.lsp_symbols() end,            desc = "(f)ind lsp (s)ymbols" },
       {
         "<leader>N",
         desc = "Neovim News",

@@ -9,7 +9,12 @@ return {
         actions = true,
         completion = true,
         hover = true,
-      }
+      },
+      completion = {
+        crates = {
+          enabled = true,
+        },
+      },
     }
   },
   {

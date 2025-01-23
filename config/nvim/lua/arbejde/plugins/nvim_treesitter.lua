@@ -5,7 +5,7 @@ return {
       "nvim-treesitter/nvim-treesitter-textobjects",
       "nvim-treesitter/nvim-treesitter-context",
     },
-    lazy = false,
+    event = "BufRead",
     build = ":TSUpdate",
     config = function()
       require("nvim-treesitter.configs").setup({

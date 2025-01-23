@@ -5,7 +5,6 @@ return {
       "nvim-lua/plenary.nvim",
       "sindrets/diffview.nvim",
     },
-    config = true,
     keys = {
       {
         "<leader>gg",

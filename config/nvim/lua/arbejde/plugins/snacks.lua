@@ -3,6 +3,9 @@ return {
     "folke/snacks.nvim",
     priority = 1000,
     lazy = false,
+    dependencies = {
+      "echasnovski/mini.diff",
+    },
     ---@type snacks.Config
     opts = {
       dashboard = {
@@ -107,6 +110,18 @@ return {
           Snacks.toggle.treesitter():map("<leader>uT")
           Snacks.toggle.option("background", { off = "light", on = "dark", name = "Dark Background" }):map("<leader>ub")
           Snacks.toggle.inlay_hints():map("<leader>uh")
+          Snacks.toggle({
+            name = "Mini Diff Signs",
+            get = function() return vim.g.minidiff_disable ~= true end,
+            set = function(state)
+              vim.g.minidiff_disable = not state
+              if state then require("mini.diff").enable(0) else require("mini.diff").disable(0) end
+              -- HACK: redraw to update the signs
+              vim.defer_fn(function()
+                vim.cmd([[redraw!]])
+              end, 200)
+            end,
+          }):map("<leader>uG")
         end,
       })
     end,

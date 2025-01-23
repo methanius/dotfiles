@@ -3,6 +3,14 @@ return {
     "saecki/crates.nvim",
     event = { "BufRead Cargo.toml" },
     dependencies = { "nvim-lua/plenary.nvim" },
+    opts = {
+      lsp = {
+        enabled = true,
+        actions = true,
+        completion = true,
+        hover = true,
+      }
+    }
   },
   {
     "mrcjkb/rustaceanvim",

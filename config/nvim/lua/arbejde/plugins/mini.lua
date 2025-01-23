@@ -19,6 +19,7 @@ return {
   },
   {
     "echasnovski/mini.surround",
+    event = { "InsertEnter", "CmdlineEnter" , "ModeChanged *:[vV\x16]*"},
     opts = {
       mappings = {
         add = "gsa",

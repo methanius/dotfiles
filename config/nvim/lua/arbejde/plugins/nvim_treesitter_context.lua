@@ -1,5 +1,6 @@
 return {
   "nvim-treesitter/nvim-treesitter-context",
+  lazy = true,
   opts = {
     enable = true, -- Enable this plugin (Can be enabled/disabled later via commands)
     max_lines = 0, -- How many lines the window should span. Values <= 0 mean no limit.
@@ -14,5 +15,4 @@ return {
     zindex = 20, -- The Z-index of the context window
     on_attach = nil, -- (fun(buf: integer): boolean) return false to disable attaching
   },
-  config = true,
 }

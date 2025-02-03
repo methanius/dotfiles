@@ -8,7 +8,7 @@ return {
         delete = "gsd",
         find = "gsf",
         find_left = "gsF",
-        highligt = "gsh",
+        highlight = "gsh",
         replace = "gsr",
         update_n_lines = "gsn",
       },

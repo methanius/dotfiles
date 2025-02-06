@@ -46,7 +46,7 @@ bindsym XF86MonBrightnessDown exec --no-startup-id brightnessctl s 5%-
 bindsym XF86MonBrightnessUp exec --no-startup-id brightnessctl s 5%+
 
 # Change keyboard layout
-exec_always "setxkbmap -layout us,dk"
+exec_always "setxkbmap -layout dk,us -variant nodeadkeys,intl"
 
 # Startup execs
 exec_always --no-startup-id killall picom

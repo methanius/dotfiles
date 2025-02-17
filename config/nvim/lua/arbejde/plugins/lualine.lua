@@ -1,6 +1,7 @@
 return {
   {
     "SmiteshP/nvim-navic",
+    lazy = true,
     opts = {
       highlight = true,
       depth_limit = 5,
@@ -13,6 +14,7 @@ return {
     dependencies = {
       { "nvim-tree/nvim-web-devicons", opt = true },
       "otavioschwanck/arrow.nvim",
+      "SmiteshP/nvim-navic",
     },
     config = true,
     opts = function()

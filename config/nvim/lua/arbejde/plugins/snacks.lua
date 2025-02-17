@@ -44,7 +44,8 @@ return {
       },
       picker = {
         enabled = true,
-      }
+      },
+      image = {},
     },
     keys = {
       { "gn",         function() Snacks.words.jump(vim.v.count1, true) end,  desc = "Jump to next LSP reference", mode = "n" },

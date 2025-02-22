@@ -73,13 +73,13 @@ return {
     config = function()
       --blink.cmp supports additional completion capabilities, so broadcast that to servers
       local capabilities = require("blink.cmp").get_lsp_capabilities()
+      local lspconfig = require("lspconfig")
 
       local handlers = {
         function(server_name)
           require("lspconfig")[server_name].setup({ capabilities = capabilities })
         end,
         ["pylsp"] = function()
-          local lspconfig = require("lspconfig")
           lspconfig.pylsp.setup({
             settings = {
               pylsp = {
@@ -136,7 +136,15 @@ return {
           futhark = "futhark",
         },
       })
-      require("lspconfig").futhark_lsp.setup({})
+      lspconfig.futhark_lsp.setup({})
+      vim.filetype.add({
+        extension = {
+          ex = "elixir",
+          exs = "elixir",
+        },
+      })
+      lspconfig.elixirls.setup({})
+      lspconfig.gleam.setup({})
     end,
   },
 }

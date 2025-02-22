@@ -4,7 +4,12 @@ return {
     ft = "markdown",
     dependencies = {
       "nvim-treesitter/nvim-treesitter",
-      "nvim-tree/nvim-web-devicons",
+      "echasnovski/mini.icons",
+    },
+    opts = {
+      preview = {
+        icon_provider = "mini",
+      },
     },
   },
 }

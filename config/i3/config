@@ -53,7 +53,8 @@ exec_always --no-startup-id killall picom
 exec_always --no-startup-id ~/.config/picom/picom.sh
 exec_always --no-startup-id killall polybar
 exec_always --no-startup-id ~/.config/polybar/start_polybar.sh
-exec_always --no-startup-id ~/.config/rotating_wallpapers.sh
+# exec_always --no-startup-id killall rotating_wallpapers.sh
+exec_always --no-startup-id ~/.config/rotate_wallpaper_scripts/start_wallpapers.sh
 exec_always --no-startup-id nm-applet
 bindsym $mod+d exec rofi -show combi
 bindsym Mod4+l exec i3lock

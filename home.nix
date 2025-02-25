@@ -124,6 +124,6 @@ in {
   xdg.configFile."i3".source = config.lib.file.mkOutOfStoreSymlink (builtins.toPath "${homeDirectory}/dotfiles/config/i3");
   xdg.configFile."ghostty".source = config.lib.file.mkOutOfStoreSymlink (builtins.toPath "${homeDirectory}/dotfiles/config/ghostty");
   xdg.configFile."rofi".source = ./config/rofi;
-  xdg.configFile."rotating_wallpapers.sh".source = ./config/rotating_wallpaper.sh;
+  xdg.configFile."rotate_wallpaper_scripts".source = ./config/rotate_wallpaper_scripts;
   xdg.configFile."wallpapers".source = ./config/wallpapers;
 }

@@ -1,7 +1,7 @@
 return {
   {
     "echasnovski/mini.surround",
-    event = { "InsertEnter", "CmdlineEnter" , "ModeChanged *:[vV\x16]*"},
+    event = { "InsertEnter", "CmdlineEnter", "ModeChanged *:[vV\x16]*" },
     opts = {
       mappings = {
         add = "gsa",
@@ -57,6 +57,26 @@ return {
           break
         end
       end
+    end,
+  },
+  {
+    "echasnovski/mini.ai",
+    ecent = "VeryLazy",
+    opts = function()
+      local ai = require("mini.ai")
+      local spec_treesitter = ai.gen_spec.treesitter
+      return {
+        n_lines = 500,
+        custom_textobjects = {
+          -- Completely stealing these from LazyVim and treesitter-textobjects
+          o = ai.gen_spec.treesitter({
+            a = { "@block.outer", "@conditional.outer", "@loop.outer" },
+            i = { "@block.inner", "@conditional.inner", "@loop.inner" },
+          }),
+          f = spec_treesitter({ a = "@function.outer", i = "@function.inner" }),
+          c = spec_treesitter({ a = "@class.outer", i = "@class.inner" }),
+        }
+      }
     end,
   },
 }

@@ -85,6 +85,7 @@ return {
               statuscolumn = " ",
               conceallevel = 3,
             },
+            border = "single",
           })
         end,
       },

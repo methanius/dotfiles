@@ -1,5 +1,13 @@
 return {
   {
+    "echasnovski/mini.icons",
+    opts = {},
+    config = function ()
+      require("mini.icons").setup(opts)
+      MiniIcons.mock_nvim_web_devicons()
+    end
+  },
+  {
     "echasnovski/mini.surround",
     event = { "InsertEnter", "CmdlineEnter", "ModeChanged *:[vV\x16]*" },
     opts = {

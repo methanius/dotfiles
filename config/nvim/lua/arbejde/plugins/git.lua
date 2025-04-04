@@ -9,11 +9,12 @@ return {
       {
         "<leader>gg",
         mode = "n",
-        function()
-          require("neogit").open()
-        end,
+        "<Cmd>Neogit<cr>",
         desc = "Open Neogit for current project",
       },
+    },
+    cmd = {
+      "Neogit"
     },
   },
 }

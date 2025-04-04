@@ -76,6 +76,7 @@ return {
       "onsails/lspkind.nvim",
       "saghen/blink.cmp",
       { "smjonas/inc-rename.nvim", opts = {}, },
+      "nvim-treesitter/nvim-treesitter",
     },
     config = function()
       --blink.cmp supports additional completion capabilities, so broadcast that to servers
@@ -135,23 +136,10 @@ return {
         automatic_installation = true,
         handlers = handlers,
       })
-
-      -- Futhark filetype and lsp
-      vim.filetype.add({
-        extension = {
-          fut = "futhark",
-          futhark = "futhark",
-        },
-      })
-      lspconfig.futhark_lsp.setup({})
-      vim.filetype.add({
-        extension = {
-          ex = "elixir",
-          exs = "elixir",
-        },
-      })
-      lspconfig.elixirls.setup({})
-      lspconfig.gleam.setup({})
+      --
+      -- lspconfig.futhark_lsp.setup({})
+      -- lspconfig.elixirls.setup({})
+      -- lspconfig.gleam.setup({})
     end,
   },
 }

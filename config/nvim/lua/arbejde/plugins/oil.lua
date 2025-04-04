@@ -2,8 +2,7 @@ return {
   {
     "stevearc/oil.nvim",
     dependencies = { { "echasnovski/mini.icons", opts = {} } },
-    cmd = { "Oil" },
-    event = { "VimEnter */*,.*", "BufNew */*,.*" },
+    lazy = false,
     opts = {
       -- Oil will take over directory buffers (e.g. `vim .` or `:e src/`)
       -- Set to false if you still want to use netrw.

@@ -63,8 +63,6 @@ autocmd("LspAttach", {
       vim.keymap.set({ "n", "v" }, "go", function()
         vim.cmd("ClangdSwitchSourceHeader")
       end, { desc = "Switch between header and source (C++ specific)" })
-      require("clangd_extensions.inlay_hints").setup_autocmd()
-      require("clangd_extensions.inlay_hints").set_inlay_hints()
     end
 
     if client ~= nil and client.name == "pylsp" and client.server_capabilities then

@@ -63,6 +63,11 @@ return {
       pip = { upgrade_pip = true },
       ui = {
         border = "rounded",
+        icons = {
+          package_installed = "✓",
+          package_pending = "➜",
+          package_uninstalled = "✗",
+        },
       },
     },
   },
@@ -79,67 +84,54 @@ return {
       "nvim-treesitter/nvim-treesitter",
     },
     config = function()
-      --blink.cmp supports additional completion capabilities, so broadcast that to servers
-      local capabilities = require("blink.cmp").get_lsp_capabilities()
-      local lspconfig = require("lspconfig")
-
-      local handlers = {
-        function(server_name)
-          require("lspconfig")[server_name].setup({ capabilities = capabilities })
-        end,
-        ["pylsp"] = function()
-          lspconfig.pylsp.setup({
-            settings = {
-              pylsp = {
-                plugins = {
-                  pycodestyle = {
-                    enabled = false,
-                  },
-                  pyflakes = {
-                    enabled = false,
-                  },
-                  mccabe = {
-                    enabled = false,
-                  },
-                  autopep8 = {
-                    enabled = false,
-                  },
-                  yapf = {
-                    enabled = false,
-                  },
-                  ruff = {
-                    enabled = false,
-                    formatEnabled = true,
-                    preview = true,
-                  },
-                  pylsp_mypy = {
-                    live_mode = true,
-                  },
+      local servers = {
+        pylsp = {
+          settings = {
+            pylsp = {
+              plugins = {
+                pycodestyle = {
+                  enabled = false,
+                },
+                pyflakes = {
+                  enabled = false,
+                },
+                mccabe = {
+                  enabled = false,
+                },
+                autopep8 = {
+                  enabled = false,
+                },
+                yapf = {
+                  enabled = false,
+                },
+                ruff = {
+                  enabled = false,
+                  formatEnabled = true,
+                  preview = true,
+                },
+                pylsp_mypy = {
+                  live_mode = true,
                 },
               },
             },
-            capabilities = capabilities,
-          })
-        end,
-      }
-      require("mason").setup({
-        ui = {
-          icons = {
-            package_installed = "✓",
-            package_pending = "➜",
-            package_uninstalled = "✗",
           },
         },
-      })
+        bashls = {},
+        clangd = {},
+        ruff = {},
+        lua_ls = {},
+      }
+
+      local ensure_installed = vim.tbl_keys(servers or {})
       require("mason-lspconfig").setup({
-        ensure_installed = { "bashls", "clangd", "pylsp", "ruff", "lua_ls" },
+        ensure_installed = ensure_installed,
         automatic_installation = true,
-        handlers = handlers,
       })
-      --
-      -- lspconfig.futhark_lsp.setup({})
-      -- lspconfig.elixirls.setup({})
-      -- lspconfig.gleam.setup({})
+
+      for server, settings in pairs(servers) do
+        vim.lsp.config(server, settings)
+        vim.lsp.enable(server)
+      end
     end,
   },
 }

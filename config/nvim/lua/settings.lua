@@ -23,6 +23,10 @@ vim.o.clipboard = "unnamedplus"
 -- Use rounded borders for floating windows.
 vim.o.winborder = 'rounded'
 
+-- Case insensitive searching UNLESS /C or the search has capitals.
+vim.o.ignorecase = true
+vim.o.smartcase = true
+
 -- Smartindentation for use with "=". I actually override this with Treesitter
 vim.o.smartindent = true
 

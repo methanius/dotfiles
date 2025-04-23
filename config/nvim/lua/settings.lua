@@ -20,6 +20,9 @@ vim.o.undofile = true
 -- Synx Neovim and system clipboard, I've never used yank rings anyway
 vim.o.clipboard = "unnamedplus"
 
+-- Use rounded borders for floating windows.
+vim.o.winborder = 'rounded'
+
 -- Smartindentation for use with "=". I actually override this with Treesitter
 vim.o.smartindent = true
 

@@ -30,15 +30,11 @@ return {
 
       completion = {
         menu = {
-          border = "rounded",
           winhighlight = "Normal:BlinkCmpDoc,FloatBorder:BlinkCmpDocBorder,CursorLine:BlinkCmpDocCursorLine,Search:None",
         },
         documentation = {
           auto_show = true,
           auto_show_delay_ms = 100,
-          window = {
-            border = "rounded",
-          },
         },
         ghost_text = {
           enabled = true,

@@ -17,21 +17,6 @@ autocmd(
   { desc = "Open files at last edited position", group = FileGroup, pattern = "*", command = 'silent! normal! g`"zv' }
 )
 
---Python specific binds
-autocmd("FileType", {
-  desc = "Set Python specific keybinds and options",
-  pattern = "python",
-  callback = function(args)
-    local opts = { buffer = args.buf }
-    vim.keymap.set(
-      { "n", "i" },
-      "<F5>",
-      "<Cmd>w <bar> exec '!python '.shellescape('%')<CR>",
-      mergeBintoA(opts, { desc = "Save and run Python file" })
-    )
-  end,
-})
-
 autocmd("LspAttach", {
   group = ClausGroup,
   callback = function(args)

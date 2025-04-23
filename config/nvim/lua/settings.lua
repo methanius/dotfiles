@@ -56,7 +56,7 @@ vim.o.updatetime = 50
 -- Set 󰌑 as icon for line breaks
 vim.o.list = true
 vim.opt.listchars = {
-  eol = '󰌑',
+  trail = '⋅',
 }
 --
 -- Disable cursor blinking in terminal mode.

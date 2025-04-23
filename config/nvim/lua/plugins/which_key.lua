@@ -23,8 +23,6 @@ return {
       },
 
       -- next greatest remap ever : asbjornHaland
-      { "<leader>y", [["+y]], desc = "Yank selection to system register",        mode = { "n", "v" } },
-      { "<leader>Y", [["+Y]], desc = "Yank line to system register",             mode = "n" },
       { "<leader>d", [["_d]], desc = "Delete to void register",                  mode = { "n", "v" } },
 
       { "Q",         "<nop>", desc = "I will never need Ex mode, so remove it.", mode = "n" },

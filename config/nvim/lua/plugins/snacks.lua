@@ -27,9 +27,6 @@ return {
       debug = {
         enabled = true,
       },
-      words = {
-        enabled = true,
-      },
       notifier = {
         enabled = true,
       },
@@ -48,8 +45,6 @@ return {
       image = {},
     },
     keys = {
-      { "gn",         function() Snacks.words.jump(vim.v.count1, true) end,  desc = "Jump to next LSP reference",     mode = "n" },
-      { "gN",         function() Snacks.words.jump(-vim.v.count1, true) end, desc = "Jump to next LSP reference",     mode = "n" },
       { "<C-/>",      function() Snacks.terminal() end,                      desc = "Toggle terminal",                mode = { "n", "t" } },
       { "<leader>tt", function() Snacks.terminal() end,                      desc = "Toggle terminal",                mode = { "n", "t" } },
       { "<leader>un", function() Snacks.notifier.hide() end,                 desc = "Dismiss All Notifications" },

@@ -26,4 +26,20 @@ require("lazy").setup({ { import = "plugins" } }, {
     border = "rounded",
     title = "Lazy"
   },
+  rocks = {
+    enabled = false,
+  },
+  performance = {
+    rtp = {
+      disabled_plugins = {
+        "gzip",
+        "netrwPlugin",
+        "rplugin",
+        "tarPlugin",
+        "tohtml",
+        "tutor",
+        "zipPlugin",
+      }
+    },
+  },
 })

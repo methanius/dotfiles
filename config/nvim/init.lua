@@ -43,3 +43,4 @@ require("lazy").setup({ { import = "plugins" } }, {
     },
   },
 })
+require("keymaps")

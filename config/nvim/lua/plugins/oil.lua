@@ -162,13 +162,5 @@ return {
         border = "rounded",
       },
     },
-    keys = {
-      {
-        "<leader>pv",
-        mode = { "n" },
-        "<Cmd>Oil<CR>",
-        desc = "Open path to current buffer in Oil.nvim",
-      },
-    },
   },
 }

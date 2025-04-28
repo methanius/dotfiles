@@ -45,30 +45,5 @@ return {
       },
       { "theHamsta/nvim-dap-virtual-text", opts = {} }
     },
-    keys = {
-      {
-        "<leader>db",
-        function() require("dap").toggle_breakpoint() end,
-        desc = "DAP Breakpoints",
-      },
-      {
-        "<leader>ds",
-        function()
-          local widgets = require("dap.ui.widgets")
-          widgets.centered_float(widgets.scopes, { border = "rounded" })
-        end,
-        desc = "DAP Scopes",
-      },
-      { "<F1>",  function() require("dap.ui.widgets").hover(nil, { border = "rounded" }) end },
-      { "<F5>",  "<CMD>DapContinue<CR>",                                                     desc = "DAP Continue" },
-      { "<F10>", "<CMD>DapStepOver<CR>",                                                     desc = "Step Over" },
-      { "<F11>", "<CMD>DapStepInto<CR>",                                                     desc = "Step Into" },
-      { "<F12>", "<CMD>DapStepOut<CR>",                                                      desc = "Step Out" },
-      {
-        "<leader>dv",
-        "<Cmd>DapVirtualTextToggle<Cr>",
-        desc = "Toggle (D)AP (V)irtual Text",
-      }
-    },
   }
 }

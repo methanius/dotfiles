@@ -7,11 +7,4 @@ return {
     "UndotreePersistUndo",
     "UndotreeShow",
   },
-  keys = {
-    {
-      "<leader>tu",
-      vim.cmd.UndotreeToggle,
-      desc = "Toggle undotree",
-    },
-  },
 }

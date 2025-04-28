@@ -9,17 +9,5 @@ return {
       "ToggleNextBool",
       "TogglePreviousBool"
     },
-    keys = {
-      {
-        "<leader>tb",
-        "<Cmd>ToggleNextBool<Cr>",
-        desc = "Toggle next boolean using Treesitter",
-      },
-      {
-        "<leader>tB",
-        "<Cmd>TogglePreviousBool<Cr>",
-        desc = "Toggle previous boolean using Treesitter",
-      }
-    },
   },
 }

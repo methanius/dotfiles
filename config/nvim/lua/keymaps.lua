@@ -23,6 +23,10 @@ vim.keymap.set("n", "<C-j>", "<cmd>cnext<CR>zz", { desc = "Go to next item in th
 vim.keymap.set("n", "<leader><leader>", function() vim.cmd("so") end, { desc = "Shout out current file" })
 
 
+-- Stay in visual mode when shifting in or out
+vim.keymap.set("v", "<", "<gv", { desc = "Stay in visual mode when indenting selection" })
+vim.keymap.set("v", ">", ">gt hunkv", { desc = "Stay in visual mode when indenting selection" })
+
 -- Open Lazy package manager
 vim.keymap.set("n", "<leader>L", "<Cmd>Lazy<cr>", { desc = "Open Lazy" })
 

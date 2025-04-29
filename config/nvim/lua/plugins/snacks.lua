@@ -42,6 +42,9 @@ return {
       picker = {
         enabled = true,
       },
+      zen = {
+        enabled = true,
+      },
       image = {},
     },
     init = function()

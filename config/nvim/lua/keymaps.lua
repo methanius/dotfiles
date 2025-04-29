@@ -60,6 +60,7 @@ Snacks.toggle.option("conceallevel", { off = 0, on = vim.o.conceallevel > 0 and 
   "<leader>tc")
 Snacks.toggle.treesitter():map("<leader>tT")
 Snacks.toggle.inlay_hints():map("<leader>th")
+Snacks.toggle.option("background", { off = "light", on = "dark", name = "Dark Background" }):map("<leader>tD")
 Snacks.toggle.zen():map("<leader>tz")
 Snacks.toggle({
   name = "Mini Diff Signs",

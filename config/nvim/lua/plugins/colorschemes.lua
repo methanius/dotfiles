@@ -28,7 +28,6 @@ return {
       keywordStyle = { italic = true },
       statementStyle = { bold = false },
       typeStype = {},
-      transparent = true,
       dimInactive = false,
       terminalColors = true,
       overrides = function(colors)
@@ -42,7 +41,14 @@ return {
         }
       end,
       colors = {
-        theme = { all = { ui = { bg_gutter = "none" } } },
+        theme = {
+          wave = {
+            ui = {
+              bg = "NONE",
+            },
+          },
+          all = { ui = { bg_gutter = "none" } }
+        },
       },
       background = {   -- map the value of 'background' option to a theme
         dark = "wave", -- try "dragon" !

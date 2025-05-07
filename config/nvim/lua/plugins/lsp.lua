@@ -46,7 +46,7 @@ return {
     },
   },
   {
-    "williamboman/mason.nvim",
+    "mason-org/mason.nvim",
     cmd = {
       "Mason",
       "MasonInstall",
@@ -58,7 +58,6 @@ return {
     opts = {
       pip = { upgrade_pip = true },
       ui = {
-        border = "rounded",
         icons = {
           package_installed = "✓",
           package_pending = "➜",
@@ -71,8 +70,7 @@ return {
     "neovim/nvim-lspconfig",
     event = { "BufReadPre", "BufNewFile" },
     dependencies = {
-      "williamboman/mason.nvim",
-      "williamboman/mason-lspconfig.nvim",
+      "mason-org/mason-lspconfig.nvim",
       "p00f/clangd_extensions.nvim",
       "onsails/lspkind.nvim",
       "saghen/blink.cmp",
@@ -122,11 +120,13 @@ return {
       require("mason-lspconfig").setup({
         ensure_installed = ensure_installed,
         automatic_installation = true,
+        automatic_enable = true,
       })
 
       for server, settings in pairs(servers) do
         vim.lsp.config(server, settings)
-        vim.lsp.enable(server)
+        -- enable is handled by mason-lspconfig for now
+        -- vim.lsp.enable(server)
       end
     end,
   },

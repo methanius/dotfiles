@@ -38,6 +38,7 @@ in {
       pkgs.tree
       pkgs.tree-sitter
       pkgs.bluetui
+      pkgs.jujutsu
     ];
   };
   imports = [./apps/fish.nix ./apps/zsh.nix];

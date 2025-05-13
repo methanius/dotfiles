@@ -100,6 +100,8 @@ vim.keymap.set("n", "<leader>fi", function() Snacks.picker.lines() end, { desc =
 vim.keymap.set("n", "<leader>fu", function() Snacks.picker.undo() end, { desc = "(f)ind (u)ndo" })
 vim.keymap.set("n", "gt", function() Snacks.picker.lsp_type_definitions() end, { desc = "Go to type defition" })
 vim.keymap.set("n", "<leader>fs", function() Snacks.picker.lsp_symbols() end, { desc = "(f)ind lsp (s)ymbols" })
+vim.keymap.set("n", "<leader>fc", function() Snacks.picker.pick('files', { cwd = vim.fn.stdpath('config') }) end,
+  { desc = "Find config file" })
 vim.keymap.set("n", "<leader>pe", function() Snacks.picker.explorer() end, { desc = "(p)roject (e)xplore with Snacks" })
 vim.keymap.set("n", "<leader>N",
   function()

@@ -25,10 +25,8 @@ return {
     event = { "BufReadPre", "BufNewFile" },
     dependencies = {
       "mason-org/mason-lspconfig.nvim",
-      "onsails/lspkind.nvim",
       "saghen/blink.cmp",
       { "smjonas/inc-rename.nvim", opts = {}, },
-      "nvim-treesitter/nvim-treesitter",
     },
     config = function()
       local servers = {

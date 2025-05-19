@@ -91,15 +91,9 @@ vim.keymap.set("n", "<leader>fw", function() Snacks.picker.grep_word() end, { de
 vim.keymap.set("n", "<leader>fl", function() Snacks.picker.grep() end, { desc = "Live grep" })
 vim.keymap.set("n", "<leader>fh", function() Snacks.picker.help() end, { desc = "Find help" })
 vim.keymap.set("n", "<leader>fa", function() Snacks.picker.resume() end, { desc = "Resume search" })
-vim.keymap.set("n", "gr", function() Snacks.picker.lsp_references() end,
-  { desc = "References", nowait = true })
-vim.keymap.set("n", "gd", function() Snacks.picker.lsp_definitions() end, { desc = "Goto Definition" })
-vim.keymap.set("n", "<leader>fd", function() Snacks.picker.diagnostics() end, { desc = "Diagnostics" })
 vim.keymap.set("n", "<leader>gf", function() Snacks.picker.git_log_file() end, { desc = "(g)it (f)ile history" })
 vim.keymap.set("n", "<leader>fi", function() Snacks.picker.lines() end, { desc = "(f)ind line (i)nside file" })
 vim.keymap.set("n", "<leader>fu", function() Snacks.picker.undo() end, { desc = "(f)ind (u)ndo" })
-vim.keymap.set("n", "gt", function() Snacks.picker.lsp_type_definitions() end, { desc = "Go to type defition" })
-vim.keymap.set("n", "<leader>fs", function() Snacks.picker.lsp_symbols() end, { desc = "(f)ind lsp (s)ymbols" })
 vim.keymap.set("n", "<leader>fc", function() Snacks.picker.pick('files', { cwd = vim.fn.stdpath('config') }) end,
   { desc = "Find config file" })
 vim.keymap.set("n", "<leader>pe", function() Snacks.picker.explorer() end, { desc = "(p)roject (e)xplore with Snacks" })

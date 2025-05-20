@@ -1,53 +1,70 @@
+---@param lhs string
+---@param rhs string|function
+---@param desc string
+---@param mode? string|string[]
+---@param extra_opts? vim.keymap.set.Opts
+local function keymap(lhs, rhs, desc, mode, extra_opts)
+  mode = mode or "n"
+  local opts = { desc = desc }
+  if extra_opts then
+    opts = vim.tbl_extend("keep", opts, extra_opts)
+  end
+  vim.keymap.set(mode, lhs, rhs, opts)
+end
+
+keymap("<leader>a", function()
+  require("treesitter_home_tools").increment_next_integer(vim.v.count1)
+end, "Increment integer using TreeSitter", { "n", "v" })
+
+
 -- Moving selections, might switch to mini.move later on
-vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv", { desc = "Move selected lines 1 line down" })
-vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv", { desc = "Move selected lines 1 line up" })
+keymap("J", ":m '>+1<CR>gv=gv", "Move selected lines 1 line down", "v")
+keymap("K", ":m '<-2<CR>gv=gv", "Move selected lines 1 line up", "v")
 
 -- Nifty movement keymaps keeping the view centered
-vim.keymap.set("n", "J", "mzJ`z", { desc = "Append line below to current line" })
-vim.keymap.set("n", "<C-d>", "<C-d>zz", { desc = "Scroll half buffer down and center cursor" })
-vim.keymap.set("n", "<C-u>", "<C-u>zz", { desc = "Scroll half buffer up and center cursor" })
-vim.keymap.set("n", "n", "nzzzv",
-  { desc = "Next item matching search, including in folds, keeping cursor centered in buffer" })
-vim.keymap.set("n", "N", "Nzzzv",
-  { desc = "Prev item matchin search, including in folds, keeping cursor centered in buffer" })
+keymap("J", "mzJ`z", "Append line below to current line")
+keymap("<C-d>", "<C-d>zz", "Scroll half buffer down and center cursor")
+keymap("<C-u>", "<C-u>zz", "Scroll half buffer up and center cursor")
+keymap("n", "nzzzv", "Next item matching search, including in folds, keeping cursor centered in buffer")
+keymap("N", "Nzzzv", "Prev item matchin search, including in folds, keeping cursor centered in buffer")
 
 -- Easy delete without populating yank register
-vim.keymap.set("n", "<leader>d", [["_d]], { desc = "Delete to void register" })
+keymap("<leader>d", [["_d]], "Delete to void register")
 
 -- Quickfix jump keymaps with centering
 -- ThePrimeagen inspired keymap that I quite like
-vim.keymap.set("n", "<C-k>", "<cmd>cprev<CR>zz", { desc = "Go to prev item in the quickfix list and center cursor" })
-vim.keymap.set("n", "<C-j>", "<cmd>cnext<CR>zz", { desc = "Go to next item in the quickfix list and center cursor" })
+keymap("<C-k>", "<cmd>cprev<CR>zz", "Go to prev item in the quickfix list and center cursor")
+keymap("<C-j>", "<cmd>cnext<CR>zz", "Go to next item in the quickfix list and center cursor")
 
 -- Quick load current file
-vim.keymap.set("n", "<leader><leader>", function() vim.cmd("so") end, { desc = "Shout out current file" })
+keymap("<leader><leader>", function() vim.cmd("so") end, "Shout out current file")
 
 
 -- Stay in visual mode when shifting in or out
-vim.keymap.set("v", "<", "<gv", { desc = "Stay in visual mode when indenting selection" })
-vim.keymap.set("v", ">", ">gt hunkv", { desc = "Stay in visual mode when indenting selection" })
+keymap("<", "<gv", "Stay in visual mode when indenting selection", "v")
+keymap(">", ">gt hunkv", "Stay in visual mode when indenting selection", "v")
 
 -- Open Lazy package manager
-vim.keymap.set("n", "<leader>L", "<Cmd>Lazy<cr>", { desc = "Open Lazy" })
+keymap("<leader>L", "<Cmd>Lazy<cr>", "Open Lazy")
 
 -- My own small hobby fun package
-vim.keymap.set("n", "<leader>tb", "<Cmd>ToggleNextBool<cr>", { desc = "Toggle next boolean" })
-vim.keymap.set("n", "<leader>tB", "<Cmd>TogglePreviousBool<Cr>", { desc = "Toggle previous boolean" })
+keymap("<leader>tb", "<Cmd>ToggleNextBool<cr>", "Toggle next boolean")
+keymap("<leader>tB", "<Cmd>TogglePreviousBool<Cr>", "Toggle previous boolean")
 
 -- Open current file position in Oil
-vim.keymap.set("n", "<leader>pv", "<Cmd>Oil<CR>", { desc = "Open path to current buffer in Oil.nvim", })
+keymap("<leader>pv", "<Cmd>Oil<CR>", "Open path to current buffer in Oil.nvim")
 
 -- Open neogit
-vim.keymap.set("n", "<leader>gg", "<Cmd>Neogit<cr>", { desc = "Open Neogit for current project" })
+keymap("<leader>gg", "<Cmd>Neogit<cr>", "Open Neogit for current project")
 
 -- Undotree toggle
-vim.keymap.set("n", "<leader>tu", "<Cmd>UndotreeToggle<cr>", { desc = "Toggle undotree" })
+keymap("<leader>tu", "<Cmd>UndotreeToggle<cr>", "Toggle undotree")
 
 -- Flash.nvim keymaps
-vim.keymap.set({ "n", "x", "o" }, "s", function() require("flash").jump() end, { desc = "Flash" })
-vim.keymap.set({ "n", "x", "o" }, "S", function() require("flash").treesitter() end, { desc = "Flash Treesitter" })
-vim.keymap.set("o", "r", function() require("flash").remote() end, { desc = "Remote Flash" })
-vim.keymap.set({ "o", "x" }, "R", function() require("flash").treesitter_search() end, { desc = "Treesitter Search" })
+keymap("s", function() require("flash").jump() end, "Flash", { "n", "x", "o" })
+keymap("S", function() require("flash").treesitter() end, "Flash Treesitter", { "n", "x", "o" })
+keymap("r", function() require("flash").remote() end, "Remote Flash", "o")
+keymap("R", function() require("flash").treesitter_search() end, "Treesitter Search", { "o", "x" })
 
 
 -- Create some toggle mappings using Snacks
@@ -76,29 +93,26 @@ Snacks.toggle({
 }):map("<leader>tG")
 
 -- Mini diff keymap
-vim.keymap.set("n", "<leader>go", function() require("mini.diff").toggle_overlay(0) end,
-  { desc = "Toggle mini.diff overlay", })
+keymap("<leader>go", function() require("mini.diff").toggle_overlay(0) end, "Toggle mini.diff overlay")
 
 -- Snacks keymaps, there are quite a lot :p
-vim.keymap.set({ "n", "t" }, "<C-/>", function() Snacks.terminal() end, { desc = "Toggle terminal" })
-vim.keymap.set({ "n", "t" }, "<leader>tt", function() Snacks.terminal() end, { desc = "Toggle terminal" })
-vim.keymap.set("n", "<leader>tn", function() Snacks.notifier.hide() end, { desc = "Dismiss All Notifications" })
-vim.keymap.set("n", "<leader>gb", function() Snacks.git.blame_line() end, { desc = "Git Blame Line" })
-vim.keymap.set("n", "<leader>gl", function() Snacks.lazygit.log() end, { desc = "Lazygit Log (cwd)" })
-vim.keymap.set("n", "<leader>ff", function() Snacks.picker.files() end, { desc = "Fuzzy (f)ind (f)iles" })
-vim.keymap.set("n", "<leader>fg", function() Snacks.picker.git_files() end, { desc = "Fuzzy (g)it (f)iles" })
-vim.keymap.set("n", "<leader>fw", function() Snacks.picker.grep_word() end, { desc = "(w)ord under cursor ripgrep" })
-vim.keymap.set("n", "<leader>fl", function() Snacks.picker.grep() end, { desc = "Live grep" })
-vim.keymap.set("n", "<leader>fh", function() Snacks.picker.help() end, { desc = "Find help" })
-vim.keymap.set("n", "<leader>fa", function() Snacks.picker.resume() end, { desc = "Resume search" })
-vim.keymap.set("n", "<leader>gf", function() Snacks.picker.git_log_file() end, { desc = "(g)it (f)ile history" })
-vim.keymap.set("n", "<leader>fi", function() Snacks.picker.lines() end, { desc = "(f)ind line (i)nside file" })
-vim.keymap.set("n", "<leader>fu", function() Snacks.picker.undo() end, { desc = "(f)ind (u)ndo" })
-vim.keymap.set("n", "<leader>fc", function() Snacks.picker.pick('files', { cwd = vim.fn.stdpath('config') }) end,
-  { desc = "Find config file" })
-vim.keymap.set("n", "<leader>pe", function() Snacks.picker.explorer() end, { desc = "(p)roject (e)xplore with Snacks" })
-vim.keymap.set("n", "<leader>N",
-  function()
+keymap("<C-/>", function() Snacks.terminal() end, "Toggle terminal", { "n", "t" })
+keymap("<leader>tt", function() Snacks.terminal() end, "Toggle terminal", { "n", "t" })
+keymap("<leader>tn", function() Snacks.notifier.hide() end, "Dismiss All Notifications")
+keymap("<leader>gb", function() Snacks.git.blame_line() end, "Git Blame Line")
+keymap("<leader>gl", function() Snacks.lazygit.log() end, "Lazygit Log (cwd)")
+keymap("<leader>ff", function() Snacks.picker.files() end, "Fuzzy (f)ind (f)iles")
+keymap("<leader>fg", function() Snacks.picker.git_files() end, "Fuzzy (g)it (f)iles")
+keymap("<leader>fw", function() Snacks.picker.grep_word() end, "(w)ord under cursor ripgrep")
+keymap("<leader>fl", function() Snacks.picker.grep() end, "Live grep")
+keymap("<leader>fh", function() Snacks.picker.help() end, "Find help")
+keymap("<leader>fa", function() Snacks.picker.resume() end, "Resume search")
+keymap("<leader>gf", function() Snacks.picker.git_log_file() end, "(g)it (f)ile history")
+keymap("<leader>fi", function() Snacks.picker.lines() end, "(f)ind line (i)nside file")
+keymap("<leader>fu", function() Snacks.picker.undo() end, "(f)ind (u)ndo")
+keymap("<leader>fc", function() Snacks.picker.pick('files', { cwd = vim.fn.stdpath('config') }) end, "Find config file")
+keymap("<leader>pe", function() Snacks.picker.explorer() end, "(p)roject (e)xplore with Snacks")
+keymap("<leader>N", function()
     Snacks.win({
       file = vim.api.nvim_get_runtime_file("doc/news.txt", false)[1],
       width = 0.6,
@@ -113,29 +127,21 @@ vim.keymap.set("n", "<leader>N",
       border = "single",
     })
   end,
-  { desc = "Neovim News" }
+  "Neovim News"
 )
 
 -- Neogen keymaps, I've loved these for python
-vim.keymap.set("n", "<leader>nm", function() require("neogen").generate({ type = "func" }) end,
-  { desc = "Neogen function docstring generation" })
-vim.keymap.set("n", "<leader>nc", function() require("neogen").generate({ type = "class" }) end,
-  { desc = "Neogen class docstring generation" })
-vim.keymap.set("n", "<leader>nt", function() require("neogen").generate({ type = "type" }) end,
-  { desc = "Neogen type docstring generation" })
-vim.keymap.set("n", "<leader>ng", function() require("neogen").generate({}) end, { desc = "Neogen docstring generation" })
-vim.keymap.set("n", "<leader>nf", function() require("neogen").generate({ type = "file" }) end,
-  { desc = "Neogen file docstring generation" })
+keymap("<leader>nm", function() require("neogen").generate({ type = "func" }) end, "Neogen function docstring generation",
+  "n")
+keymap("<leader>nc", function() require("neogen").generate({ type = "class" }) end, "Neogen class docstring generation",
+  "n")
+keymap("<leader>nt", function() require("neogen").generate({ type = "type" }) end, "Neogen type docstring generation",
+  "n")
+keymap("<leader>ng", function() require("neogen").generate({}) end, "Neogen file docstring generation")
 
 -- DAP keymaps. Only just barely used these with a cruddy C++ project at a previous company
-vim.keymap.set("n", "<leader>db", function() require("dap").toggle_breakpoint() end, { desc = "DAP Breakpoints" })
-vim.keymap.set("n", "<leader>ds",
-  function()
-    local widgets = require("dap.ui.widgets")
-    widgets.centered_float(widgets.scopes, { border = "rounded" })
-  end, { desc = "DAP Scopes" })
-vim.keymap.set("n", "<F5>", "<CMD>DapContinue<CR>", { desc = "DAP Continue" })
-vim.keymap.set("n", "<F10>", "<CMD>DapStepOver<CR>", { desc = "Step Over" })
-vim.keymap.set("n", "<F11>", "<CMD>DapStepInto<CR>", { desc = "Step Into" })
-vim.keymap.set("n", "<F12>", "<CMD>DapStepOut<CR>", { desc = "Step Out" })
-vim.keymap.set("n", "<leader>dv", "<Cmd>DapVirtualTextToggle<Cr>", { desc = "Toggle (D)AP (V)irtual Text" })
+keymap("<leader>db", function() require("dap").toggle_breakpoint() end, "DAP Continue")
+keymap("<F10>", "<CMD>DapStepOver<CR>", "Step Over")
+keymap("<F11>", "<CMD>DapStepInto<CR>", "Step Into")
+keymap("<F12>", "<CMD>DapStepOut<CR>", "Step Out")
+keymap("<leader>dv", "<Cmd>DapVirtualTextToggle<Cr>", "Toggle (D)AP (V)irtual Text")

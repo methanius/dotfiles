@@ -3,6 +3,10 @@
 --- and I don't need lazyloading yet.
 local M = {}
 
+local servers = require("lsp.servers")
+for server, settings in pairs(servers) do
+  vim.lsp.config(server, settings)
+end
 ---@alias CoreKeymapPreNaming { [1]: string, [2]: string|function, [3]: string, mode?: string|string[], extra_opts?: vim.keymap.set.Opts}
 ---@alias LSPKeymapSpec CoreKeymapPreNaming|{has?:string|string[], specific_client?:string , cond?:fun():boolean}
 

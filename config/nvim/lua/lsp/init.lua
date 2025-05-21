@@ -61,13 +61,19 @@ local function on_attach(client, bufnr)
 
   local lsp_keymaps = require("lsp.keymaps")
   set_lsp_keymaps(lsp_keymaps, bufnr)
+  --
   -- I only ever use inlay hints in Rust an a few other languages
   -- Toggler from Snacks is configured
   vim.g.inlay_hints = false
 
   vim.lsp.document_color.enable(true, bufnr)
+
   if an_active_client_has(bufnr, "documentSymbol") then
     require("nvim-navic").attach(client, bufnr)
+  end
+
+  if client.name == "clangd" then
+    require("clangd_extensions")
   end
 end
 

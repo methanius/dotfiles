@@ -2,6 +2,10 @@ local servers = require("lsp.servers")
 
 return {
   {
+    "smjonas/inc-rename.nvim",
+    opts = {},
+  },
+  {
     "mason-org/mason.nvim",
     cmd = {
       "Mason",
@@ -25,20 +29,22 @@ return {
   {
     "mason-org/mason-lspconfig.nvim",
     dependencies = {
+      "mason-org/mason.nvim",
       "neovim/nvim-lspconfig",
     },
+    event = { "BufReadPre", "BufNewFile" },
     opts = {
       ensure_installed = vim.tbl_keys(servers or {}),
       automatic_installation = true,
-      automatic_enable = true,
+      automatic_enable = false,
     }
   },
   {
     "neovim/nvim-lspconfig",
+    events = { "BufReadPre", "BufNewFile" },
     dependencies = {
       "mason-org/mason-lspconfig.nvim",
       "saghen/blink.cmp",
-      { "smjonas/inc-rename.nvim", opts = {}, },
     },
   },
 }

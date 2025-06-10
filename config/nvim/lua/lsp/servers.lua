@@ -1,3 +1,7 @@
+---@type lsp.ClientCapabilities
+local ty_capabilities = vim.lsp.protocol.make_client_capabilities()
+ty_capabilities.textDocument.hover = nil
+
 --- I use lspconfig, so these are just the overrides
 ---@type table<string, vim.lsp.Config>
 local M = {
@@ -36,6 +40,22 @@ local M = {
     },
   },
   ruff = {},
+  ty = {
+    cmd = { "uvx", "ty", "server" },
+    filetypes = { "python" },
+    root_dir = vim.fs.root(0, { ".git/", "pyproject.toml", "ty.toml" }),
+    -- init_options = {
+    --   settings = {
+    --     experimental = {
+    --       completions = {
+    --         enable = true,
+    --       },
+    --     },
+    --   },
+    -- },
+    single_file_support = true,
+    capabilities = ty_capabilities,
+  },
 }
 
 return M

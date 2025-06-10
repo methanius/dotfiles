@@ -76,6 +76,9 @@ local function on_attach(client, bufnr)
   if client.name == "clangd" then
     require("clangd_extensions")
   end
+  if client.name == "ty" then
+    client.server_capabilities.hoverProvider = false
+  end
 end
 
 vim.api.nvim_create_autocmd("LspAttach", {

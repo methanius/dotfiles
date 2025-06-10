@@ -15,6 +15,14 @@ local M = {
     settings = {
       pylsp = {
         plugins = {
+          jedi = {
+            auto_import_modules = { "numpy", "matplotlib" },
+          },
+          jedi_completion = {
+            enabled = true,
+            fuzzy = true,
+            cache_for = { "numpy", "matplotlib" },
+          },
           pycodestyle = {
             enabled = false,
           },
@@ -56,10 +64,9 @@ local M = {
           local plugins = opts.fargs
           local plugins_str = table.concat(plugins, ", ")
           notify(("Installing %s..."):format(plugins_str))
-          local result = spawn.pip {
+          local result = spawn.uv {
+            "pip",
             "install",
-            "-U",
-            "--disable-pip-version-check",
             plugins,
             stdio_sink = process.StdioSink:new {
               stdout = vim.schedule_wrap(vim.notify),

@@ -41,9 +41,9 @@ return {
   },
   {
     "neovim/nvim-lspconfig",
-    events = { "BufReadPre", "BufNewFile" },
+    lazy = true,
     dependencies = {
-      "mason-org/mason-lspconfig.nvim",
+      { "mason-org/mason.nvim", opts = {} },
       "saghen/blink.cmp",
     },
   },

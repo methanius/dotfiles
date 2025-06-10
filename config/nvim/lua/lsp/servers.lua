@@ -1,5 +1,9 @@
 --- I use lspconfig, so these are just the overrides
+---@type table<string, vim.lsp.Config>
 local M = {
+  bashls = {},
+  clangd = {},
+  lua_ls = {},
   pylsp = {
     settings = {
       pylsp = {
@@ -31,10 +35,7 @@ local M = {
       },
     },
   },
-  bashls = {},
-  clangd = {},
   ruff = {},
-  lua_ls = {},
 }
 
 return M

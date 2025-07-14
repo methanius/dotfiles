@@ -33,9 +33,6 @@ return {
       gitbrowse = {
         enabled = true,
       },
-      lazygit = {
-        enabled = true,
-      },
       statuscolumn = {
         enabled = true,
       },

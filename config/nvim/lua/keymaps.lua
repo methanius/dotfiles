@@ -100,7 +100,6 @@ keymap("<C-/>", function() Snacks.terminal() end, "Toggle terminal", { "n", "t" 
 keymap("<leader>tt", function() Snacks.terminal() end, "Toggle terminal", { "n", "t" })
 keymap("<leader>tn", function() Snacks.notifier.hide() end, "Dismiss All Notifications")
 keymap("<leader>gb", function() Snacks.git.blame_line() end, "Git Blame Line")
-keymap("<leader>gl", function() Snacks.lazygit.log() end, "Lazygit Log (cwd)")
 keymap("<leader>ff", function() Snacks.picker.files() end, "Fuzzy (f)ind (f)iles")
 keymap("<leader>fg", function() Snacks.picker.git_files() end, "Fuzzy (g)it (f)iles")
 keymap("<leader>fw", function() Snacks.picker.grep_word() end, "(w)ord under cursor ripgrep")

@@ -42,7 +42,7 @@ keymap("<leader><leader>", function() vim.cmd("so") end, "Shout out current file
 
 -- Stay in visual mode when shifting in or out
 keymap("<", "<gv", "Stay in visual mode when indenting selection", "v")
-keymap(">", ">gt hunkv", "Stay in visual mode when indenting selection", "v")
+keymap(">", ">gv", "Stay in visual mode when indenting selection", "v")
 
 -- Open Lazy package manager
 keymap("<leader>L", "<Cmd>Lazy<cr>", "Open Lazy")

@@ -60,7 +60,7 @@ config.window_padding = {
   bottom = 0,
 }
 -- config.window_padding
-config.font_size = 15
+config.font_size = 13
 -- config.line_height = 1.10 // Buggy on ubuntu 24.04 apparently? Booh.
 config.show_tab_index_in_tab_bar = true
 

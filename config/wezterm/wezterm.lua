@@ -75,31 +75,10 @@ config.audible_bell = "Disabled"
 
 -- Configs for Windows pc only
 if wezterm.target_triple == "x86_64-pc-windows-msvc" then
-  -- Choosing color_scheme
-  config.color_scheme = "zenbones_dark"
-
   config.default_domain = "WSL:Ubuntu"
   -- Reload configuration every 30 minutes
 
-  config.background = {
-    {
-      source = {
-        File = "C:\\Users\\cnm\\AppData\\Roaming\\Microsoft\\Windows\\Themes\\TranscodedWallpaper",
-      },
-      hsb = { brightness = 0.05 },
-      horizontal_align = "Center",
-      vertical_align = "Middle",
-      repeat_x = "NoRepeat",
-      repeat_y = "NoRepeat",
-      -- height = 1600,
-      -- width = 2560,
-    },
-  }
-
-  -- Track when wallpaper changes
-  wezterm.add_to_config_reload_watch_list(
-    "C:\\Users\\cnm\\AppData\\Roaming\\Microsoft\\Windows\\Themes\\TranscodedWallpaper"
-  )
+  config.window_background_opacity = 0.95
 end
 
 -- Configs for linux only
@@ -112,8 +91,6 @@ if wezterm.target_triple == "x86_64-unknown-linux-gnu" then
   -- WebGpu was painfully slow on my linux box for whatever reason!
   config.front_end = "OpenGL"
   config.enable_wayland = false
-  local theme = require("kanagawa")
-  config.colors = theme.colors
   config.force_reverse_video_cursor = false
   config.colors.tab_bar = {
     background = "rgba(0,0,0,0)",
@@ -136,6 +113,9 @@ if wezterm.target_triple == "x86_64-unknown-linux-gnu" then
     },
   }
 end
+
+local theme = require("kanagawa")
+config.colors = theme.colors
 
 -- and finally, return the configuration to wezterm
 return config

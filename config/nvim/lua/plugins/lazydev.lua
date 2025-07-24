@@ -8,7 +8,7 @@ return {
     },
     opts = {
       library = {
-        { "lazy.nvim", },
+        "lazy.nvim",
 
         -- See the configuration section for more details
         -- Load luvit types when the `vim.uv` word is found
@@ -19,6 +19,9 @@ return {
 
         -- Optional wezterm types
         { path = "wezterm-types",      mods = { "wezterm" } },
+
+        -- Nvim dap ui types
+        "nvim-dap-ui",
       },
     },
   },

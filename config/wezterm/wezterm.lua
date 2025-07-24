@@ -15,7 +15,7 @@ end
 config.font = wezterm.font({
   family = "JetBrainsMono NF",
   harfbuzz_features = { "zero", "ss02", "ss19", "cv03" },
-  weight="Light"
+  weight = "Light"
 })
 
 config.font_rules = {
@@ -116,6 +116,9 @@ end
 
 local theme = require("kanagawa")
 config.colors = theme.colors
+
+-- Enable kitty graphics protocol
+config.enable_kitty_graphics = true
 
 -- and finally, return the configuration to wezterm
 return config

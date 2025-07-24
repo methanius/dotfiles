@@ -71,6 +71,7 @@ cachix use nix-community
 
 # Build the damn thing
 git add username.nix
+trap "git restore --staged username.nix" SIGINT
 # nix run . -- build --flake .
 home-manager switch --flake .
 git restore --staged username.nix

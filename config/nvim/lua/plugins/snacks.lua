@@ -4,7 +4,7 @@ return {
     priority = 1000,
     lazy = false,
     dependencies = {
-      "echasnovski/mini.diff",
+      "nvim-mini/mini.diff",
     },
     ---@type snacks.Config
     opts = {

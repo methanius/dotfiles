@@ -1,6 +1,6 @@
 return {
   {
-    "echasnovski/mini.icons",
+    "nvim-mini/mini.icons",
     opts = {},
     config = function ()
       require("mini.icons").setup(opts)
@@ -8,7 +8,7 @@ return {
     end
   },
   {
-    "echasnovski/mini.surround",
+    "nvim-mini/mini.surround",
     event = { "InsertEnter", "CmdlineEnter", "ModeChanged *:[vV\x16]*" },
     opts = {
       mappings = {
@@ -24,7 +24,7 @@ return {
   },
   -- setup mini.diff
   {
-    "echasnovski/mini.diff",
+    "nvim-mini/mini.diff",
     opts = {
       view = {
         style = "sign",
@@ -59,7 +59,7 @@ return {
     end,
   },
   {
-    "echasnovski/mini.ai",
+    "nvim-mini/mini.ai",
     dependencies = {
       'nvim-treesitter/nvim-treesitter-textobjects',
     },

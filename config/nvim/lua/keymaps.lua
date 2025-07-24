@@ -159,3 +159,15 @@ keymap("<F12>", "<CMD>DapStepOut<CR>", "DAP Step Out")
 keymap("<leader>dh", "<CMD>DapStepOut<CR>", "DAP Step Out")
 keymap("<leader>dv", "<CMD>DapVirtualTextToggle<CR>", "Toggle (D)AP (V)irtual Text")
 keymap("<leader>du", function() require("dapui").toggle() end, "Toggle dapui")
+keymap("<leader>dq", function() require("dap").terminate() end, "Dap Terminate")
+keymap("<leader>da", function()
+  vim.notify("Rerunning last DAP conf", vim.log.levels.INFO)
+  require("dap").run_last()
+end, "DAP rerun last")
+keymap("<leader>de",
+  function()
+    require("dap.repl").execute(vim.iter(vim.fn.getregion(vim.fn.getpos("'<"), vim.fn.getpos("'>"))):fold("",
+      function(acc, next_line)
+        return acc .. next_line .. "\n"
+      end))
+  end, "DAP pass selection to dap repl", "v")

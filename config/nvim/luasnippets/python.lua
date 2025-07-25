@@ -137,7 +137,6 @@ return {
       {}
     )
   ),
-  )
   s(
     {
       trig = "numpy",
@@ -149,5 +148,19 @@ return {
         import numpy as np
       ]],
       {}
+    )
+  ),
+  s(
+    {
+      trig = "pandas",
+      name = "pandas as pd",
+      descr = "Common pandas as pd imoprt"
+    },
+    fmt(
+      [[
+        import pandas as pd
+      ]],
+      {}
+    )
   ),
 }

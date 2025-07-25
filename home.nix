@@ -15,6 +15,7 @@ in {
     stateVersion = "23.11";
     sessionVariables.EDITOR = "nvim";
     packages = [
+      pkgs.zig
       pkgs.btop
       pkgs.cargo
       pkgs.delta
@@ -39,6 +40,7 @@ in {
       pkgs.tree-sitter
       pkgs.bluetui
       pkgs.jujutsu
+      pkgs.uv
     ];
   };
   imports = [./apps/fish.nix ./apps/zsh.nix];

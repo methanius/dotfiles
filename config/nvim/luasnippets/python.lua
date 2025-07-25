@@ -137,15 +137,17 @@ return {
       {}
     )
   ),
-  s({
-    trig = "numpy",
-    name = "numpy as np",
-    descr = "Common numpy as np imoprt"
-  }, fmt(
-    [[
-    import numpy as np
-    ]],
-    {}
   )
+  s(
+    {
+      trig = "numpy",
+      name = "numpy as np",
+      descr = "Common numpy as np imoprt"
+    },
+    fmt(
+      [[
+        import numpy as np
+      ]],
+      {}
   ),
 }

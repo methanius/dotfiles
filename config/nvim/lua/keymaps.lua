@@ -133,6 +133,8 @@ keymap("<leader>N", function()
   "Neovim News"
 )
 
+keymap("<leader>M", "<CMD>Mason<CR>", "Open Mason")
+
 -- Neogen keymaps, I've loved these for python
 keymap("<leader>nm", function() require("neogen").generate({ type = "func" }) end, "Neogen function docstring generation",
   "n")

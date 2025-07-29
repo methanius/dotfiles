@@ -20,6 +20,7 @@ return {
             { icon = " ", key = "c", desc = "Config", action = "<Cmd>lua Snacks.dashboard.pick('files', {cwd = vim.fn.stdpath('config')})<cr>" },
             { icon = " ", key = "s", desc = "Restore Session", section = "session" },
             { icon = "󰒲 ", key = "L", desc = "Lazy", action = "<Cmd>Lazy<cr>", enabled = package.loaded.lazy ~= nil },
+            { icon = "󱌣", key = "M", desc = "Mason", action = "<Cmd>Mason<cr>" },
             { icon = " ", key = "q", desc = "Quit", action = "<Cmd>qa<cr>" },
           },
         },
@@ -56,7 +57,6 @@ return {
             Snacks.debug.backtrace()
           end
           vim.print = _G.dd -- Override print to use snacks for `:=` command
-
         end,
       })
     end,

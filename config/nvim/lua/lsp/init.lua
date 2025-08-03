@@ -69,6 +69,8 @@ local function on_attach(client, bufnr)
 
   vim.lsp.document_color.enable(true, bufnr)
 
+  vim.lsp.on_type_formatting.enable(true)
+
   if an_active_client_has(bufnr, "documentSymbol") then
   local clients = vim.lsp.get_clients({ bufnr = bufnr })
   for _, client in ipairs(clients) do

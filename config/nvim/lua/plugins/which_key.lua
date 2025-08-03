@@ -10,7 +10,7 @@ return {
         { "<leader>p", "Project" },
         { "<leader>g", "Git" },
         { "<leader>n", "Neogen" },
-        { "<leader>t", "Toggle "},
+        { "<leader>t", "Toggle " },
         {
           "<leader>w",
           proxy = "<c-w>",

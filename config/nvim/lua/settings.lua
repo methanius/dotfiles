@@ -1,4 +1,3 @@
-
 -- I like <space>, haven't tried others
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
@@ -64,6 +63,6 @@ vim.o.guicursor = 'n-v-c-sm:block,i-ci-ve:ver25,r-cr-o:hor20,t:block-TermCursor'
 
 -- I don't want "[written]" and "SEARCH HIT BOTTOM" messages
 vim.opt.shortmess:append {
-    w = true,
-    s = true,
+  w = true,
+  s = true,
 }

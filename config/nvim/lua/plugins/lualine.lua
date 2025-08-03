@@ -35,7 +35,6 @@ return {
         return arrow.text_for_statusline_with_icons()
       end
 
-      local navic_context = function ()
         return require("nvim-navic").get_location()
       end
 

@@ -10,7 +10,26 @@ ty_capabilities.textDocument.hover = nil
 local M = {
   bashls = {},
   clangd = {},
-  lua_ls = {},
+  lua_ls = {
+    settings = {
+      Lua = {
+        completion = {
+          callSnippet = "Replace",
+        },
+        codeLens = {
+          enable = true,
+        },
+        hint = {
+          enable = true,
+          setType = false,
+          paramType = true,
+          paramName = "All",
+          semicolon = "All",
+          arrayIndex = "SameLine",
+        },
+      },
+    },
+  },
   pylsp = {
     settings = {
       pylsp = {

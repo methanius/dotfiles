@@ -59,6 +59,9 @@ then
     echo "$FLAKE_EXPERIMENTAL_LINE" | cat >> "$NIXCONF"
 fi
 
+NIX_AUTO_OPTIMIZE_LINE="auto-optimise-store = true"
+grep -qxF "$NIX_AUTO_OPTIMIZE_LINE" "$NIXCONF" || echo "$NIX_AUTO_OPTIMIZE_LINE" >> "$NIXCONF"
+
 if home-manager --help >/dev/null 2>&1; then
     echo "Home manager already installed."
 else 

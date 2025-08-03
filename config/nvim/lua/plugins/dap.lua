@@ -20,7 +20,6 @@ return {
         args = { "-i", "dap" },
       }
 
-      require("dap.ext.vscode").load_launchjs()
       local dapui = require("dapui")
       dapui.setup()
       dap.listeners.before.attach.dapui_config = function()
@@ -37,6 +36,7 @@ return {
       end
     end,
     dependencies = {
+      "mfussenegger/nvim-dap",
       { "stevearc/overseer.nvim",          config = true },
       {
         "rcarriga/nvim-dap-ui",
@@ -45,5 +45,11 @@ return {
       },
       { "theHamsta/nvim-dap-virtual-text", opts = {} }
     },
-  }
+  },
+  {
+    "mfussenegger/nvim-dap-python",
+    config = function()
+      require("dap-python").setup("uv")
+    end
+  },
 }

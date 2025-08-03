@@ -33,8 +33,8 @@ keymap("<leader>d", [["_d]], "Delete to void register")
 
 -- Quickfix jump keymaps with centering
 -- ThePrimeagen inspired keymap that I quite like
-keymap("<C-k>", "<cmd>cprev<CR>zz", "Go to prev item in the quickfix list and center cursor")
-keymap("<C-j>", "<cmd>cnext<CR>zz", "Go to next item in the quickfix list and center cursor")
+keymap("<C-k>", "<CMD>cprev<CR>zz", "Go to prev item in the quickfix list and center cursor")
+keymap("<C-j>", "<CMD>cnext<CR>zz", "Go to next item in the quickfix list and center cursor")
 
 -- Quick load current file
 keymap("<leader><leader>", function() vim.cmd("so") end, "Shout out current file")
@@ -45,20 +45,20 @@ keymap("<", "<gv", "Stay in visual mode when indenting selection", "v")
 keymap(">", ">gv", "Stay in visual mode when indenting selection", "v")
 
 -- Open Lazy package manager
-keymap("<leader>L", "<Cmd>Lazy<cr>", "Open Lazy")
+keymap("<leader>L", "<CMD>Lazy<CR>", "Open Lazy")
 
 -- My own small hobby fun package
-keymap("<leader>tb", "<Cmd>ToggleNextBool<cr>", "Toggle next boolean")
-keymap("<leader>tB", "<Cmd>TogglePreviousBool<Cr>", "Toggle previous boolean")
+keymap("<leader>tb", "<CMD>ToggleNextBool<CR>", "Toggle next boolean")
+keymap("<leader>tB", "<CMD>TogglePreviousBool<CR>", "Toggle previous boolean")
 
 -- Open current file position in Oil
-keymap("<leader>pv", "<Cmd>Oil<CR>", "Open path to current buffer in Oil.nvim")
+keymap("<leader>pv", "<CMD>Oil<CR>", "Open path to current buffer in Oil.nvim")
 
 -- Open neogit
-keymap("<leader>gg", "<Cmd>Neogit<cr>", "Open Neogit for current project")
+keymap("<leader>gg", "<CMD>Neogit<CR>", "Open Neogit for current project")
 
 -- Undotree toggle
-keymap("<leader>tu", "<Cmd>UndotreeToggle<cr>", "Toggle undotree")
+keymap("<leader>tu", "<CMD>UndotreeToggle<CR>", "Toggle undotree")
 
 -- Flash.nvim keymaps
 keymap("s", function() require("flash").jump() end, "Flash", { "n", "x", "o" })

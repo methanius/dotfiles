@@ -9,8 +9,8 @@ vim.keymap.set(
 local function activate_venv()
   local venv_path = vim.fn.getcwd() .. "/.venv"
   if vim.fn.isdirectory(venv_path) == 1 then
-    vim.env.virtual_env = venv_path
-    vim.env.path = venv_path .. "/bin:" .. vim.env.PATH
+    vim.env.VIRTUAL_ENV = venv_path
+    vim.env.PATH = venv_path .. "/bin:" .. vim.env.PATH
     vim.g.python_venv = venv_path
     vim.notify("Activated Python virtual environment: " .. venv_path, vim.log.levels.INFO)
   end

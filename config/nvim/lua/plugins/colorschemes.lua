@@ -5,14 +5,14 @@ return {
     opts = {
       transparent = true,
       plugins = { auto = true },
-      on_hightlights = function(highlights, colors)
-        local theme = colors.theme
-        highlights.NormalFloat = { bg = "none" }
-        highlights.FloatBorder = { bg = "none" }
-        highlights.FloatTitle = { bg = "none" }
-        highlights.TelescopeTitle = { bg = "none", fg = theme.ui.special, bold = true }
-        highlights.TelescopeBorder = { bg = "none" }
-        highlights.NotifyBackground.background_colour = "#000000"
+      on_highlights = function(hl, _c)
+        hl.NormalFloat = { bg = "none" }
+        hl.FloatBorder = { bg = "none" }
+        hl.FloatTitle = { bg = "none" }
+        hl.DapBreakpoint = { link = "DiagnosticWarn" }
+        hl.DapBreakpointCondition = { link = "DiagnosticWarn" }
+        hl.DapBreakpointRejected = { link = "DiagnosticError" }
+        hl.DapLogPoint = { link = "DiagnosticHint" }
       end,
     },
   },
@@ -21,7 +21,6 @@ return {
     lazy = false,
     priority = 1000,
     opts = {
-      compile = true,
       statementStyle = { bold = false },
       overrides = function(colors)
         local theme = colors.theme
@@ -31,6 +30,10 @@ return {
           FloatTitle = { bg = "none" },
           TelescopeTitle = { bg = "none", fg = theme.ui.special, bold = true },
           TelescopeBorder = { bg = "none" },
+          DapBreakpoint = { link = "DiagnosticWarn" },
+          DapBreakpointCondition = { link = "DiagnosticWarn" },
+          DapBreakpointRejected = { link = "DiagnosticError" },
+          DapLogPoint = { link = "DiagnosticHint" },
         }
       end,
       colors = {

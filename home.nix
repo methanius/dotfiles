@@ -34,7 +34,7 @@ in {
       pkgs.rofi
       pkgs.selene
       pkgs.stylua
-      pkgs.tldr
+      pkgs.tealdeer
       pkgs.tree
       pkgs.tree-sitter
       pkgs.bluetui

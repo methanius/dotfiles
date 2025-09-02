@@ -1,4 +1,5 @@
 --- Stolen from LazyVims way of setting keymaps and adapted to my needs
+---
 --- I don't set keymaps for LSP other than in the corresponding keymaps file
 --- and I don't need lazyloading yet.
 local M = {}
@@ -64,7 +65,7 @@ local function on_attach(client, bufnr)
   if client.name == "clangd" then
     require("clangd_extensions")
   end
-  if client.name == "ty" then
+  if client.name == "ruff" then
     client.server_capabilities.hoverProvider = false
   end
 end

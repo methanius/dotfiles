@@ -38,7 +38,8 @@ local function set_lsp_keymaps(lsp_keymaps, bufnr)
   for _, keys in pairs(lsp_keymaps) do
     local has = not keys.has or an_active_client_has(bufnr, keys.has)
     local cond = not (keys.cond == false or ((type(keys.cond) == "function") and not keys.cond()))
-    local specific_client = not keys.specific_client or vim.lsp.get_clients({ name = keys.specific_client })
+    local specific_client = not keys.specific_client or
+        not vim.tbl_isempty(vim.lsp.get_clients({ name = keys.specific_client }))
 
     if has and cond and specific_client then
       ---@type vim.keymap.set.Opts

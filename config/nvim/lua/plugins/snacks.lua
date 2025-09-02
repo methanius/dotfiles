@@ -62,6 +62,7 @@ return {
                     score_add = (buf_nr == current_buf) and 1000 or 0,
                     line = text,
                     item = line_table,
+                    buf_nr = buf_nr,
                   })
                 end
               end
@@ -69,7 +70,30 @@ return {
             end,
             format = "file",
             preview = "file",
-          }
+            win = {
+              input = {
+                keys = {
+                  ["d"] = "delete_breakpoint"
+                },
+              },
+            },
+            on_show = function() vim.cmd.stopinsert() end,
+            actions = {
+              delete_breakpoint = function(picker)
+                local dap_breakpoints = require("dap.breakpoints")
+                local items = picker:selected({ fallback = true })
+                for _, item in ipairs(items) do
+                  dap_breakpoints.remove(item.buf_nr, item.item.line)
+                end
+
+                picker.list:set_selected()
+                picker.list:set_target()
+                vim.schedule(function()
+                  picker:find()
+                end)
+              end,
+            },
+          },
         },
       },
       zen = {

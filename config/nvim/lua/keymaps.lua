@@ -15,11 +15,6 @@ function keymaps:set_all()
     vim.keymap.set(mode, lhs, rhs, opts)
   end
 
-  keymap("<leader>a", function()
-    require("treesitter_home_tools").increment_next_integer(vim.v.count1)
-  end, "Increment integer using TreeSitter", { "n", "v" })
-
-
   -- Moving selections, might switch to mini.move later on
   keymap("J", ":m '>+1<CR>gv=gv", "Move selected lines 1 line down", "v")
   keymap("K", ":m '<-2<CR>gv=gv", "Move selected lines 1 line up", "v")

@@ -7,9 +7,10 @@ local M = {
   { "gI",         function() Snacks.picker.lsp_implementations({ on_show = function() vim.cmd.stopinsert() end, layout = { preset = "dropdown" } }) end, "Goto Implementation" },
   { "gD",         vim.lsp.buf.declaration,                                                                                                               "Goto Declaration" },
   { "<leader>cc", vim.lsp.codelens.run,                                                                                                                  "Run Codelens",                       mode = { "n", "v" },           has = "codeLens" },
-  { "<leader>cC", vim.lsp.codelens.refresh,                                                                                                              "Refresh & Display Codelens",         mode = { "n", "v" },           has = "codeLens" },
+  { "<leader>cC", function() vim.lsp.codelens.enable(true) end,                                                                                                         "Refresh & Display Codelens",         mode = { "n", "v" },           has = "codeLens" },
   { "<F4>",       vim.lsp.buf.code_action,                                                                                                               "Code Actions",                       has = "codeAction" },
-  { "<leader>fd", Snacks.picker.diagnostics,                                                                                                             "Diagnostics" },
+  { "<leader>fd", Snacks.picker.diagnostics_buffer,                                                                                                      "Diagnostics current buffer" },
+  { "<leader>fD", Snacks.picker.diagnostics,                                                                                                             "Diagnostics workspace" },
   { "<leader>fs", function() Snacks.picker.lsp_symbols({ layout = { preset = "sidebar" } }) end,                                                         "(f)ind document (s)ymbols",          has = "documentSymbol" },
   { "<leader>fS", Snacks.picker.lsp_workspace_symbols,                                                                                                   "(f)ind workspace (S)ymbols",         has = "workspaceSymbol" },
   {

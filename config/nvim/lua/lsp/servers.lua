@@ -27,6 +27,11 @@ local M = {
           semicolon = "All",
           arrayIndex = "SameLine",
         },
+        diagnostics = {
+          globals = {
+            "s", "c", "t", "sn", "i", "fmt", "k", "rep", "ai",
+          },
+        },
       },
     },
   },

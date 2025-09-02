@@ -2,9 +2,7 @@ return {
   {
     "nvim-lualine/lualine.nvim",
     event = "VeryLazy",
-    dependencies = {
-      "otavioschwanck/arrow.nvim",
-    },
+    dependencies = {},
     config = true,
     opts = function()
       local clients_lsp = function()
@@ -18,11 +16,6 @@ return {
           table.insert(c, client.name)
         end
         return "\u{f085} " .. table.concat(c, "|")
-      end
-
-      local arrowline = function()
-        local arrow = require("arrow.statusline")
-        return arrow.text_for_statusline_with_icons()
       end
 
 
@@ -56,9 +49,7 @@ return {
               "filename",
               path = 0,
             },
-            {
-              arrowline,
-            },
+            {},
           },
           lualine_x = { "encoding", "fileformat", "filetype" },
           lualine_y = {},

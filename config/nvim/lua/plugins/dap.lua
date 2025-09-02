@@ -32,7 +32,7 @@ return {
       "mfussenegger/nvim-dap",
       { "stevearc/overseer.nvim",          config = true },
       {
-        "igorlfs/nvim-dap-view", lazy = false, opts = { winbar = { sections = { "console", "watches", "scopes", "exceptions", "breakpoints", "threads", "repl" } } },
+        "igorlfs/nvim-dap-view", lazy = false, opts = { winbar = { sections = { "console", "watches", "scopes", "exceptions", "threads", "repl" } } },
       },
       { "theHamsta/nvim-dap-virtual-text", opts = {} }
     },

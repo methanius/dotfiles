@@ -161,12 +161,21 @@ function keymaps:set_all()
   keymap("<leader>db", function() require("dap").toggle_breakpoint() end, "DAP Breakpoint")
   keymap("<leader>dc", function() require("dap").continue() end, "DAP Continue")
   keymap("<leader>dC", function() require("dap").run_to_cursor() end, "DAP Run to Cursor")
+
+  local function word_in_current_buffer(word)
+    return vim.iter(ipairs(vim.api.nvim_buf_get_lines(0, 0, -1, false))):any(function(_, line)
+      return line:find(word)
+    end)
+  end
   keymap("<leader>dr", function()
     local dap_view = require("dap-view")
     if require("dap-view.state").current_section == "repl" and vim.api.nvim_get_current_win() == require("dap-view.state").winnr then
       dap_view.close()
     else
       dap_view.open()
+      if vim.bo.filetype == "python" and (word_in_current_buffer("polars") or word_in_current_buffer("pandas")) then
+        vim.api.nvim_win_set_height(require("dap-view.state").winnr, 23)
+      end
       dap_view.jump_to_view("repl")
       vim.api.nvim_set_current_win(require("dap-view.state").winnr)
     end

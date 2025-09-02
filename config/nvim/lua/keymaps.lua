@@ -196,13 +196,6 @@ function keymaps:set_all()
     vim.notify("Rerunning last DAP conf", vim.log.levels.INFO)
     require("dap").run_last()
   end, "DAP rerun last")
-  keymap("<leader>de",
-    function()
-      require("dap.repl").execute(vim.iter(vim.fn.getregion(vim.fn.getpos("'<"), vim.fn.getpos("'>"))):fold("",
-        function(acc, next_line)
-          return acc .. next_line .. "\n"
-        end))
-    end, "DAP pass selection to dap repl", "v")
   keymap("<leader>de", function()
     local mode = vim.api.nvim_get_mode().mode
     local stop = vim.fn.getpos(".")

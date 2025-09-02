@@ -203,6 +203,17 @@ function keymaps:set_all()
           return acc .. next_line .. "\n"
         end))
     end, "DAP pass selection to dap repl", "v")
+  keymap("<leader>de", function()
+    local mode = vim.api.nvim_get_mode().mode
+    local stop = vim.fn.getpos(".")
+    local start = vim.fn.getpos("v")
+    local lines = vim.fn.getregion(start, stop, { type = mode })
+    if lines == nil then
+      return
+    end
+    local expression = table.concat(lines, "\n")
+    require("dap.repl").execute(expression, { context = "repl" })
+  end, "Execute selected text in DAP repl", "v")
 end
 
 return keymaps

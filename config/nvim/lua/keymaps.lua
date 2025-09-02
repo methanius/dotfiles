@@ -57,9 +57,6 @@ keymap("<leader>pv", "<CMD>Oil<CR>", "Open path to current buffer in Oil.nvim")
 -- Open neogit
 keymap("<leader>gg", "<CMD>Neogit<CR>", "Open Neogit for current project")
 
--- Undotree toggle
-keymap("<leader>tu", "<CMD>UndotreeToggle<CR>", "Toggle undotree")
-
 -- Flash.nvim keymaps
 keymap("s", function() require("flash").jump() end, "Flash", { "n", "x", "o" })
 keymap("S", function() require("flash").treesitter() end, "Flash Treesitter", { "n", "x", "o" })

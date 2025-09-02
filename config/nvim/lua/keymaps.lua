@@ -112,7 +112,7 @@ keymap("<leader>ff", function() Snacks.picker.files() end, "Fuzzy (f)ind (f)iles
 keymap("<leader>fg", function() Snacks.picker.git_files({ layout = { preset = "ivy" } }) end, "Fuzzy (g)it (f)iles")
 keymap("<leader>fw", function() Snacks.picker.grep_word({ layout = { preset = "ivy" } }) end,
   "(w)ord under cursor ripgrep")
-keymap("<leader>fl", function() Snacks.picker.grep({ layout = { preset = "ivy" } }) end, "Live grep")
+keymap("<leader>ft", function() Snacks.picker.grep({ layout = { preset = "ivy" } }) end, "Find Text Live")
 keymap("<leader>fh", function() Snacks.picker.help() end, "Find help")
 keymap("<leader>fa", function() Snacks.picker.resume() end, "Resume search")
 keymap("<leader>gf", function() Snacks.picker.git_log_file() end, "(g)it (f)ile history")
@@ -125,6 +125,13 @@ keymap("<leader>fu", function() Snacks.picker.undo({ layout = { preset = "sideba
 keymap("<leader>fc", function() Snacks.picker.pick('files', { cwd = vim.fn.stdpath('config') }) end, "Find config file")
 keymap("<leader>pe", function() Snacks.picker.explorer() end, "(p)roject (e)xplore with Snacks")
 keymap("<leader>fm", function() Snacks.picker.marks({ layout = { preset = "ivy" } }) end, "Find marks")
+keymap("<leader>fr", function() Snacks.picker.recent({ layout = { preset = "ivy" } }) end, "Find recent")
+-- keymap("<leader>fb", function()
+--   Snacks.picker.pick({
+--     finder = breakpoints,
+--     preview = "lines",
+--   })
+-- end, "Pick breakpoint")
 keymap("<leader>N", function()
     Snacks.win({
       file = vim.api.nvim_get_runtime_file("doc/news.txt", false)[1],

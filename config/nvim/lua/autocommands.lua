@@ -6,6 +6,15 @@ vim.api.nvim_create_autocmd(
   { desc = "Open files at last edited position", group = FileGroup, pattern = "*", command = 'silent! normal! g`"zv' }
 )
 
+vim.api.nvim_create_autocmd("User", {
+  pattern = "OilActionsPost",
+  callback = function(event)
+    if event.data.actions[1].type == "move" then
+      Snacks.rename.on_rename_file(event.data.actions[1].src_url, event.data.actions[1].dest_url)
+    end
+  end,
+})
+
 ---@param filetype string
 ---@return boolean
 local function is_installed(filetype)

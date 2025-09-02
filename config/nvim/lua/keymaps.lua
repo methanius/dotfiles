@@ -111,8 +111,9 @@ function keymaps:set_all()
   keymap("<leader>gb", function() Snacks.git.blame_line() end, "Git Blame Line")
   keymap("<leader>ff", function() Snacks.picker.files() end, "Fuzzy (f)ind (f)iles")
   keymap("<leader>fg", function() Snacks.picker.git_files({ layout = { preset = "ivy" } }) end, "Fuzzy (g)it (f)iles")
-  keymap("<leader>fw", function() Snacks.picker.grep_word({ layout = { preset = "ivy" } }) end,
-    "(w)ord under cursor ripgrep")
+  keymap("<leader>fw",
+    function() Snacks.picker.grep_word({ on_show = function() vim.cmd.stopinsert() end, layout = { preset = "ivy" } }) end,
+    "(w)ord under cursor ripgrep", { "n", "v" })
   keymap("<leader>ft", function() Snacks.picker.grep({ layout = { preset = "ivy" } }) end, "Find Text Live")
   keymap("<leader>fh", function() Snacks.picker.help() end, "Find help")
   keymap("<leader>fa", function() Snacks.picker.resume() end, "Resume search")
@@ -127,7 +128,8 @@ function keymaps:set_all()
   keymap("<leader>pe", function() Snacks.picker.explorer() end, "(p)roject (e)xplore with Snacks")
   keymap("<leader>fm", function() Snacks.picker.marks({ layout = { preset = "ivy" } }) end, "Find marks")
   keymap("<leader>fr", function() Snacks.picker.recent({ layout = { preset = "ivy" } }) end, "Find recent")
-  keymap("<leader>fb", function() Snacks.picker.dap_breakpoints() end, "Fin DAP Breakpoints")
+  keymap("<leader>fb", function() Snacks.picker.dap_breakpoints({ layout = { preset = "ivy" } }) end,
+    "Find DAP Breakpoints")
   keymap("<leader>N", function()
       Snacks.win({
         file = vim.api.nvim_get_runtime_file("doc/news.txt", false)[1],

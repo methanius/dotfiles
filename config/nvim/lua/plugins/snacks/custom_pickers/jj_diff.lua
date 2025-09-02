@@ -21,8 +21,8 @@ return {
     -- Build the jj diff command
     local args = {
       "diff",
-      "--git",                   -- git-style unified diff
-      "--color=never",           -- no ANSI colors in output
+      "--git",         -- git-style unified diff
+      "--color=never", -- no ANSI colors in output
     }
 
     -- Optional: if you later call this picker with opts.rev / from / to
@@ -48,7 +48,6 @@ return {
       cwd = cwd,
     }), ctx)
   end,
-  -- leave actions empty; default confirm/accept = jump to file+line
   win = {
     input = {
       keys = {
@@ -69,17 +68,14 @@ return {
         local block = item.block
         if block and block.hunks and item.pos then
           -- Find the hunk that this item corresponds to
-          local hunk
-          for _, h in ipairs(block.hunks) do
-            if h.line == item.pos[1] then
-              hunk = h
-              break
-            end
-          end
+          local hunk = vim.iter(block.hunks):find(function(h)
+            return h.line == item.pos[1]
+          end)
 
           if hunk and hunk.diff then
             -- hunk.diff[1] is the @@ header; start counting from the first body line
             local lnum = hunk.line
+            local prev_line_started_with_minus = false
 
             for i = 2, #hunk.diff do
               local line = hunk.diff[i]
@@ -90,9 +86,14 @@ return {
                 item.pos[1] = lnum
                 break
               elseif c == " " then
+                if prev_line_started_with_minus then
+                  item.pos[1] = lnum - 1
+                  break
+                end
                 -- Context lines advance the new-file line number
                 lnum = lnum + 1
               elseif c == "-" then
+                prev_line_started_with_minus = true
                 -- Deletion: affects old file only, do not increment lnum
               end
             end

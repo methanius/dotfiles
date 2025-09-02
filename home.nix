@@ -22,7 +22,6 @@ in {
       pkgs.dust
       pkgs.fd
       pkgs.feh
-      pkgs.glow
       pkgs.go
       pkgs.htop
       pkgs.neovim

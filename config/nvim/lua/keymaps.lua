@@ -135,6 +135,8 @@ function keymaps:set_all()
     "Find DAP Breakpoints")
   keymap("<leader>jd", function() Snacks.picker.jj_diff({ on_show = function() vim.cmd.stopinsert() end, }) end,
     "(j)j diff")
+  keymap("<leader>js", function() Snacks.picker.jj_status({ on_show = function() vim.cmd.stopinsert() end, }) end,
+    "(j)j status")
   keymap("<leader>N", function()
       Snacks.win({
         file = vim.api.nvim_get_runtime_file("doc/news.txt", false)[1],

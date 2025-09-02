@@ -42,7 +42,8 @@ return {
         enabled = true,
         sources = {
           dap_breakpoints = require("plugins.snacks.custom_pickers.dap_breakpoints"),
-          jj_diff = require("plugins.snacks.custom_pickers.jj_diff")
+          jj_diff = require("plugins.snacks.custom_pickers.jj_diff"),
+          jj_status = require("plugins.snacks.custom_pickers.jj_status"),
         },
       },
       zen = {

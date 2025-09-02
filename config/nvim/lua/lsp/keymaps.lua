@@ -71,6 +71,13 @@ local M = {
     mode = { "n", "v" },
     specific_client = "rust-analyzer",
   },
+  {
+    "J",
+    "<CMD>RustLsp joinLines<CR>",
+    "Join lines with rust-analyzer",
+    mode = "n",
+    specific_client = "rust-analyzer",
+  }
 }
 
 return M

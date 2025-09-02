@@ -4,8 +4,8 @@ return {
     dependencies = {
       "nvim-treesitter/nvim-treesitter-context",
     },
+    branch = "main",
     build = ":TSUpdate",
-    main = "nvim-treesitter.configs",
     lazy = false,
     opts = {
       ensure_installed = {
@@ -38,15 +38,6 @@ return {
       highlight = { enable = true },
       auto_install = true,
       indent = { enable = true },
-      incremental_selection = {
-        enable = true,
-        keymaps = {
-          init_selection = "<C-space>",
-          node_incremental = "<C-space>",
-          scope_incremental = false,
-          node_decremental = "<bs>",
-        },
-      },
     },
   },
 

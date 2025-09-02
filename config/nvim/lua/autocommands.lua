@@ -6,6 +6,14 @@ vim.api.nvim_create_autocmd(
   { desc = "Open files at last edited position", group = FileGroup, pattern = "*", command = 'silent! normal! g`"zv' }
 )
 
+vim.api.nvim_create_autocmd(
+  "User", {
+    pattern = "VeryLazy",
+    callback = function()
+      require("keymaps"):set_all()
+    end
+  })
+
 vim.api.nvim_create_autocmd("User", {
   pattern = "OilActionsPost",
   callback = function(event)

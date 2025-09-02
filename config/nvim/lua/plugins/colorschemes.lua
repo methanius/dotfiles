@@ -22,14 +22,7 @@ return {
     priority = 1000,
     opts = {
       compile = true,
-      undercurl = true,
-      commentStyle = { italic = true },
-      functionStyle = {},
-      keywordStyle = { italic = true },
       statementStyle = { bold = false },
-      typeStype = {},
-      dimInactive = false,
-      terminalColors = true,
       overrides = function(colors)
         local theme = colors.theme
         return {

@@ -138,13 +138,11 @@ keymap("<leader>N", function()
 keymap("<leader>M", "<CMD>Mason<CR>", "Open Mason")
 
 -- Neogen keymaps, I've loved these for python
-keymap("<leader>nm", function() require("neogen").generate({ type = "func" }) end, "Neogen function docstring generation",
-  "n")
-keymap("<leader>nc", function() require("neogen").generate({ type = "class" }) end, "Neogen class docstring generation",
-  "n")
-keymap("<leader>nt", function() require("neogen").generate({ type = "type" }) end, "Neogen type docstring generation",
-  "n")
-keymap("<leader>ng", function() require("neogen").generate({}) end, "Neogen file docstring generation")
+keymap("<leader>nf", function() require("neogen").generate({ type = "func" }) end, "Neogen function docstring generation")
+keymap("<leader>nF", function() require("neogen").generate({ type = "file" }) end, "Neogen file docstring generation")
+keymap("<leader>nc", function() require("neogen").generate({ type = "class" }) end, "Neogen class docstring generation")
+keymap("<leader>nt", function() require("neogen").generate({ type = "type" }) end, "Neogen type docstring generation")
+keymap("<leader>ng", function() require("neogen").generate({}) end, "Neogen general docstring generation")
 
 -- DAP keymaps. Only just barely used these with a cruddy C++ project at a previous company
 keymap("<leader>dn", "<CMD>DapNew<CR>", "DAP New")

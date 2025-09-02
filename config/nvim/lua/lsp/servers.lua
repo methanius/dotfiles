@@ -29,6 +29,7 @@ local M = {
     },
   },
   ruff = {},
+  tombi = {},
   ty = {
     cmd = {  "ty", "server" },
     filetypes = { "python" },

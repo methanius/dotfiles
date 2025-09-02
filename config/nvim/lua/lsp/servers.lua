@@ -38,6 +38,8 @@ local M = {
         diagnosticMode = "workspace",
         experimental = {
           rename = true,
+        },
+        completions = {
           autoImport = true,
         },
       },

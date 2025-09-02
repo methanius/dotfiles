@@ -5,7 +5,6 @@ return {
     lazy = false,
     dependencies = {
       "nvim-mini/mini.diff",
-      "mfussenegger/nvim-dap",
     },
     ---@type snacks.Config
     opts = {

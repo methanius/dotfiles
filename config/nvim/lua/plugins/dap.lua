@@ -1,6 +1,7 @@
 return {
   {
     "mfussenegger/nvim-dap",
+    lazy = true,
     config = function()
       -- Signs
       for _, group in pairs({
@@ -32,15 +33,15 @@ return {
       "mfussenegger/nvim-dap",
       { "stevearc/overseer.nvim",          config = true },
       {
-        "igorlfs/nvim-dap-view", lazy = false, opts = { winbar = { sections = { "console", "watches", "scopes", "exceptions", "threads", "repl" } } },
+        "igorlfs/nvim-dap-view", opts = { winbar = { sections = { "console", "watches", "scopes", "exceptions", "threads", "repl" } } },
       },
-      { "theHamsta/nvim-dap-virtual-text", opts = {} }
+      { "theHamsta/nvim-dap-virtual-text", opts = {} },
+      {
+        "mfussenegger/nvim-dap-python",
+        config = function()
+          require("dap-python").setup("uv")
+        end
+      },
     },
-  },
-  {
-    "mfussenegger/nvim-dap-python",
-    config = function()
-      require("dap-python").setup("uv")
-    end
   },
 }

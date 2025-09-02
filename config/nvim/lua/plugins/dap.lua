@@ -13,6 +13,7 @@ return {
       end
 
       local dap = require("dap")
+      -- dap.defaults.fallback.terminal_win_cmd = "50vsplit new"
       -- C, C++
       dap.adapters.gdb = {
         type = "executable",
@@ -20,22 +21,18 @@ return {
         args = { "-i", "dap" },
       }
 
-      local dapui = require("dapui")
-      dapui.setup()
-      dap.listeners.before.event_terminated.dapui_config = function()
-        dapui.close()
+      dap.listeners.before.event_terminated.dap_view_config = function()
+        require("dap-view").close()
       end
-      dap.listeners.before.event_exited.dapui_config = function()
-        dapui.close()
+      dap.listeners.before.event_exited.dap_view_config = function()
+        require("dap-view").close()
       end
     end,
     dependencies = {
       "mfussenegger/nvim-dap",
       { "stevearc/overseer.nvim",          config = true },
       {
-        "rcarriga/nvim-dap-ui",
-        dependencies = "nvim-neotest/nvim-nio",
-        lazy = false,
+        "igorlfs/nvim-dap-view", lazy = false, opts = { winbar = { sections = { "console", "watches", "scopes", "exceptions", "breakpoints", "threads", "repl" } } },
       },
       { "theHamsta/nvim-dap-virtual-text", opts = {} }
     },

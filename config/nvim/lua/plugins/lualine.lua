@@ -46,8 +46,8 @@ return {
           },
           lualine_c = {
             {
-              "filename",
-              path = 0,
+              "navic",
+              color_correction = "dynamic",
             },
             {},
           },

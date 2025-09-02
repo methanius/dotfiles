@@ -70,6 +70,9 @@ local function on_attach(client, bufnr)
   if client.name == "ruff" then
     client.server_capabilities.hoverProvider = false
   end
+  if client.server_capabilities.documentSymbolProvider then
+    require("nvim-navic").attach(client, bufnr)
+  end
 end
 
 vim.api.nvim_create_autocmd("LspAttach", {

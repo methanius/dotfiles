@@ -38,20 +38,29 @@ return {
           },
         },
         sections = {
-          lualine_a = { "mode" },
+          lualine_a = {
+            -- {"mode"},
+          },
           lualine_b = {
-            { "branch" },
-            { "diff" },
+            -- { "branch" },
+            -- { "diff" },
             { "diagnostics" },
           },
           lualine_c = {
             {
+              "filename",
+              path = 0,
+            },
+            {
               "navic",
               color_correction = "dynamic",
             },
-            {},
           },
-          lualine_x = { "encoding", "fileformat", "filetype" },
+          lualine_x = {
+            -- { "encoding" },
+            -- { "fileformat" },
+            { "filetype" },
+          },
           lualine_y = {},
           lualine_z = { clients_lsp },
         },

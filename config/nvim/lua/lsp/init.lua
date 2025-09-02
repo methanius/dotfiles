@@ -60,8 +60,6 @@ local function on_attach(client, bufnr)
   -- Toggler from Snacks is configured
   vim.g.inlay_hints = false
 
-  vim.lsp.document_color.enable(true, bufnr)
-
   vim.lsp.on_type_formatting.enable(true)
 
   if client.name == "clangd" then

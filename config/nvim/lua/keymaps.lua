@@ -123,7 +123,9 @@ function keymaps:set_all()
   keymap("<leader>gd", function() Snacks.picker.git_diff() end, "(g)it status")
   keymap("<leader>gl", function() Snacks.picker.git_log() end, "(g)it log")
   keymap("<leader>fi", function() Snacks.picker.lines() end, "(f)ind line (i)nside file")
-  keymap("<leader>fu", function() Snacks.picker.undo({ layout = { preset = "sidebar" } }) end, "(f)ind (u)ndo")
+  keymap("<leader>fu",
+    function() Snacks.picker.undo({ on_show = function() vim.cmd.stopinsert() end, layout = { preset = "sidebar" } }) end,
+    "(f)ind (u)ndo")
   keymap("<leader>fc", function() Snacks.picker.pick('files', { cwd = vim.fn.stdpath('config') }) end, "Find config file")
   keymap("<leader>pe", function() Snacks.picker.explorer() end, "(p)roject (e)xplore with Snacks")
   keymap("<leader>fm", function() Snacks.picker.marks({ layout = { preset = "ivy" } }) end, "Find marks")

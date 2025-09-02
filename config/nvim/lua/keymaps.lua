@@ -130,7 +130,8 @@ function keymaps:set_all()
   keymap("<leader>pe", function() Snacks.picker.explorer() end, "(p)roject (e)xplore with Snacks")
   keymap("<leader>fm", function() Snacks.picker.marks({ layout = { preset = "ivy" } }) end, "Find marks")
   keymap("<leader>fr", function() Snacks.picker.recent({ layout = { preset = "ivy" } }) end, "Find recent")
-  keymap("<leader>fb", function() Snacks.picker.dap_breakpoints({ layout = { preset = "ivy" } }) end,
+  keymap("<leader>fb",
+    function() Snacks.picker.dap_breakpoints({ layout = { preset = "ivy" }, on_show = function() vim.cmd.stopinsert() end, }) end,
     "Find DAP Breakpoints")
   keymap("<leader>N", function()
       Snacks.win({

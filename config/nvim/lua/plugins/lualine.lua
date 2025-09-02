@@ -1,19 +1,9 @@
 return {
   {
-    "SmiteshP/nvim-navic",
-    lazy = true,
-    opts = {
-      highlight = true,
-      depth_limit = 5,
-      lazy_update_context = true,
-    },
-  },
-  {
     "nvim-lualine/lualine.nvim",
     event = "VeryLazy",
     dependencies = {
       "otavioschwanck/arrow.nvim",
-      "SmiteshP/nvim-navic",
     },
     config = true,
     opts = function()
@@ -35,9 +25,6 @@ return {
         return arrow.text_for_statusline_with_icons()
       end
 
-      local function navic_context()
-        return require("nvim-navic").get_location()
-      end
 
       return {
         options = {
@@ -71,9 +58,6 @@ return {
             },
             {
               arrowline,
-            },
-            {
-              navic_context,
             },
           },
           lualine_x = { "encoding", "fileformat", "filetype" },

@@ -71,17 +71,6 @@ local function on_attach(client, bufnr)
 
   vim.lsp.on_type_formatting.enable(true)
 
-  if an_active_client_has(bufnr, "documentSymbol") then
-    local clients = vim.lsp.get_clients({ bufnr = bufnr })
-    for _, client in ipairs(clients) do
-      if client:supports_method("textDocument/documentSymbol") then
-        require("nvim-navic").attach(client, bufnr)
-        goto continue
-      end
-    end
-    ::continue::
-  end
-
   if client.name == "clangd" then
     require("clangd_extensions")
   end

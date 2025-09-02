@@ -103,29 +103,9 @@ function keymaps:set_all()
 
 
   -- Create some toggle mappings using Snacks
-  Snacks.toggle.option("spell", { name = "Spelling" }):map("<leader>ts")
-  Snacks.toggle.option("wrap", { name = "Wrap" }):map("<leader>tw")
-  Snacks.toggle.option("relativenumber", { name = "Relative Number" }):map("<leader>tL")
-  Snacks.toggle.diagnostics():map("<leader>td")
-  Snacks.toggle.line_number():map("<leader>tl")
-  Snacks.toggle.option("conceallevel", { off = 0, on = vim.o.conceallevel > 0 and vim.o.conceallevel or 2 }):map(
-    "<leader>tc")
-  Snacks.toggle.treesitter():map("<leader>tT")
   Snacks.toggle.inlay_hints():map("<leader>th")
   Snacks.toggle.option("background", { off = "light", on = "dark", name = "Dark Background" }):map("<leader>tD")
   Snacks.toggle.zen():map("<leader>tz")
-  Snacks.toggle({
-    name = "Mini Diff Signs",
-    get = function() return vim.g.minidiff_disable ~= true end,
-    set = function(state)
-      vim.g.minidiff_disable = not state
-      if state then require("mini.diff").enable(0) else require("mini.diff").disable(0) end
-      -- HACK: redraw to update the signs
-      vim.defer_fn(function()
-        vim.cmd([[redraw!]])
-      end, 200)
-    end,
-  }):map("<leader>tG")
 
   -- Mini diff keymap
   keymap("<leader>go", function() require("mini.diff").toggle_overlay(0) end, "Toggle mini.diff overlay")
@@ -133,7 +113,6 @@ function keymaps:set_all()
   -- Snacks keymaps, there are quite a lot :p
   keymap("<C-/>", function() Snacks.terminal() end, "Toggle terminal", { "n", "t" })
   keymap("<leader>tt", function() Snacks.terminal() end, "Toggle terminal", { "n", "t" })
-  keymap("<leader>tn", function() Snacks.notifier.hide() end, "Dismiss All Notifications")
   keymap("<leader>gb", function() Snacks.git.blame_line() end, "Git Blame Line")
   keymap("<leader>ff", function() Snacks.picker.files() end, "Fuzzy (f)ind (f)iles")
   keymap("<leader>fg", function() Snacks.picker.git_files({ layout = { preset = "ivy" } }) end, "Fuzzy (g)it (f)iles")
@@ -192,7 +171,6 @@ function keymaps:set_all()
   keymap("<leader>ng", function() require("neogen").generate({}) end, "Neogen general docstring generation")
 
   -- DAP keymaps. Only just barely used these with a cruddy C++ project at a previous company
-  keymap("<leader>dn", "<CMD>DapNew<CR>", "DAP New")
   keymap("<leader>db", function() require("dap").toggle_breakpoint() end, "DAP Breakpoint")
   keymap("<leader>dc", function() require("dap").continue() end, "DAP Continue")
   keymap("<leader>dC", function() require("dap").run_to_cursor() end, "DAP Run to Cursor")
@@ -218,13 +196,13 @@ function keymaps:set_all()
       vim.api.nvim_set_current_win(require("dap-view.state").winnr)
     end
   end, "DAP REPL Toggle")
-  keymap("<F10>", "<CMD>DapStepOver<CR>", " DAP Step Over")
-  keymap("<leader>dj", "<CMD>DapStepOver<CR>", "DAP Step Over")
-  keymap("<F11>", "<CMD>DapStepInto<CR>", "DAP Step Into")
-  keymap("<leader>dl", "<CMD>DapStepInto<CR>", "DAP Step Into")
-  keymap("<F12>", "<CMD>DapStepOut<CR>", "DAP Step Out")
-  keymap("<leader>dh", "<CMD>DapStepOut<CR>", "DAP Step Out")
-  keymap("<leader>dv", "<CMD>DapVirtualTextToggle<CR>", "Toggle (D)AP (V)irtual Text")
+  keymap("<F10>", function() require("dap").step_over() end, " DAP Step Over")
+  keymap("<leader>dj", function() require("dap").step_over() end, "DAP Step Over")
+  keymap("<F11>", function() require("dap").step_into() end, "DAP Step Into")
+  keymap("<leader>dl", function() require("dap").step_into() end, "DAP Step Into")
+  keymap("<F12>", function() require("dap").step_out() end, "DAP Step Out")
+  keymap("<leader>dh", function() require("dap").step_out() end, "DAP Step Out")
+  keymap("<leader>dv", function() require("dap-view").virtual_text_toggle() end, "Toggle (D)AP (V)irtual Text")
   keymap("<leader>du", function() require("dap-view").toggle() end, "Toggle dap view")
   keymap("<leader>dq", function() require("dap").terminate() end, "Dap Terminate")
   keymap("<leader>da", function()
@@ -243,6 +221,21 @@ function keymaps:set_all()
     require("dap.repl").execute(expression, { context = "repl" })
   end, "Execute selected text in DAP repl", "v")
   keymap("<leader>dE", "<CMD>DapEval<CR>", "Open Dap Eval buffer")
+
+
+  -- Neotest
+  keymap("<leader>ta", function() require("neotest").run.attach() end, "Attach to Test (Neotest)")
+  keymap("<leader>tf", function() require("neotest").run.run(vim.fn.expand("%")) end, "Run File (Neotest)")
+  keymap("<leader>tF", function() require("neotest").run.run(vim.uv.cwd()) end, "Run All Test Files (Neotest)")
+  keymap("<leader>tr", function() require("neotest").run.run() end, "Run Nearest (Neotest)")
+  keymap("<leader>td", function() require("neotest").run.run({ strategy = "dap" }) end, "Debug Nearest (Neotest)")
+  keymap("<leader>tl", function() require("neotest").run.run_last() end, "Run Last (Neotest)")
+  keymap("<leader>ts", function() require("neotest").summary.toggle() end, "Toggle Summary (Neotest)")
+  keymap("<leader>to", function() require("neotest").output.open({ enter = true, auto_close = true }) end,
+    "Show Output (Neotest)")
+  keymap("<leader>tO", function() require("neotest").output_panel.toggle() end, "Toggle Output Panel (Neotest)")
+  keymap("<leader>tS", function() require("neotest").run.stop() end, "Stop (Neotest)")
+  keymap("<leader>tw", function() require("neotest").watch.toggle(vim.fn.expand("%")) end, "Toggle Watch (Neotest)")
 end
 
 return keymaps

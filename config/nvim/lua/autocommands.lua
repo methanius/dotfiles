@@ -26,21 +26,15 @@ vim.api.nvim_create_autocmd("User", {
 ---@param filetype string
 ---@return boolean
 local function is_installed(filetype)
-  for lang in vim.iter(require("nvim-treesitter").get_installed()) do
-    if filetype == lang then
-      return true
-    end
-  end
-  return false
+  return vim.iter(require("nvim-treesitter").get_installed()):any(function(lang)
+    return lang == filetype
+  end)
 end
 
 local function is_available(filetype)
-  for lang in vim.iter(require("nvim-treesitter").get_available()) do
-    if filetype == lang then
-      return true
-    end
-  end
-  return false
+  return vim.iter(require("nvim-treesitter").get_available()):any(function(lang)
+    return filetype == lang
+  end)
 end
 
 vim.api.nvim_create_autocmd(

@@ -14,21 +14,10 @@ end
 ---@param method string|string[]
 local function an_active_client_has(buffer, method)
   if type(method) == "table" then
-    for _, m in ipairs(method) do
-      if an_active_client_has(buffer, m) then
-        return true
-      end
-    end
-    return false
+    return vim.iter(method):all(function(m) return an_active_client_has(buffer, m) end)
   end
-  method = method:find("/") and method or "textDocument/" .. method
   local clients = vim.lsp.get_clients({ bufnr = buffer })
-  for _, client in ipairs(clients) do
-    if client:supports_method(method) then
-      return true
-    end
-  end
-  return false
+  return vim.iter(clients):any(function(client) return client:supports_method(method) end)
 end
 
 ---Sets all the contained LSP related keymaps depending on cond and has checks

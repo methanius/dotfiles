@@ -7,7 +7,10 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
+    neovim-nightly-overlay = {
+      url = "github:nix-community/neovim-nightly-overlay";
+        inputs.nixpkgs.follows = "nixpkgs";
+        };
   };
 
   outputs = {
@@ -18,14 +21,15 @@
   }: let
     system = "x86_64-linux";
     username = builtins.replaceStrings ["\n"] [""] (builtins.readFile ./username.nix);
+    overlays = [
+      neovim-nightly-overlay.overlays.default
+    ]; 
   in {
     packages.${system}.default = home-manager.defaultPackage.${system};
     homeConfigurations.${username} = home-manager.lib.homeManagerConfiguration {
       pkgs = import nixpkgs {
         inherit system;
-        overlays = [
-          neovim-nightly-overlay.overlays.default
-        ];
+        overlays = overlays;
       };
       modules = [./home.nix];
     };

@@ -61,7 +61,12 @@ return {
   {
     "nvim-mini/mini.ai",
     dependencies = {
-      'nvim-treesitter/nvim-treesitter-textobjects',
+      {
+        'nvim-treesitter/nvim-treesitter-textobjects',
+        branch = "main",
+        dependencies =
+        'nvim-treesitter/nvim-treesitter',
+      }
     },
     ecent = "VeryLazy",
     opts = function()

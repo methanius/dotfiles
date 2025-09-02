@@ -65,6 +65,14 @@ keymap("s", function() require("flash").jump() end, "Flash", { "n", "x", "o" })
 keymap("S", function() require("flash").treesitter() end, "Flash Treesitter", { "n", "x", "o" })
 keymap("r", function() require("flash").remote() end, "Remote Flash", "o")
 keymap("R", function() require("flash").treesitter_search() end, "Treesitter Search", { "o", "x" })
+keymap("<C-space>", function()
+  require("flash").treesitter({
+    actions = {
+      ["<C-space>"] = "next",
+      ["<BS>"] = "prev"
+    }
+  })
+end, "Treesitter incremental selection using Flash", { "n", "x", "o" })
 
 
 -- Create some toggle mappings using Snacks

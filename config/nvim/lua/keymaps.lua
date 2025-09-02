@@ -70,7 +70,8 @@ keymap("<C-space>", function()
     actions = {
       ["<C-space>"] = "next",
       ["<BS>"] = "prev"
-    }
+    },
+    labels = ""
   })
 end, "Treesitter incremental selection using Flash", { "n", "x", "o" })
 

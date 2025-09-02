@@ -44,29 +44,22 @@ local M = {
   -- C++ specific
   {
     "go",
-    function()
-      vim.cmd("ClangdSwitchSourceHeader")
-    end,
+    "<CMD>ClangdSwitchSourceHeader<CR>",
     "Switch between header and source (C++ specific)",
     mode = { "n", "v" },
     specific_client = "clangd",
   },
-  -- -- Rustaceanvim specific
-  -- if client.name == "rust-analyzer" then
+  -- Rustaceanvim specific
   {
     "<leader>mu",
-    function()
-      vim.cmd.RustLsp({ "moveItem", "up" })
-    end,
+    "<CMD>RustLsp moveItem up<CR>",
     "Move item up",
     mode = { "n", "v" },
     specific_client = "rust-analyzer",
   },
   {
     "<leader>md",
-    function()
-      vim.cmd.RustLsp({ "moveItem", "down" })
-    end,
+    "<CMD>RustLsp moveItem down<CR>",
     "Move item down",
     mode = { "n", "v" },
     specific_client = "rust-analyzer",
@@ -77,7 +70,22 @@ local M = {
     "Join lines with rust-analyzer",
     mode = "n",
     specific_client = "rust-analyzer",
-  }
+  },
+  {
+    "K",
+    "<CMD>RustLsp hover actions<CR>",
+    "hover actions from rust-analyzer",
+    mode = "n",
+    specific_client = "rust-analyzer",
+  },
+  -- haskell-tools specific
+  {
+    "K",
+    "<CMD>Haskell hover<CR>",
+    "hover actions from haskell-tools hls",
+    mode = "n",
+    specific_client = "hls",
+  },
 }
 
 return M

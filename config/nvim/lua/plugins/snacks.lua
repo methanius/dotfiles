@@ -63,6 +63,8 @@ return {
                     line = text,
                     item = line_table,
                     buf_nr = buf_nr,
+                    line_num = line_table.line,
+                    is_current_buffer = (buf_nr == current_buf) and 0 or 1
                   })
                 end
               end
@@ -76,6 +78,16 @@ return {
                   ["d"] = "delete_breakpoint"
                 },
               },
+            },
+            sort = {
+              fields = {
+                "is_current_buffer",
+                "file",
+                "line_num",
+              },
+            },
+            matcher = {
+              sort_empty = true,
             },
             on_show = function() vim.cmd.stopinsert() end,
             actions = {

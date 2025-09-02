@@ -17,6 +17,7 @@ return {
         hl.DapBreakpointRejected = { link = "DiagnosticError" }
         hl.DapLogPoint = { link = "DiagnosticHint" }
         hl.debugPC = { bg = c.bg_highlight }
+        hl.DiagnosticUnnecessary = { fg = c.fg_dark }
       end,
     },
   },

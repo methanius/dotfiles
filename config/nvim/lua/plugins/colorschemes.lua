@@ -1,18 +1,22 @@
 return {
   {
     "folke/tokyonight.nvim",
-    lazy = true,
+    lazy = false,
+    priority = 1000,
     opts = {
       transparent = true,
-      plugins = { auto = true },
-      on_highlights = function(hl, _c)
-        hl.NormalFloat = { bg = "none" }
-        hl.FloatBorder = { bg = "none" }
-        hl.FloatTitle = { bg = "none" }
+      styles = {
+        floats = "transparent",
+      },
+      plugins = {
+        auto = true,
+      },
+      on_highlights = function(hl, c)
         hl.DapBreakpoint = { link = "DiagnosticWarn" }
         hl.DapBreakpointCondition = { link = "DiagnosticWarn" }
         hl.DapBreakpointRejected = { link = "DiagnosticError" }
         hl.DapLogPoint = { link = "DiagnosticHint" }
+        hl.debugPC = { bg = c.bg_highlight }
       end,
     },
   },
@@ -51,10 +55,5 @@ return {
         light = "lotus",
       },
     },
-    config = function(_, opts)
-      -- vim.cmd(":KanagawaCompile")
-      require("kanagawa").setup(opts)
-      vim.cmd.colorscheme("kanagawa")
-    end,
   },
 }

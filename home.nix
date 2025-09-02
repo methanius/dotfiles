@@ -12,7 +12,7 @@ in {
   home = {
     inherit username;
     inherit homeDirectory;
-    stateVersion = "23.11";
+    stateVersion = "26.05";
     sessionVariables.EDITOR = "nvim";
     packages = [
       pkgs.zig

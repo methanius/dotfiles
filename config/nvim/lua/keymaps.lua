@@ -66,14 +66,43 @@ function keymaps:set_all()
   keymap("r", function() require("flash").remote() end, "Remote Flash", "o")
   keymap("R", function() require("flash").treesitter_search() end, "Treesitter Search", { "o", "x" })
   keymap("<C-space>", function()
-    require("flash").treesitter({
-      actions = {
-        ["<C-space>"] = "next",
-        ["<BS>"] = "prev"
-      },
-      labels = ""
-    })
-  end, "Treesitter incremental selection using Flash", { "n", "x", "o" })
+    local bufnr = vim.api.nvim_get_current_buf()
+    if vim.iter(vim.lsp.get_clients({ bufnr = bufnr })):any(
+          function(client)
+            return client.server_capabilities and client.server_capabilities.selectionRangeProvider
+          end) then
+      vim.lsp.buf.selection_range(1)
+      vim.keymap.set("x", "<BS>",
+        function()
+          vim.lsp.buf.selection_range(-1)
+        end,
+        { desc = "Shrink LSP selection", buffer = bufnr }
+      )
+      vim.keymap.set("x", "<C-space>", function()
+        vim.lsp.buf.selection_range(1)
+      end, { desc = "Expand LSP selection", buffer = bufnr })
+      local group = vim.api.nvim_create_augroup("LSPIncrementalSelectionMapping", { clear = true })
+      vim.api.nvim_create_autocmd(
+        { "ModeChanged", "InsertEnter", "TextChanged", "TextChangedI", "BufLeave", "WinLeave" }, {
+          once = true,
+          group = group,
+          buffer = bufnr,
+          callback = function()
+            vim.keymap.del("x", "<BS>", { buffer = bufnr })
+            vim.keymap.del("x", "<C-space>", { buffer = bufnr })
+            vim.api.nvim_del_augroup_by_id(group)
+          end
+        })
+    else
+      require("flash").treesitter({
+        actions = {
+          ["<C-space>"] = "next",
+          ["<BS>"] = "prev"
+        },
+        labels = ""
+      })
+    end
+  end, "Treesitter incremental selection using LSP or Flash", { "n", "x", "o" })
 
 
   -- Create some toggle mappings using Snacks

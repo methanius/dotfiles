@@ -19,7 +19,7 @@ in {
       pkgs.btop
       pkgs.cargo
       pkgs.delta
-      pkgs.du-dust
+      pkgs.dust
       pkgs.fd
       pkgs.feh
       pkgs.glow

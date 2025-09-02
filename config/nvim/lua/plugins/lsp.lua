@@ -3,7 +3,7 @@ local servers = require("lsp.servers")
 return {
   {
     "smjonas/inc-rename.nvim",
-    opts = {},
+    opts = { input_buffer_type = "snacks" },
   },
   {
     "mason-org/mason.nvim",
@@ -34,7 +34,7 @@ return {
     },
     event = { "BufReadPre", "BufNewFile" },
     opts = {
-      ensure_installed = vim.tbl_keys(servers or {}),
+      ensure_installed = vim.tbl_keys(servers),
       automatic_installation = true,
       automatic_enable = false,
     }

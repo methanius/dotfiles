@@ -31,11 +31,10 @@ return {
     end,
     dependencies = {
       "mfussenegger/nvim-dap",
-      { "stevearc/overseer.nvim",          config = true },
+      { "stevearc/overseer.nvim", config = true },
       {
         "igorlfs/nvim-dap-view", opts = { winbar = { sections = { "console", "watches", "scopes", "exceptions", "threads", "repl" } } },
       },
-      { "theHamsta/nvim-dap-virtual-text", opts = {} },
       {
         "mfussenegger/nvim-dap-python",
         config = function()
@@ -43,5 +42,8 @@ return {
         end
       },
     },
+    cmd = {
+      "DapEval",
+    }
   },
 }

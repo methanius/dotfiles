@@ -9,5 +9,6 @@ return {
       "ToggleNextBool",
       "TogglePreviousBool"
     },
+    -- dir = "~/projects/treesitter_home_tools.nvim",
   },
 }

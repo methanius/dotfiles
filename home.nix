@@ -40,6 +40,9 @@ in {
       pkgs.bluetui
       pkgs.jujutsu
       pkgs.uv
+      pkgs.gh
+      pkgs.opencode
+      pkgs.mergiraf
     ];
   };
   imports = [./apps/fish.nix ./apps/zsh.nix];

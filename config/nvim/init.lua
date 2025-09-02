@@ -45,3 +45,4 @@ require("lazy").setup({ { import = "plugins" } }, {
   },
 })
 
+vim.cmd.colorscheme("kanagawa")

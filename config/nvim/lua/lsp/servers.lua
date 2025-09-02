@@ -1,6 +1,7 @@
 --- I use lspconfig, so these are just the overrides
 ---@type table<string, vim.lsp.Config>
 local M = {
+  azure_pipelines_ls = {},
   bashls = {},
   clangd = {},
   lua_ls = {
@@ -31,7 +32,7 @@ local M = {
   ruff = {},
   tombi = {},
   ty = {
-    cmd = {  "ty", "server" },
+    cmd = { "ty", "server" },
     filetypes = { "python" },
     root_dir = vim.fs.root(0, { ".git/", "pyproject.toml", "ty.toml" }),
     settings = {

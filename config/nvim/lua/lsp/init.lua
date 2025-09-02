@@ -23,15 +23,17 @@ end
 
 ---Sets all the contained LSP related keymaps depending on cond and has checks
 ---@param lsp_keymaps LSPKeymapSpec[]
+---@param client vim.lsp.Client
+---@param bufnr integer
 ---@return nil
-local function set_lsp_keymaps(lsp_keymaps, bufnr)
+local function set_lsp_keymaps(lsp_keymaps, client, bufnr)
   for _, keys in pairs(lsp_keymaps) do
     local has = not keys.has or an_active_client_has(bufnr, keys.has)
     local cond = not (keys.cond == false or ((type(keys.cond) == "function") and not keys.cond()))
-    local specific_client = not keys.specific_client or
-        not vim.tbl_isempty(vim.lsp.get_clients({ name = keys.specific_client }))
+    local specific_or_unspecified_client = (not keys.specific_client) or
+        (client.name == keys.specific_client)
 
-    if has and cond and specific_client then
+    if has and cond and specific_or_unspecified_client then
       ---@type vim.keymap.set.Opts
       local opts = { desc = "LSP: " .. keys[3] }
       if keys.extra_opts then
@@ -52,7 +54,7 @@ local function on_attach(client, bufnr)
   ---@type LSPKeymapSpec[]
 
   local lsp_keymaps = require("lsp.keymaps")
-  set_lsp_keymaps(lsp_keymaps, bufnr)
+  set_lsp_keymaps(lsp_keymaps, client, bufnr)
   --
   -- I only ever use inlay hints in Rust an a few other languages
   -- Toggler from Snacks is configured

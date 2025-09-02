@@ -207,6 +207,7 @@ function keymaps:set_all()
     local expression = table.concat(lines, "\n")
     require("dap.repl").execute(expression, { context = "repl" })
   end, "Execute selected text in DAP repl", "v")
+  keymap("<leader>dE", "<CMD>DapEval<CR>", "Open Dap Eval buffer")
 end
 
 return keymaps

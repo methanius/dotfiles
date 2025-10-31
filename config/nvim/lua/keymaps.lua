@@ -161,20 +161,23 @@ function keymaps:set_all()
   keymap("<leader>db", function() require("dap").toggle_breakpoint() end, "DAP Breakpoint")
   keymap("<leader>dc", function() require("dap").continue() end, "DAP Continue")
   keymap("<leader>dC", function() require("dap").run_to_cursor() end, "DAP Run to Cursor")
-
-  local function word_in_current_buffer(word)
-    return vim.iter(ipairs(vim.api.nvim_buf_get_lines(0, 0, -1, false))):any(function(_, line)
-      return line:find(word)
-    end)
-  end
   keymap("<leader>dr", function()
     local dap_view = require("dap-view")
     if require("dap-view.state").current_section == "repl" and vim.api.nvim_get_current_win() == require("dap-view.state").winnr then
       dap_view.close()
     else
       dap_view.open()
-      if vim.bo.filetype == "python" and (word_in_current_buffer("polars") or word_in_current_buffer("pandas")) then
-        vim.api.nvim_win_set_height(require("dap-view.state").winnr, 23)
+      if vim.bo.filetype == "python" then
+        local parser = vim.treesitter.get_parser()
+        if parser ~= nil then
+          local tree = parser:parse()[1]
+          local query = vim.treesitter.query.get(vim.bo.filetype, "polars_pandas_module")
+          if query ~= nil then
+            if vim.iter(query:iter_matches(tree:root(), vim.api.nvim_get_current_buf(), 0, -1)):next() and true or false then
+              vim.api.nvim_win_set_height(require("dap-view.state").winnr, 23)
+            end
+          end
+        end
       end
       dap_view.jump_to_view("repl")
       vim.api.nvim_set_current_win(require("dap-view.state").winnr)

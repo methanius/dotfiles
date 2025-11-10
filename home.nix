@@ -124,6 +124,7 @@ in {
   xdg.configFile."polybar".source = ./config/polybar;
   xdg.configFile."picom".source = config.lib.file.mkOutOfStoreSymlink (builtins.toPath "${homeDirectory}/dotfiles/config/picom");
   xdg.configFile."i3".source = config.lib.file.mkOutOfStoreSymlink (builtins.toPath "${homeDirectory}/dotfiles/config/i3");
+  xdg.configFile."atuin".source = config.lib.file.mkOutOfStoreSymlink (builtins.toPath "${homeDirectory}/dotfiles/config/atuin");
   xdg.configFile."ghostty".source = config.lib.file.mkOutOfStoreSymlink (builtins.toPath "${homeDirectory}/dotfiles/config/ghostty");
   xdg.configFile."rofi".source = ./config/rofi;
   xdg.configFile."rotate_wallpaper_scripts".source = ./config/rotate_wallpaper_scripts;

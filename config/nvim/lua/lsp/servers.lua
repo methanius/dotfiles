@@ -36,9 +36,6 @@ local M = {
     settings = {
       ty = {
         diagnosticMode = "workspace",
-        experimental = {
-          rename = true,
-        },
         completions = {
           autoImport = true,
         },

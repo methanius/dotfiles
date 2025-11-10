@@ -1,11 +1,18 @@
 return {
   "saghen/blink.cmp",
   event = { "InsertEnter", "CmdlineEnter" },
-  build = "nix run .#build-plugin",
+  build = function()
+    -- build the fuzzy matcher, wait up to 60 seconds
+    -- you can use `gb` in `:Lazy` to rebuild the plugin as needed
+    require('blink.cmp').build():wait(600000)
+  end,
   dependencies = {
     { "L3MON4D3/LuaSnip", version = "v2.*" },
-    "folke/lazydev.nvim"
+    "folke/lazydev.nvim",
+    "saghen/blink.lib",
   },
+      ---@module 'blink.cmp'
+      ---@type blink.cmp.Config
   opts = {
     keymap = {
       preset = "default",

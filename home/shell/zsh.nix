@@ -29,17 +29,7 @@
       cmlbrel = "cmake -S . -B build -DCMAKE_EXPORT_COMPILE_COMMANDS=on -DCMAKE_BUILD_TYPE=Release;cmake --build build -j15";
       cmlbreldeb = "cmake -S . -B build -DCMAKE_EXPORT_COMPILE_COMMANDS=on -DCMAKE_BUILD_TYPE=RelWithDebInfo;cmake --build build -j15";
     };
-    envExtra = ''
-      path+=('/home/clausormann/.local/bin')
-      export PATH
-      if [ -f ~/pip-token-mftus ]; then
-          for TOKEN in $(cat ~/pip-token-mftus)
-          do
-              export PIP_EXTRA_INDEX_URL="https://$TOKEN@pkgs.dev.azure.com/mft-energy/MFTUS/_packaging/mft-us-pip/pypi/simple/ https://$TOKEN@pkgs.dev.azure.com/mft-energy/_packaging/mft-energy-pip/pypi/simple/"
-              export UV_INDEX="https://$TOKEN@pkgs.dev.azure.com/mft-energy/MFTUS/_packaging/mft-us-pip/pypi/simple/ https://$TOKEN@pkgs.dev.azure.com/mft-energy/_packaging/mft-energy-pip/pypi/simple/"
-          done
-      fi
-    '';
+
     initContent = ''
               source "''${XDG_CONFIG_HOME:-$HOME/.config}/wezterm/wezterm.sh"
               autoload -Uz add-zsh-hook

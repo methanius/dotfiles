@@ -1,5 +1,5 @@
 {
-  description = "My first Home Manager flake";
+  description = "Unified Nix configuration — home-manager + NixOS";
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
@@ -9,8 +9,8 @@
     };
     neovim-nightly-overlay = {
       url = "github:nix-community/neovim-nightly-overlay";
-        inputs.nixpkgs.follows = "nixpkgs";
-        };
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = {
@@ -20,18 +20,46 @@
     ...
   }: let
     system = "x86_64-linux";
-    username = builtins.replaceStrings ["\n"] [""] (builtins.readFile ./username.nix);
-    overlays = [
-      neovim-nightly-overlay.overlays.default
-    ]; 
-  in {
-    packages.${system}.default = home-manager.defaultPackage.${system};
-    homeConfigurations.${username} = home-manager.lib.homeManagerConfiguration {
-      pkgs = import nixpkgs {
-        inherit system;
-        overlays = overlays;
-      };
-      modules = [./home.nix];
+    username = "clausormann";
+    overlays = import ./overlays/default.nix {inherit neovim-nightly-overlay;};
+    pkgs = import nixpkgs {
+      inherit system;
+      inherit overlays;
     };
+  in {
+    homeConfigurations."${username}@wsl" = home-manager.lib.homeManagerConfiguration {
+      inherit pkgs;
+      extraSpecialArgs = {
+        repoPath = "/home/${username}/dotfiles";
+      };
+      modules = [
+        ./home/default.nix
+        ./hosts/wsl/default.nix
+        {
+          home = {
+            inherit username;
+            homeDirectory = "/home/${username}";
+          };
+        }
+      ];
+    };
+
+    # Placeholder: NixOS configuration with home-manager as a module
+    # nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
+    #   inherit system;
+    #   modules = [
+    #     ./hosts/nixos/default.nix
+    #     home-manager.nixosModules.home-manager
+    #     {
+    #       nixpkgs.overlays = overlays;
+    #       home-manager.useGlobalPkgs = true;
+    #       home-manager.useUserPackages = true;
+    #       home-manager.extraSpecialArgs = {
+    #         repoPath = "/home/${username}/nix-config";
+    #       };
+    #       home-manager.users.${username} = import ./home/default.nix;
+    #     }
+    #   ];
+    # };
   };
 }

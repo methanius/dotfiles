@@ -35,8 +35,8 @@
         repoPath = "/home/${username}/dotfiles";
       };
       modules = [
-        ./home/default.nix
-        ./hosts/wsl/default.nix
+        ./modules/home/default.nix
+        ./hosts/wsl/home.nix
         {
           home = {
             inherit username;

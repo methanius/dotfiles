@@ -31,7 +31,7 @@
       enable = true;
       themes = {
         kanagawa = {
-          src = ../../config/bat;
+          src = ../../../config/bat;
           file = "kanagawa.tmTheme";
         };
       };

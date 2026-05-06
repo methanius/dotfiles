@@ -1,8 +1,8 @@
-{...}: {
+{config, ...}: {
   targets.genericLinux.enable = true;
 
   programs.zsh.envExtra = ''
-    path+=('/home/clausormann/.local/bin')
+    path+=('${config.home.homeDirectory}/.local/bin')
     export PATH
     if [ -f ~/pip-token-mftus ]; then
         for TOKEN in $(cat ~/pip-token-mftus)

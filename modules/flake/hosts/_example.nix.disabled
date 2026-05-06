@@ -1,0 +1,32 @@
+# Template for a future standalone Home-Manager host.
+#
+# To activate:
+#   1. Copy this file to modules/flake/hosts/<host>.nix (drop the .disabled
+#      suffix; without it import-tree picks up the file).
+#   2. Create hosts/<host>/home.nix (you can copy hosts/_example/home.nix.disabled
+#      as a starting point, again dropping the .disabled suffix).
+#   3. Replace placeholders below with real values.
+#   4. nix flake show should then list homeConfigurations."<user>@<host>".
+#
+# {
+#   self,
+#   inputs,
+#   withSystem,
+#   ...
+# }: {
+#   flake.homeConfigurations."<user>@<host>" = withSystem "x86_64-linux" ({pkgs, ...}:
+#     inputs.home-manager.lib.homeManagerConfiguration {
+#       inherit pkgs;
+#       modules = [
+#         self.homeModules.default
+#         ../../../hosts/<host>/home.nix
+#         {
+#           home = {
+#             username = "<user>";
+#             homeDirectory = "/home/<user>";
+#           };
+#           my.repoPath = "/home/<user>/dotfiles";
+#         }
+#       ];
+#     });
+# }

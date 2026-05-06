@@ -1,8 +1,4 @@
-{
-  config,
-  repoPath,
-  ...
-}: {
+{config, ...}: {
   xdg.configFile."ghostty".source =
-    config.lib.file.mkOutOfStoreSymlink "${repoPath}/config/ghostty";
+    config.lib.file.mkOutOfStoreSymlink "${config.my.repoPath}/config/ghostty";
 }

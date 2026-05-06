@@ -1,8 +1,12 @@
 # Wires Home-Manager into NixOS as a module, feeding it the same
 # self.homeModules.default aggregator that the standalone WSL build uses.
 #
-# Add NixOS-only HM extras (e.g. self.homeModules.desktop) to
-# users.clausormann.imports below as the desktop config evolves.
+# `my.repoPath` is set per host inside hosts/<host>/system.nix and flows
+# into the HM module set automatically because useGlobalPkgs/useUserPackages
+# share the NixOS-side option scope.
+#
+# Add NixOS-only HM extras (e.g. self.homeModules.desktop) to the user's
+# imports list below as the desktop config evolves.
 {
   inputs,
   self,
@@ -14,9 +18,6 @@
     useGlobalPkgs = true;
     useUserPackages = true;
     backupFileExtension = "hm-backup";
-    extraSpecialArgs = {
-      repoPath = "/home/clausormann/dotfiles";
-    };
     users.clausormann.imports = [
       self.homeModules.default
       # self.homeModules.desktop  # enable when desktop config is ready

@@ -1,7 +1,6 @@
 {
   pkgs,
   config,
-  repoPath,
   ...
 }: {
   home.packages = [
@@ -52,6 +51,6 @@
   };
 
   xdg.configFile."atuin".source =
-    config.lib.file.mkOutOfStoreSymlink "${repoPath}/config/atuin";
+    config.lib.file.mkOutOfStoreSymlink "${config.my.repoPath}/config/atuin";
   xdg.configFile."zsh/completions/nix.zsh".source = "${pkgs.nix}/share/zsh/vendor_completions.d/nix.zsh";
 }

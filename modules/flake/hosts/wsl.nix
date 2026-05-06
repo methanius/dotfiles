@@ -1,7 +1,9 @@
-# Builds the standalone Home-Manager outputs.
+# Standalone Home-Manager configuration for the WSL host.
 #
-# Each host composes self.homeModules.default (the cross-host aggregator)
-# with its host-specific HM module from ./hosts/<host>/home.nix.
+# This is the single source of truth for "who runs HM on WSL and where their
+# repo lives". Adding a second standalone HM host is a matter of dropping a
+# new file under modules/flake/hosts/ following this same shape; see
+# _example.nix.disabled for a template.
 {
   self,
   inputs,
@@ -11,17 +13,15 @@
   flake.homeConfigurations."clausormann@wsl" = withSystem "x86_64-linux" ({pkgs, ...}:
     inputs.home-manager.lib.homeManagerConfiguration {
       inherit pkgs;
-      extraSpecialArgs = {
-        repoPath = "/home/clausormann/dotfiles";
-      };
       modules = [
         self.homeModules.default
-        ../../hosts/wsl/home.nix
+        ../../../hosts/wsl/home.nix
         {
           home = {
             username = "clausormann";
             homeDirectory = "/home/clausormann";
           };
+          my.repoPath = "/home/clausormann/dotfiles";
         }
       ];
     });

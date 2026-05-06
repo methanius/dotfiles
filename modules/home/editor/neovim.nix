@@ -1,7 +1,6 @@
 {
   pkgs,
   config,
-  repoPath,
   ...
 }: {
   home.packages = [
@@ -12,5 +11,5 @@
   ];
 
   xdg.configFile."nvim".source =
-    config.lib.file.mkOutOfStoreSymlink "${repoPath}/config/nvim";
+    config.lib.file.mkOutOfStoreSymlink "${config.my.repoPath}/config/nvim";
 }

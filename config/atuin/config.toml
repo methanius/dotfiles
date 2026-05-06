@@ -29,6 +29,8 @@ auto_sync = true
 # update_check = true
 
 ## address of the sync server
+## NOTE: this URL is borderline-secret (private atuin server). Scrub before
+## making this repo public.
 sync_address = "http://atuin.wibrand.dev"
 
 ## how often to sync history. note that this is only triggered when a command

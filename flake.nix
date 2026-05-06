@@ -1,5 +1,5 @@
 {
-  description = "Unified Nix configuration — home-manager + NixOS";
+  description = "Dendritic dotfiles — Home-Manager + NixOS via flake-parts";
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
@@ -15,53 +15,13 @@
     };
   };
 
-  outputs = {
-    nixpkgs,
-    home-manager,
-    neovim-nightly-overlay,
-    ...
-  }: let
-    system = "x86_64-linux";
-    username = "clausormann";
-    overlays = import ./overlays/default.nix {inherit neovim-nightly-overlay;};
-    pkgs = import nixpkgs {
-      inherit system;
-      inherit overlays;
+  # Dendritic pattern: every flake-parts module lives under ./modules/flake
+  # and is auto-discovered by import-tree. The repo's plain HM/NixOS modules
+  # (./modules/home, ./modules/nixos, ./hosts) are intentionally outside the
+  # import-tree scope; they are referenced by file path from the flake-parts
+  # modules that build homeConfigurations / nixosConfigurations.
+  outputs = inputs:
+    inputs.flake-parts.lib.mkFlake {inherit inputs;} {
+      imports = [(inputs.import-tree ./modules/flake)];
     };
-  in {
-    homeConfigurations."${username}@wsl" = home-manager.lib.homeManagerConfiguration {
-      inherit pkgs;
-      extraSpecialArgs = {
-        repoPath = "/home/${username}/dotfiles";
-      };
-      modules = [
-        ./modules/home/default.nix
-        ./hosts/wsl/home.nix
-        {
-          home = {
-            inherit username;
-            homeDirectory = "/home/${username}";
-          };
-        }
-      ];
-    };
-
-    # Placeholder: NixOS configuration with home-manager as a module
-    # nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
-    #   inherit system;
-    #   modules = [
-    #     ./hosts/nixos/default.nix
-    #     home-manager.nixosModules.home-manager
-    #     {
-    #       nixpkgs.overlays = overlays;
-    #       home-manager.useGlobalPkgs = true;
-    #       home-manager.useUserPackages = true;
-    #       home-manager.extraSpecialArgs = {
-    #         repoPath = "/home/${username}/nix-config";
-    #       };
-    #       home-manager.users.${username} = import ./home/default.nix;
-    #     }
-    #   ];
-    # };
-  };
 }

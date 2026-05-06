@@ -10,6 +10,10 @@
 {...}: {
   networking.hostName = "nixos";
 
+  # Identity and repo location on this host.
+  my.user.name = "normann";
+  my.repoPath = "/home/normann/dotfiles";
+
   # Bump after first successful rebuild on the target machine.
   system.stateVersion = "25.05";
 }

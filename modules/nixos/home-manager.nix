@@ -10,6 +10,7 @@
 {
   inputs,
   self,
+  config,
   ...
 }: {
   imports = [inputs.home-manager.nixosModules.home-manager];
@@ -18,9 +19,12 @@
     useGlobalPkgs = true;
     useUserPackages = true;
     backupFileExtension = "hm-backup";
-    users.clausormann.imports = [
+    users.${config.my.user.name}.imports = [
       self.homeModules.default
       # self.homeModules.desktop  # enable when desktop config is ready
+      # Forward the NixOS-level my.repoPath into HM scope so HM modules that
+      # consume `config.my.repoPath` (mkOutOfStoreSymlink consumers) work.
+      {my.repoPath = config.my.repoPath;}
     ];
   };
 }

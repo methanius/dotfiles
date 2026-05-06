@@ -1,8 +1,13 @@
 # Cross-host NixOS base aggregator. Anything that should be on every NixOS
 # machine this flake configures lives here (or under a sibling file imported
 # from this aggregator).
-{pkgs, ...}: {
+{
+  pkgs,
+  config,
+  ...
+}: {
   imports = [
+    ./_options.nix
     ./home-manager.nix
   ];
 
@@ -13,9 +18,9 @@
 
   nixpkgs.config.allowUnfree = true;
 
-  users.users.clausormann = {
+  users.users.${config.my.user.name} = {
     isNormalUser = true;
-    description = "clausormann";
+    description = config.my.user.name;
     extraGroups = ["wheel" "networkmanager" "video" "audio"];
     shell = pkgs.zsh;
   };

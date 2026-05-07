@@ -66,3 +66,12 @@ vim.opt.shortmess:append {
   w = true,
   s = true,
 }
+
+-- Disable unused remote-plugin language providers. We don't use any
+-- :python/:ruby/:perl/node-host remote plugins; skipping the probe makes
+-- startup quieter (no :checkhealth noise) and a touch faster, and avoids
+-- accidentally picking up an interpreter from a transient nix-shell PATH.
+vim.g.loaded_node_provider = 0
+vim.g.loaded_perl_provider = 0
+vim.g.loaded_ruby_provider = 0
+vim.g.loaded_python3_provider = 0

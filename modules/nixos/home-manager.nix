@@ -22,9 +22,12 @@
     users.${config.my.user.name}.imports = [
       self.homeModules.default
       # self.homeModules.desktop  # enable when desktop config is ready
-      # Forward the NixOS-level my.repoPath into HM scope so HM modules that
-      # consume `config.my.repoPath` (mkOutOfStoreSymlink consumers) work.
-      {my.repoPath = config.my.repoPath;}
+      # Forward NixOS-level options into HM scope so HM modules that consume
+      # them (mkOutOfStoreSymlink consumers, wrapped-nvim extraPackages) work.
+      {
+        my.repoPath = config.my.repoPath;
+        my.editor.neovim.extraRuntimePackages = config.my.editor.neovim.extraRuntimePackages;
+      }
     ];
   };
 }

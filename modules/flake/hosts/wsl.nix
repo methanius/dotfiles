@@ -22,6 +22,7 @@
             homeDirectory = "/home/clausormann";
           };
           my.repoPath = "/home/clausormann/dotfiles";
+          my.editor.neovim.extraRuntimePackages = [];
         }
       ];
     });

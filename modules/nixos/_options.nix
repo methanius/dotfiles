@@ -26,5 +26,19 @@
         symlinks for nvim, terminals, atuin) get the host-specific value.
       '';
     };
+
+    editor.neovim.extraRuntimePackages = lib.mkOption {
+      type = lib.types.listOf lib.types.package;
+      default = [];
+      description = ''
+        Extra packages to put on the wrapped nvim's PATH on this NixOS host.
+
+        Transport option: declared here so hosts/<host>/system.nix can set
+        it cleanly, then forwarded into the HM submodule by
+        modules/nixos/home-manager.nix. Has no NixOS-side semantic effect on
+        its own; the actual consumer is the HM-scope option of the same
+        name in modules/home/_options.nix.
+      '';
+    };
   };
 }

@@ -18,6 +18,7 @@
       inherit pkgs;
       modules = [
         self.homeModules.default
+        config.flake.modules.homeManager.base
         config.flake.modules.homeManager.workstation-user
         ../../../hosts/wsl/home.nix
         {

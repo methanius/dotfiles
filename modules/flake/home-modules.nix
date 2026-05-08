@@ -10,10 +10,6 @@
 
     programs = ../home/programs.nix;
 
-    "shell.fish" = ../home/shell/fish.nix;
-    "shell.zsh" = ../home/shell/zsh.nix;
-    "shell.starship" = ../home/shell/starship.nix;
-
     "editor.neovim" = ../home/editor/neovim.nix;
 
     dev = ../home/dev/default.nix;

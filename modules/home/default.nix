@@ -2,9 +2,6 @@
 {
   imports = [
     ./_options.nix
-    ./shell/fish.nix
-    ./shell/zsh.nix
-    ./shell/starship.nix
     ./editor/neovim.nix
     ./dev/default.nix
     ./programs.nix

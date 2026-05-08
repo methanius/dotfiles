@@ -14,7 +14,7 @@ let
   # them to home-manager.users.<user>.imports without trying to read
   # `config.flake.*` from inside a NixOS module (different scope).
   hmBase = config.flake.modules.homeManager.base;
-  hmWorkstationUser = config.flake.modules.homeManager.workstation-user;
+  hmWorkstationUser = config.flake.modules.homeManager.workstation-niri-user;
 in
 {
   flake.nixosConfigurations.nixos = withSystem "x86_64-linux" (
@@ -28,7 +28,7 @@ in
 
         # Roles + host-specific bits.
         config.flake.modules.nixos.base
-        config.flake.modules.nixos.workstation
+        config.flake.modules.nixos.workstation-niri
         config.flake.modules.nixos.host-nixos
 
         # Home-Manager as a NixOS module, attaching the user's HM role bundle

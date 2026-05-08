@@ -8,11 +8,8 @@
   flake.homeModules = {
     default = ../home/default.nix;
 
-    programs = ../home/programs.nix;
-
     "editor.neovim" = ../home/editor/neovim.nix;
 
-    dev = ../home/dev/default.nix;
     desktop = ../home/desktop/default.nix;
   };
 }

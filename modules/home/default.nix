@@ -3,8 +3,6 @@
   imports = [
     ./_options.nix
     ./editor/neovim.nix
-    ./dev/default.nix
-    ./programs.nix
   ];
 
   programs.home-manager.enable = true;

@@ -177,6 +177,12 @@ in {
 
   programs.waybar = {
     enable = true;
+    # Run as a systemd user unit bound to graphical-session.target so waybar
+    # comes up automatically when sway starts and goes down with it.
+    systemd = {
+      enable = true;
+      targets = ["sway-session.target"];
+    };
     settings.mainBar = {
       layer = "bottom";
       position = "bottom";

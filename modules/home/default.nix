@@ -6,7 +6,6 @@
     ./shell/zsh.nix
     ./shell/starship.nix
     ./editor/neovim.nix
-    ./terminal/ghostty.nix
     ./terminal/wezterm.nix
     ./terminal/alacritty.nix
     ./dev/default.nix

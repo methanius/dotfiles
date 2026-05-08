@@ -6,6 +6,7 @@
 # _example.nix.disabled for a template.
 {
   self,
+  config,
   inputs,
   withSystem,
   ...
@@ -17,6 +18,7 @@
       inherit pkgs;
       modules = [
         self.homeModules.default
+        config.flake.modules.homeManager.workstation-user
         ../../../hosts/wsl/home.nix
         {
           home = {

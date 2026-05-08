@@ -16,7 +16,6 @@
 
     "editor.neovim" = ../home/editor/neovim.nix;
 
-    "terminal.ghostty" = ../home/terminal/ghostty.nix;
     "terminal.wezterm" = ../home/terminal/wezterm.nix;
     "terminal.alacritty" = ../home/terminal/alacritty.nix;
 

@@ -49,13 +49,13 @@ in {
       menu = "fuzzel";
 
       # Dual layout: dk on the laptop's built-in keyboard, us on the
-      # programmable mechanical splits. Mod1+Shift toggles between them
-      # via xkb (sway keybinds get first dibs on Mod1+Shift+<digit>, so
-      # those still move containers; only Mod1+Shift+space reaches xkb).
+      # programmable mechanical splits. Mod4+Space toggles between them.
+      # (Earlier `grp:alt_shift_toggle` hijacked Mod1+Shift+<num> before
+      # sway ever saw it, breaking move-container-to-workspace.)
       input."type:keyboard" = {
         xkb_layout = "dk,us";
         xkb_variant = "nodeadkeys,intl";
-        xkb_options = "grp:alt_shift_toggle";
+        xkb_options = "grp:win_space_toggle";
       };
 
       # Solid color until the swww-rotate timer fires (30s after boot).

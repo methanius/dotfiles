@@ -97,6 +97,24 @@ home-manager switch --flake ".#clausormann@wsl"
 The output of `build` is symlinked to `./result/`; inspect with
 `./result/home-path/bin/nvim --version` etc.
 
+#### One-time: enable the nix-community binary cache
+
+Home-Manager on a non-NixOS host cannot rewrite `/etc/nix/nix.conf`, so the
+substituter declared in `modules/nixos/default.nix` for the NixOS host does
+**not** propagate here. Run this once per fresh WSL box so neovim-nightly
+(and other `nix-community` artifacts) come down prebuilt instead of
+rebuilding from source:
+
+```sh
+nix-env -iA cachix -f https://cachix.org/api/v1/install   # if cachix not yet installed
+sudo $(which cachix) use nix-community
+sudo systemctl restart nix-daemon                          # or: sudo pkill -HUP nix-daemon
+```
+
+`cachix use` edits `/etc/nix/nix.conf` non-destructively (appends, dedupes,
+preserves `cache.nixos.org`). Verify with
+`nix show-config | grep -E '^(substituters|trusted-public-keys) '`.
+
 ### NixOS (system + HM as a NixOS module)
 
 ```sh

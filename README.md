@@ -146,6 +146,34 @@ nix eval --json \
   --apply 'xs: map (p: p.pname or p.name) xs'
 ```
 
+## Desktop module (sway)
+
+`self.homeModules.desktop` (in `modules/home/desktop/default.nix`) bundles
+the full sway stack: `wayland.windowManager.sway` with i3-style keybinds
+(Mod1/Alt main modifier, Mod4+L for swaylock), `programs.waybar` styled in
+the Tomorrow Night palette, `programs.swaylock`, `services.swayidle`, and a
+systemd user timer (`swww-rotate.timer`) that picks a random wallpaper from
+`~/Pictures/wallpapers` every 15 min via swww.
+
+It is opt-in per host: not in the cross-host `modules/home/default.nix`
+imports list. The NixOS host pulls it in via
+`modules/nixos/home-manager.nix`; WSL does not. System-side requirements
+(`programs.sway`, `xdg.portal`, swaylock PAM) live in
+`hosts/nixos/system.nix`.
+
+The wallpaper directory is **not** managed by this repo. Create it and
+populate it manually:
+
+```sh
+mkdir -p ~/Pictures/wallpapers
+# drop .jpg/.jpeg/.png/.webp files in
+systemctl --user start swww-rotate.timer    # picks up automatically on next login
+systemctl --user start swww-rotate.service  # trigger an immediate rotation
+```
+
+If the directory is missing or empty the rotator no-ops; the bg falls back
+to the solid Tomorrow Night background `#282A2E` set in the sway config.
+
 ## Adding a new HM host
 
 1. Copy `modules/flake/hosts/_example.nix.disabled` →

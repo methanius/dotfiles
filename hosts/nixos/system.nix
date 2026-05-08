@@ -55,8 +55,28 @@
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
 
-  # Enable the X11 windowing system.
-  services.xserver.enable = true;
+  # Sway (Wayland) — system-side enable. The user-side config (keybinds,
+  # waybar, swaylock, swayidle, wallpaper rotation) lives in
+  # modules/home/desktop/default.nix and reaches this host via
+  # modules/nixos/home-manager.nix.
+  programs.sway = {
+    enable = true;
+    xwayland.enable = true;
+  };
+
+  # XDG portals: file pickers, screen sharing, etc. wlr portal for sway,
+  # gtk portal as a fallback for non-portal-aware apps.
+  xdg.portal = {
+    enable = true;
+    wlr.enable = true;
+    extraPortals = [pkgs.xdg-desktop-portal-gtk];
+    config.common.default = "*";
+  };
+
+  # PAM file required for swaylock to actually authenticate. The HM-side
+  # programs.swaylock only writes ~/.config/swaylock/config; the PAM
+  # service itself has to be declared at the system level.
+  security.pam.services.swaylock = {};
 
   environment.systemPackages = with pkgs; [
     vim
@@ -66,7 +86,7 @@
     grim
     slurp
     dunst
-    swww
+    awww # was `swww`; renamed upstream
     git
     jujutsu
     xclip
@@ -77,9 +97,11 @@
   #  wget
   ];
 
-  # Enable the GNOME Desktop Environment.
-  services.xserver.displayManager.gdm.enable = true;
-  services.xserver.desktopManager.gnome.enable = true;
+  # GDM (Wayland greeter) — keeps the existing login flow; sway shows up as
+  # a session option automatically once programs.sway.enable is set above.
+  # X server itself is no longer enabled; sway is Wayland-native and GDM
+  # runs its own internal compositor for the greeter.
+  services.displayManager.gdm.enable = true;
   # Identity and repo location on this host.
   my.user.name = "normann";
   my.repoPath = "/home/normann/dotfiles";

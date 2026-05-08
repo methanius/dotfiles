@@ -21,7 +21,7 @@
     backupFileExtension = "hm-backup";
     users.${config.my.user.name}.imports = [
       self.homeModules.default
-      # self.homeModules.desktop  # enable when desktop config is ready
+      self.homeModules.desktop
       # Forward NixOS-level options into HM scope so HM modules that consume
       # them (mkOutOfStoreSymlink consumers, wrapped-nvim extraPackages) work.
       {

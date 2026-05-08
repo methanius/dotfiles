@@ -28,7 +28,10 @@
     ];
   };
 
-  nixpkgs.config.allowUnfree = true;
+  # NOTE: nixpkgs.config.allowUnfree is intentionally NOT set here; the
+  # external pkgs instance from modules/flake/overlays.nix already carries
+  # config.allowUnfree = true, and setting it again triggers the
+  # "externally created instance" assertion in NixOS top-level.
 
   users.users.${config.my.user.name} = {
     isNormalUser = true;

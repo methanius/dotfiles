@@ -15,11 +15,12 @@
     };
   };
 
-  # Dendritic pattern: every flake-parts module lives under ./modules/flake
-  # and is auto-discovered by import-tree. The repo's plain HM/NixOS modules
-  # (./modules/home, ./modules/nixos, ./hosts) are intentionally outside the
-  # import-tree scope; they are referenced by file path from the flake-parts
-  # modules that build homeConfigurations / nixosConfigurations.
+  # Strict dendritic pattern: every flake-parts module lives under
+  # ./modules/flake and is auto-discovered by import-tree. The legacy
+  # ./modules/home, ./modules/nixos plain-module trees and ./hosts/<host>/
+  # are gone — every tool/role/host is now a flake-parts module
+  # contributing to flake.modules.<class>.<role> via
+  # flake-parts.flakeModules.modules.
   outputs =
     inputs:
     inputs.flake-parts.lib.mkFlake { inherit inputs; } {

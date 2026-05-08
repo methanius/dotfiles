@@ -9,6 +9,9 @@ font-size = 12
 theme = "Kanagawabones"
 background-opacity = 0.95
 
+#Shaders
+custom-shader = shaders/cursor_blaze.glsl
+
 # Window
 window-inherit-font-size = true
 window-decoration = false

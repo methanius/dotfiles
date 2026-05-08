@@ -185,7 +185,7 @@ in {
     };
     settings.mainBar = {
       layer = "bottom";
-      position = "bottom";
+      position = "top";
       height = 28;
       spacing = 6;
 

@@ -80,7 +80,7 @@
 
   environment.systemPackages = with pkgs; [
     vim
-    wofi
+    fuzzel
     waybar
     thunar
     grim

@@ -28,7 +28,7 @@
   '';
 in {
   home.packages = with pkgs; [
-    wofi
+    fuzzel
     awww
     grim
     slurp
@@ -37,13 +37,16 @@ in {
     networkmanagerapplet
   ];
 
+  xdg.configFile."fuzzel/fuzzel.ini".source =
+    config.lib.file.mkOutOfStoreSymlink "${config.my.repoPath}/config/fuzzel/fuzzel.ini";
+
   wayland.windowManager.sway = {
     enable = true;
     wrapperFeatures.gtk = true;
     config = {
       modifier = mod;
       terminal = "ghostty";
-      menu = "wofi --show drun";
+      menu = "fuzzel";
 
       # Dual layout: dk on the laptop's built-in keyboard, us on the
       # programmable mechanical splits. Mod1+Shift toggles between them
@@ -69,7 +72,7 @@ in {
       keybindings = lib.mkOptionDefault {
         # Launchers
         "${mod}+Return" = "exec ghostty";
-        "${mod}+d" = "exec wofi --show drun";
+        "${mod}+d" = "exec fuzzel";
         "${mod}+Shift+q" = "kill";
 
         # Focus (h/j/k/l + arrow keys)

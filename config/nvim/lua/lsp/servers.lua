@@ -1,16 +1,13 @@
 --- I use lspconfig, so these are just the overrides
 
---- Build a `cmd` for tools we launch via `uvx`. Always passes `--offline` so
---- nvim startup never blocks on a network round-trip; uv serves from its
---- cache. To pick up a new upstream release, refresh the cache out-of-band:
----   uvx ruff --version    (fetches latest, populates cache)
----   uvx ty --version
---- After that the next nvim session will use the refreshed binary.
+--- Build a `cmd` for tools we launch via `uvx`. Always online -- if you're
+--- working offline and have the tool cached, hand-patch this to add
+--- `--offline` for the session.
 ---@param tool string  Tool name as known to uv (e.g. "ruff", "ty")
 ---@param ... string   Extra args appended after the tool name (e.g. "server")
 ---@return string[]
 local function uvx_cmd(tool, ...)
-  local cmd = { "uvx", "--offline", tool }
+  local cmd = { "uvx", tool }
   vim.list_extend(cmd, { ... })
   return cmd
 end

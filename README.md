@@ -204,13 +204,13 @@ binaries come from three places:
 - **Nix (`my.editor.neovim.extraRuntimePackages`)**: `bash-language-server`,
   `clang-tools` (for `clangd`), `lua-language-server`. Pinned by `flake.lock`;
   upgrade by bumping nixpkgs.
-- **`uvx --offline` (cache-only)**: `ruff`, `ty`. The `cmd` in
-  `config/nvim/lua/lsp/servers.lua` always launches with `--offline` so nvim
-  startup never blocks on a network round-trip; uv serves from its cache.
-  To pick up a new upstream release, refresh the cache once out-of-band:
-  `uvx ruff --version` / `uvx ty --version` (each fetches+caches the latest;
-  next nvim session uses the refreshed binary). Inspect the cache with
-  `uv cache list`.
+- **`uvx` (online)**: `ruff`, `ty`. The `cmd` in
+  `config/nvim/lua/lsp/servers.lua` launches `uvx ruff server` / `uvx ty
+  server`; uv resolves the latest each invocation, serving from cache when
+  the resolved version matches. Inspect cache with `uv cache list`; check
+  current resolution with `uvx ruff --version` / `uvx ty --version`. If
+  working offline, hand-patch the `cmd` to insert `--offline` for that
+  session.
 - **Manual install**: `tombi` (TOML LSP, used for `pyproject.toml`
   navigation). Install out-of-band, e.g. `cargo install tombi-lsp`, and watch
   upstream for releases.

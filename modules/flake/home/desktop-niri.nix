@@ -23,7 +23,12 @@
       ...
     }:
     {
-      imports = [ inputs.niri-flake.homeModules.niri ];
+      # No `imports` here for niri-flake's HM module: the NixOS-side
+      # `inputs.niri-flake.nixosModules.niri` injects `homeModules.config`
+      # via `home-manager.sharedModules`, and re-importing it on our
+      # side triggers a duplicate-declaration error on
+      # `programs.niri.finalConfig`. Settings below evaluate against
+      # the typed schema provided by that injected module.
 
       programs.niri = {
         settings = {

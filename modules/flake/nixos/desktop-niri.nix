@@ -1,93 +1,75 @@
 # Niri scrollable-tiling Wayland compositor — NixOS-side workstation-niri role.
 #
-# Three contributions in one file:
+# Adopts upstream `inputs.niri-flake.nixosModules.niri` (sodiboo's flake)
+# instead of the nixpkgs `programs/wayland/niri.nix` module that would
+# otherwise activate via `programs.niri.enable`. The upstream module:
 #
-#   1. `perSystem.packages.niri-wrapped` (exposed at flake level via
-#      flake-parts as `flake.packages.<system>.niri-wrapped`) — a
-#      `symlinkJoin` that bundles `niri` with all the runtime CLIs the
-#      compositor shells out to (xwayland-satellite, screenshot and
-#      clipboard tools, brightness and media controls, libnotify). The
-#      `niri` binary is wrapped with `makeWrapper` so its PATH is hermetic
-#      at exec time, regardless of what the user has in `home.packages`.
-#      Mirrors the wrapping pattern already used by `programs.neovim` here.
+#   - `disabledModules`s the nixpkgs one (so they don't fight),
+#   - sets sensible defaults for the surrounding session scaffolding
+#     (xdg.portal, polkit, gnome-keyring, hardware.graphics, dconf, fonts,
+#     pam.swaylock),
+#   - registers `services.displayManager.sessionPackages = [ cfg.package ]`,
+#   - declares `niri.cachix.org` as a substituter (toggleable via
+#     `niri-flake.cache.enable`, default `true`),
+#   - wires a `niri-flake-polkit` user service (KDE polkit agent) `wantedBy`
+#     `niri.service` so authentication dialogs work inside the session.
 #
-#      The base `niri` and `xwayland-satellite` are pulled from the
-#      niri-flake outputs (`niri-stable`, `xwayland-satellite-stable`)
-#      rather than nixpkgs, because `niri.cachix.org` ships prebuilt
-#      binaries for those exact derivations. Nixpkgs's `pkgs.niri` is
-#      *not* in cache.nixos.org for fresh releases, which means using it
-#      forces a ~10-minute Rust compile on every host that pulls a new
-#      nixpkgs. Going through the flake's cache avoids that entirely.
+# Why we adopted this in C23: the previous approach in this file —
+# `pkgs.symlinkJoin` of `niri-stable` + companion CLIs, then
+# `wrapProgram $out/bin/niri --prefix PATH` — was bypassed at runtime by
+# niri's user systemd unit. The unit file (`niri.service`, surfaced by
+# symlinkJoin from the unwrapped niri output) hardcodes
+# `ExecStart=/nix/store/.../niri-25.08/bin/niri --session`, so the
+# wrapped binary was never executed. niri-flake's `niri-stable` package
+# already does an in-tree `substituteInPlace` of that ExecStart= to point
+# at its own bin/niri, and when used as `programs.niri.package` directly
+# (no symlinkJoin in the way), the unit and binary stay consistent.
 #
-#   2. `flake.modules.nixos.workstation-niri` — system-side enable for niri.
-#      Composes `workstation-common` for the bits shared with the sway stack
-#      (audio, portal scaffolding, GDM, printing). The HM-side config
-#      (keybinds, settings) lives in `modules/flake/home/desktop-niri.nix`
-#      contributing to the `workstation-niri-user` HM role. This module
-#      also declares `niri.cachix.org` as a trusted substituter so the
-#      cached prebuilds are actually fetched.
+# Companion runtime tools (grim/slurp/wl-clipboard/brightnessctl/playerctl/
+# pamixer/libnotify) are now provided via Home Manager `home.packages`
+# (see modules/flake/home/desktop-niri.nix). niri inherits them after
+# `systemctl --user import-environment` runs in `niri-session`.
+#
+# `xwayland-satellite` similarly comes via the upstream package's
+# spawn-on-demand path; if explicit installation is desired later, add
+# `inputs.niri-flake.packages.<sys>.xwayland-satellite-stable` to
+# environment.systemPackages.
 { config, inputs, ... }:
+let
+  flakeConfig = config;
+in
 {
-  perSystem =
-    { pkgs, lib, ... }:
-    let
-      niriBase = inputs.niri-flake.packages.${pkgs.stdenv.hostPlatform.system}.niri-stable;
-      xwaylandSatellite =
-        inputs.niri-flake.packages.${pkgs.stdenv.hostPlatform.system}.xwayland-satellite-stable;
-      runtimeDeps =
-        with pkgs;
-        [
-          grim
-          slurp
-          wl-clipboard
-          brightnessctl
-          playerctl
-          pamixer
-          libnotify
-        ]
-        ++ [ xwaylandSatellite ];
-    in
-    {
-      packages.niri-wrapped = pkgs.symlinkJoin {
-        name = "niri-wrapped";
-        paths = [ niriBase ] ++ runtimeDeps;
-        nativeBuildInputs = [ pkgs.makeWrapper ];
-        postBuild = ''
-          wrapProgram $out/bin/niri \
-            --prefix PATH : ${lib.makeBinPath runtimeDeps}
-        '';
-        # Propagate the session-package contract that NixOS's
-        # `services.displayManager.sessionPackages` requires. `symlinkJoin`
-        # drops `passthru` from the inputs, so we re-state it here mirroring
-        # upstream `niri.passthru.providedSessions`.
-        passthru.providedSessions = [ "niri" ];
-      };
-    };
-
   flake.modules.nixos.workstation-niri =
-    { pkgs, ... }:
+    { pkgs, config, ... }:
     {
-      imports = [ config.flake.modules.nixos.workstation-common ];
-
-      # Trust niri-flake's cachix so the prebuilt `niri-stable` and
-      # `xwayland-satellite-stable` derivations referenced by
-      # `niri-wrapped` are substituted instead of compiled locally.
-      # Public key from the niri-flake README.
-      nix.settings = {
-        substituters = [ "https://niri.cachix.org" ];
-        trusted-public-keys = [
-          "niri.cachix.org-1:Wv0OmO7PsuocRKzfDoJ3mulSl7Z6oezYhGhR+3W2964="
-        ];
-      };
+      imports = [
+        flakeConfig.flake.modules.nixos.workstation-common
+        # Upstream NixOS module from niri-flake. Replaces the nixpkgs
+        # programs.niri module via its own `disabledModules`.
+        inputs.niri-flake.nixosModules.niri
+      ];
 
       programs.niri = {
         enable = true;
-        package = config.flake.packages.${pkgs.stdenv.hostPlatform.system}.niri-wrapped;
+        # Use niri-stable from the flake's prebuilt cache rather than
+        # nixpkgs's `pkgs.niri` (which is not in cache.nixos.org for fresh
+        # releases and would force a ~10-minute Rust compile per host).
+        # The niri-flake module declares niri.cachix.org so this binary
+        # is substituted, not built.
+        package = inputs.niri-flake.packages.${pkgs.stdenv.hostPlatform.system}.niri-stable;
       };
 
-      # niri's recommended portal: gnome backend (handles screencast etc.).
-      # Common scaffolding (xdg.portal.enable, default config) comes from
-      # workstation-common.
+      # Belt-and-suspenders: udev grants seat0 input devices to the
+      # session leader, but a few kernels/configurations also gate on
+      # the `input` group. Adding it costs nothing and removes one
+      # possible cause if input-handoff problems recur.
+      users.users.${config.my.user.name}.extraGroups = [ "input" ];
+
+      # niri's recommended portal: gnome backend (handles screencast
+      # etc.). Common scaffolding (xdg.portal.enable, default config)
+      # comes from workstation-common. niri-flake's module also adds
+      # xdg-desktop-portal-gnome conditionally, so this is mostly belt-
+      # and-suspenders for an explicit declaration in our role.
       xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal-gnome ];
     };
 }

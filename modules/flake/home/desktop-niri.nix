@@ -52,15 +52,12 @@
             focus-ring.enable = false;
           };
 
-          # Spawn swww-daemon and nm-applet at session start, mirroring sway.
+          # Spawn Noctalia (and any helpers) at session start. Noctalia
+          # provides bar, launcher, notifications, OSD, lock screen,
+          # wallpaper management — replacing waybar/fuzzel/swaylock/swayidle
+          # /swww from the sway stack.
           spawn-at-startup = [
-            { command = [ "${pkgs.awww}/bin/swww-daemon" ]; }
-            {
-              command = [
-                "${pkgs.networkmanagerapplet}/bin/nm-applet"
-                "--indicator"
-              ];
-            }
+            { command = [ "noctalia-shell" ]; }
           ];
 
           # Sway-style keybinds. Niri uses `Mod` as the configured mod-key
@@ -68,9 +65,8 @@
           binds = with config.lib.niri.actions; {
             # Launchers ------------------------------------------------------
             "Mod+Return".action = spawn "ghostty";
-            # Mod+d → launcher. Until Noctalia is wired in (C18), use fuzzel.
-            # C18 will rebind this to Noctalia's IPC call.
-            "Mod+d".action = spawn "fuzzel";
+            # Mod+d → Noctalia launcher.
+            "Mod+d".action = spawn "noctalia-shell" "ipc" "call" "launcher" "toggle";
             "Mod+Shift+q".action = close-window;
 
             # Focus (h/j/k/l + arrow keys) -----------------------------------
@@ -154,8 +150,8 @@
             "Mod+Shift+e".action = quit { skip-confirmation = true; };
 
             # Lock screen — Mod4+l preserved from sway/i3 muscle memory.
-            # Until Noctalia provides its own lock screen (C18), use swaylock.
-            "Super+l".action = spawn "swaylock" "-f";
+            # Noctalia provides the lock screen.
+            "Super+l".action = spawn "noctalia-shell" "ipc" "call" "lockScreen" "toggle";
 
             # Media keys (pipewire-native via wpctl) -------------------------
             "XF86AudioRaiseVolume".action = spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "5%+";
@@ -176,18 +172,17 @@
         };
       };
 
-      # Userland helpers that Noctalia (C18) and ad-hoc binds shell out to.
+      # Userland helpers that niri keybinds and Noctalia shell out to.
+      # The compositor binary itself is wrapped with a hermetic PATH (see
+      # modules/flake/nixos/desktop-niri.nix → niri-wrapped); these are
+      # general user-facing CLIs.
       home.packages = with pkgs; [
-        fuzzel # transitional launcher; replaced by Noctalia in C18
-        swaylock # transitional locker; replaced by Noctalia in C18
         grim
         slurp
         wl-clipboard
         brightnessctl
         playerctl
         pamixer
-        networkmanagerapplet
-        awww
       ];
     };
 }

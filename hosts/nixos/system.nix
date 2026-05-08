@@ -115,6 +115,9 @@
     cargo
     rustc
     nodejs
+    bash-language-server
+    clang-tools
+    lua-language-server
   ];
 
   # Bump after first successful rebuild on the target machine.

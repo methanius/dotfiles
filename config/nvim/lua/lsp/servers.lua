@@ -1,7 +1,26 @@
 --- I use lspconfig, so these are just the overrides
+
+--- Builds a `cmd` for tools we launch via `uvx`. On invocation it does a
+--- ~1s connectivity probe against pypi.org; if the probe fails it falls back
+--- to `uvx --offline ...` so a warm cache still serves the LSP when offline.
+--- Costs roughly the probe latency on every LSP startup -- accepted tradeoff
+--- for offline resilience without committing to a per-project venv workflow.
+---@param tool string  Tool name as known to uv (e.g. "ruff", "ty")
+---@param ... string   Extra args appended after the tool name (e.g. "server")
+---@return fun(): string[]
+local function uvx_cmd(tool, ...)
+  local extra = { ... }
+  return function()
+    vim.fn.system({ "curl", "-fsS", "--max-time", "1", "https://pypi.org/simple/" })
+    local online = vim.v.shell_error == 0
+    local cmd = online and { "uvx", tool } or { "uvx", "--offline", tool }
+    vim.list_extend(cmd, extra)
+    return cmd
+  end
+end
+
 ---@type table<string, vim.lsp.Config>
 local M = {
-  azure_pipelines_ls = {},
   bashls = {},
   clangd = {},
   lua_ls = {
@@ -29,10 +48,12 @@ local M = {
       },
     },
   },
-  ruff = {},
+  ruff = {
+    cmd = uvx_cmd("ruff", "server"),
+  },
   tombi = {},
   ty = {
-    cmd = { "ty", "server" },
+    cmd = uvx_cmd("ty", "server"),
     filetypes = { "python" },
     root_dir = vim.fs.root(0, { ".git/", "pyproject.toml", "ty.toml" }),
     settings = {

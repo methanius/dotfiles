@@ -22,7 +22,16 @@
             homeDirectory = "/home/clausormann";
           };
           my.repoPath = "/home/clausormann/dotfiles";
-          my.editor.neovim.extraRuntimePackages = [];
+          my.editor.neovim.extraRuntimePackages = with pkgs; [
+            gcc
+            gnumake
+            cargo
+            rustc
+            nodejs
+            bash-language-server
+            clang-tools
+            lua-language-server
+          ];
         }
       ];
     });

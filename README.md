@@ -195,6 +195,26 @@ to the solid Tomorrow Night background `#282A2E` set in the sway config.
    `nixos` entry).
 4. `sudo nixos-rebuild switch --flake "<repoPath>#<name>"`.
 
+## Neovim LSP servers
+
+The neovim configuration uses the native `vim.lsp.config()`/`vim.lsp.enable()`
+API directly (see `config/nvim/lua/lsp/init.lua`) — no `mason.nvim`. Server
+binaries come from three places:
+
+- **Nix (`my.editor.neovim.extraRuntimePackages`)**: `bash-language-server`,
+  `clang-tools` (for `clangd`), `lua-language-server`. Pinned by `flake.lock`;
+  upgrade by bumping nixpkgs.
+- **`uvx` (per-invocation, network → cache fallback)**: `ruff`, `ty`. The
+  `cmd` in `config/nvim/lua/lsp/servers.lua` is a Lua function that probes
+  `pypi.org` (~1s timeout) and falls back to `uvx --offline` on failure, so a
+  warm uv cache keeps the LSP working offline. Versions are not pinned here;
+  `uvx` resolves the latest each time it can reach PyPI. Inspect what's
+  cached with `uv cache list`; check current resolution with
+  `uvx ruff --version` / `uvx ty --version`.
+- **Manual install**: `tombi` (TOML LSP, used for `pyproject.toml`
+  navigation). Install out-of-band, e.g. `cargo install tombi-lsp`, and watch
+  upstream for releases.
+
 ## Notes
 
 - `flake.lock` is intentionally kept stable — newer nixpkgs revisions have

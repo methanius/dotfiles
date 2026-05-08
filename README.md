@@ -429,7 +429,7 @@ input (`flake.nix`) and consumed in-module:
 {
   flake.modules.homeManager.workstation-user = { pkgs, ... }:
     let
-      addons = (import inputs.nur { inherit pkgs; }).repos.rycee.firefox-addons;
+      addons = inputs.nur.legacyPackages.${pkgs.system}.repos.rycee.firefox-addons;
     in
     {
       programs.firefox.profiles.default.extensions.packages = with addons; [
@@ -442,8 +442,14 @@ input (`flake.nix`) and consumed in-module:
 To add another addon: append the attr name (browse
 [NUR-combined](https://nix-community.github.io/NUR-combined/) to find what's
 packaged). To add NUR consumption to a *different* tool module, repeat the
-`import inputs.nur` line locally — NUR is intentionally not a global
-overlay because most modules don't need it.
+`inputs.nur.legacyPackages.${pkgs.system}` line locally — NUR is
+intentionally not a global overlay because most modules don't need it.
+
+> **Don't** use the legacy `import inputs.nur { inherit pkgs; }` form.
+> Some sub-repos (including `rycee`) do `<nixpkgs>` channel lookups
+> internally, which fails under pure flake evaluation. The
+> `legacyPackages.${system}` flake attribute is the pure-eval-safe route
+> and is what NUR's flake exposes for exactly this purpose.
 
 ## 6. Add a system service / kernel option / hardware tweak (NixOS)
 

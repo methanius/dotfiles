@@ -10,9 +10,13 @@
 #   - uBlock Origin   — adblocker
 #   - SponsorBlock    — skip YouTube sponsor segments
 #
-# NUR is wired in via a flake input (see flake.nix). It is imported here and
-# scoped to this module rather than registered as a global overlay, because
-# Firefox is currently the only NUR consumer in the repo.
+# NUR is wired in via a flake input (see flake.nix). It is consumed here via
+# the flake's `legacyPackages.${system}` attribute rather than the legacy
+# `import inputs.nur { inherit pkgs; }` call, because the legacy entrypoint
+# performs `<nixpkgs>` channel lookups inside some sub-repos (incl. rycee's)
+# which fails under pure flake evaluation. NUR is scoped to this module
+# rather than registered as a global overlay, because Firefox is currently
+# the only NUR consumer in the repo.
 #
 # Also sets Firefox as the default browser for http/https/html via
 # xdg.mimeApps so sway/portal hand-offs route here.
@@ -21,7 +25,7 @@
   flake.modules.homeManager.workstation-user =
     { pkgs, ... }:
     let
-      addons = (import inputs.nur { inherit pkgs; }).repos.rycee.firefox-addons;
+      addons = inputs.nur.legacyPackages.${pkgs.system}.repos.rycee.firefox-addons;
     in
     {
       programs.firefox = {

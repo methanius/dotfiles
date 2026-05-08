@@ -1,22 +1,23 @@
 --- I use lspconfig, so these are just the overrides
 
---- Builds a `cmd` for tools we launch via `uvx`. On invocation it does a
---- ~1s connectivity probe against pypi.org; if the probe fails it falls back
---- to `uvx --offline ...` so a warm cache still serves the LSP when offline.
---- Costs roughly the probe latency on every LSP startup -- accepted tradeoff
---- for offline resilience without committing to a per-project venv workflow.
+--- Builds a `cmd` for tools we launch via `uvx`. Probes pypi.org once at
+--- module load (~1s curl with --max-time 1) and bakes the result into a
+--- list-of-strings. If offline, falls back to `uvx --offline ...` so a warm
+--- uv cache still serves the LSP. Cost: one probe per nvim session.
+---
+--- (Earlier attempt used a Lua function for `cmd` -- that signature in
+--- nvim's native LSP API is `fun(dispatchers, config) -> rpc_client`, not
+--- `fun() -> string[]`, which crashed initialization with
+--- `attempt to call field 'request' (a nil value)`.)
 ---@param tool string  Tool name as known to uv (e.g. "ruff", "ty")
 ---@param ... string   Extra args appended after the tool name (e.g. "server")
----@return fun(): string[]
+---@return string[]
 local function uvx_cmd(tool, ...)
-  local extra = { ... }
-  return function()
-    vim.fn.system({ "curl", "-fsS", "--max-time", "1", "https://pypi.org/simple/" })
-    local online = vim.v.shell_error == 0
-    local cmd = online and { "uvx", tool } or { "uvx", "--offline", tool }
-    vim.list_extend(cmd, extra)
-    return cmd
-  end
+  vim.fn.system({ "curl", "-fsS", "--max-time", "1", "https://pypi.org/simple/" })
+  local online = vim.v.shell_error == 0
+  local cmd = online and { "uvx", tool } or { "uvx", "--offline", tool }
+  vim.list_extend(cmd, { ... })
+  return cmd
 end
 
 ---@type table<string, vim.lsp.Config>

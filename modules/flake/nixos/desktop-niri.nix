@@ -31,8 +31,9 @@
   perSystem =
     { pkgs, lib, ... }:
     let
-      niriBase = inputs.niri-flake.packages.${pkgs.system}.niri-stable;
-      xwaylandSatellite = inputs.niri-flake.packages.${pkgs.system}.xwayland-satellite-stable;
+      niriBase = inputs.niri-flake.packages.${pkgs.stdenv.hostPlatform.system}.niri-stable;
+      xwaylandSatellite =
+        inputs.niri-flake.packages.${pkgs.stdenv.hostPlatform.system}.xwayland-satellite-stable;
       runtimeDeps =
         with pkgs;
         [
@@ -81,7 +82,7 @@
 
       programs.niri = {
         enable = true;
-        package = config.flake.packages.${pkgs.system}.niri-wrapped;
+        package = config.flake.packages.${pkgs.stdenv.hostPlatform.system}.niri-wrapped;
       };
 
       # niri's recommended portal: gnome backend (handles screencast etc.).

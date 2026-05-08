@@ -439,7 +439,7 @@ input (`flake.nix`) and consumed in-module:
 {
   flake.modules.homeManager.workstation-user = { pkgs, ... }:
     let
-      addons = inputs.nur.legacyPackages.${pkgs.system}.repos.rycee.firefox-addons;
+      addons = inputs.nur.legacyPackages.${pkgs.stdenv.hostPlatform.system}.repos.rycee.firefox-addons;
     in
     {
       programs.firefox.profiles.default.extensions.packages = with addons; [
@@ -452,7 +452,7 @@ input (`flake.nix`) and consumed in-module:
 To add another addon: append the attr name (browse
 [NUR-combined](https://nix-community.github.io/NUR-combined/) to find what's
 packaged). To add NUR consumption to a *different* tool module, repeat the
-`inputs.nur.legacyPackages.${pkgs.system}` line locally — NUR is
+`inputs.nur.legacyPackages.${pkgs.stdenv.hostPlatform.system}` line locally — NUR is
 intentionally not a global overlay because most modules don't need it.
 
 > **Don't** use the legacy `import inputs.nur { inherit pkgs; }` form.
@@ -662,7 +662,7 @@ managed by an HM module (compositor, daemon, custom tool), use
     };
 
   flake.modules.nixos.<role> = { pkgs, ... }: {
-    programs.<tool>.package = config.flake.packages.${pkgs.system}.<tool>-wrapped;
+    programs.<tool>.package = config.flake.packages.${pkgs.stdenv.hostPlatform.system}.<tool>-wrapped;
   };
 }
 ```

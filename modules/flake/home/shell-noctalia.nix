@@ -33,7 +33,7 @@
 
       programs.noctalia-shell = {
         enable = true;
-        package = inputs.noctalia.packages.${pkgs.system}.default;
+        package = inputs.noctalia.packages.${pkgs.stdenv.hostPlatform.system}.default;
       };
 
       # Live symlink: Noctalia's own writes land in the repo working tree.

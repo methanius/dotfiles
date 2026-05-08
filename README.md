@@ -124,17 +124,21 @@ What this costs:
 │   │   │   ├── terminal-ghostty.nix#  → workstation-user
 │   │   │   ├── terminal-wezterm.nix#  → workstation-user
 │   │   │   ├── terminal-alacritty.nix # → workstation-user
-│   │   │   ├── desktop-sway.nix    #  → workstation-user
+│   │   │   ├── desktop-sway.nix    #  → workstation-user (WSL today)
 │   │   │   ├── desktop-waybar.nix  #  → workstation-user
 │   │   │   ├── desktop-fuzzel.nix  #  → workstation-user
 │   │   │   ├── desktop-swaylock.nix#  → workstation-user
 │   │   │   ├── desktop-swayidle.nix#  → workstation-user
 │   │   │   ├── desktop-wallpaper.nix # → workstation-user
+│   │   │   ├── desktop-niri.nix    #  → workstation-niri-user (NixOS today)
+│   │   │   ├── shell-noctalia.nix  #  → workstation-niri-user (Noctalia shell)
 │   │   │   └── host-wsl.nix        #  → host-wsl (per-host bits)
 │   │   ├── nixos/                  # contributions to flake.modules.nixos.*
 │   │   │   ├── base.nix            #  → base role (nix.settings, user, ...)
 │   │   │   ├── options.nix         #  → base role (my.user.name, etc.)
-│   │   │   ├── workstation.nix     #  → workstation role (sway/portals/pipewire/PAM/...)
+│   │   │   ├── workstation-common.nix # → workstation-common (audio/portal/GDM/...)
+│   │   │   ├── workstation.nix     #  → workstation (sway-specific) — unused on hosts today
+│   │   │   ├── desktop-niri.nix    #  → workstation-niri (niri + niri.cachix.org); also exposes packages.niri-wrapped
 │   │   │   ├── server.nix          #  → server role (placeholder)
 │   │   │   └── host-nixos.nix      #  → host-nixos (hostname, locale, packages, ...)
 │   │   └── hosts/
@@ -162,15 +166,18 @@ What this costs:
 
 ## The role taxonomy
 
-| Class         | Role               | Who imports it                                              |
-|---------------|--------------------|-------------------------------------------------------------|
-| `homeManager` | `base`             | Every HM config (WSL, NixOS HM submodule)                   |
-| `homeManager` | `workstation-user` | Hosts that want a graphical desktop (WSL today, NixOS today)|
-| `homeManager` | `host-wsl`         | The WSL host only                                           |
-| `nixos`       | `base`             | Every NixOS host                                            |
-| `nixos`       | `workstation`      | NixOS hosts that want sway (the home machine today)         |
-| `nixos`       | `server`           | Placeholder; future Pi/Optiplex                             |
-| `nixos`       | `host-nixos`       | The home NixOS box only                                     |
+| Class         | Role                     | Who imports it                                              |
+|---------------|--------------------------|-------------------------------------------------------------|
+| `homeManager` | `base`                   | Every HM config (WSL, NixOS HM submodule)                   |
+| `homeManager` | `workstation-user`       | Hosts running the sway stack (WSL today)                    |
+| `homeManager` | `workstation-niri-user`  | Hosts running the niri stack (NixOS today)                  |
+| `homeManager` | `host-wsl`               | The WSL host only                                           |
+| `nixos`       | `base`                   | Every NixOS host                                            |
+| `nixos`       | `workstation-common`     | Composed by every graphical NixOS role (audio/portal/GDM/printing) |
+| `nixos`       | `workstation`            | Sway-specific NixOS bits — defined but unused on hosts today |
+| `nixos`       | `workstation-niri`       | NixOS hosts running niri (the home machine today)           |
+| `nixos`       | `server`                 | Placeholder; future Pi/Optiplex                             |
+| `nixos`       | `host-nixos`             | The home NixOS box only                                     |
 
 A "tool" file (e.g. `desktop-fuzzel.nix`) does not get its own role — it
 contributes *into* an existing role via module-merge. New top-level roles
@@ -182,13 +189,16 @@ Decision tree for a new file:
 
 - **Is it user-level config (dotfiles, HM programs)?** → `homeManager.*`.
   - Always wanted on every host (CLI tools, shell, git, etc.)? → `base`.
-  - Only on graphical hosts (sway, terminal emulators, browser)? →
-    `workstation-user`.
+  - Only on graphical hosts running the sway stack? → `workstation-user`.
+  - Only on graphical hosts running the niri stack? → `workstation-niri-user`.
   - Only on one specific host? → `host-<name>`.
 - **Is it system-level config (services, kernel, drivers, fs)?** →
   `nixos.*`.
   - Wanted on every NixOS box? → `base`.
-  - Only on graphical NixOS boxes? → `workstation`.
+  - Shared by every graphical NixOS box regardless of compositor (audio,
+    portal scaffolding, login manager, printing)? → `workstation-common`.
+  - Only on niri NixOS boxes? → `workstation-niri`. (Sway-equivalent
+    `workstation` exists but no host imports it today.)
   - Only on a server? → `server`.
   - Only on one specific box? → `host-<name>`.
 
@@ -502,37 +512,65 @@ two extras:
 If you want it everywhere, put it in `base`. If only on graphical hosts,
 `workstation-user`.
 
-## 8. Add a new compositor / desktop environment
+## 8. Add a new compositor / desktop environment (or switch one per host)
 
-Same pattern as the existing `desktop-*` files. Two halves:
+Compositors live as paired roles: a system-side `nixos.workstation-<wm>`
+that turns on the compositor and any system bits it needs, and a
+user-side `homeManager.workstation-<wm>-user` that owns the keybinds,
+shell, panels, etc. The two are independent contributions wired up
+through host membership only — module-merge composes them by role name.
 
-**HM half** (the user-side config: keybinds, output layout, status bar,
-launcher):
+The shared graphical bits (audio, xdg portal scaffolding, login manager,
+printing, font cache) live in `nixos.workstation-common`, which every
+compositor role imports. Add new shared plumbing there, not in the
+compositor-specific roles.
 
-```nix
-# modules/flake/home/desktop-<wm>.nix
-{
-  flake.modules.homeManager.workstation-user = { pkgs, config, ... }: {
-    wayland.windowManager.<wm>.enable = true;   # or programs.<wm>, etc.
-    xdg.configFile."<wm>".source =
-      config.lib.file.mkOutOfStoreSymlink "${config.my.repoPath}/config/<wm>";
-  };
-}
-```
+**Anatomy of the niri stack as it exists today:**
 
-**NixOS half** (the system-side: portals, polkit, seat, audio, login
-manager). On graphical NixOS boxes this lives in
-`modules/flake/nixos/workstation.nix` today (see how sway is wired:
-`programs.sway.enable`, `xdg.portal`, `services.pipewire`,
-`security.polkit`, etc.). Either extend that file for a closely related
-WM (sway → hyprland share most plumbing) or create
-`modules/flake/nixos/desktop-<wm>.nix` that contributes to the
-`workstation` role for a substantially different stack.
+- `modules/flake/nixos/workstation-common.nix` — shared graphical-host
+  bits (composed by `workstation` and `workstation-niri`).
+- `modules/flake/nixos/desktop-niri.nix` — `flake.modules.nixos.workstation-niri`:
+  imports `workstation-common`, sets `programs.niri.enable`, declares
+  `niri.cachix.org` as a substituter, and exposes
+  `flake.packages.<sys>.niri-wrapped` (see recipe 12).
+- `modules/flake/home/desktop-niri.nix` —
+  `flake.modules.homeManager.workstation-niri-user`: imports
+  `inputs.niri-flake.homeModules.niri`, declares all keybinds and niri
+  settings.
+- `modules/flake/home/shell-noctalia.nix` — also contributes to
+  `workstation-niri-user`: installs the Noctalia shell via its HM
+  module and live-symlinks `~/.config/noctalia` to
+  `${repoPath}/config/noctalia` so GUI-emitted JSON state shows up in
+  the repo as a working-tree diff for selective commit.
+- `modules/flake/hosts/nixos.nix` — picks
+  `nixos.workstation-niri` and `homeManager.workstation-niri-user`.
 
-If the new WM is *replacing* sway on a host rather than coexisting,
-either make the existing `workstation` role parametric (an option like
-`my.desktop.compositor`) or split into two roles
-(`workstation-sway`, `workstation-hyprland`) and have hosts pick.
+**To add a new compositor (say hyprland), or switch a host to it:**
+
+1. `modules/flake/nixos/desktop-<wm>.nix`:
+   - `imports = [ config.flake.modules.nixos.workstation-common ];`
+   - turn on the compositor (`programs.<wm>.enable`, package, portals
+     specific to it).
+   - if the compositor has a flake with a binary cache, declare the
+     substituter in `nix.settings` here (mirror what `workstation-niri`
+     does for `niri.cachix.org`).
+2. `modules/flake/home/desktop-<wm>.nix`:
+   - `flake.modules.homeManager.workstation-<wm>-user = { ... }`,
+     importing whatever HM module the compositor's flake provides,
+     declaring keybinds + settings.
+3. To **switch** a host: edit `modules/flake/hosts/<host>.nix` and swap
+   the role names in `modules` and in the captured HM imports — that's
+   it. The old compositor's roles remain in the tree as data, just
+   unused.
+4. Build gates as usual. The `nix flake check` formatting gate +
+   the WSL HM build + the NixOS toplevel build must all stay green;
+   atomic, reversible commits.
+
+If a compositor's HM module doesn't expose every action you need
+through its `lib.<wm>.actions` helper (niri-flake's, for instance,
+omits `screenshot*` and `move-window-to-workspace`), fall back to
+the underlying KDL-leaf form: `"Mod+Print".action.screenshot-screen
+= [ ];` instead of `action = screenshot-screen;`.
 
 ## 9. Add a new role
 
@@ -576,6 +614,72 @@ writes to `flake.modules.<class>.<rolename>` and a host imports it.
    `nixos.{base, workstation or server, host-<name>}` and the HM submodule.
 4. `sudo nixos-rebuild switch --flake "<repoPath>#<name>"`.
 
+## 12. Wrap a binary with a hermetic PATH
+
+Use this when a tool needs to find auxiliary executables at runtime
+(screenshot helpers, clipboard tools, language servers, etc.) and you
+want the lookup to be deterministic regardless of what the user has in
+`home.packages` or `$PATH`. Two existing examples:
+
+- `programs.neovim.extraPackages` (HM-side) — neovim plugins shell out
+  to compilers; the wrapped `nvim` has those on PATH only when *it*
+  runs. See `modules/flake/home/editor-neovim.nix` and the
+  `my.editor.neovim.extraRuntimePackages` option transport in
+  `modules/flake/home/options.nix`.
+- `niri-wrapped` (system-side) — the niri compositor shells out to
+  `xwayland-satellite`, `grim`, `slurp`, `wl-clipboard`,
+  `brightnessctl`, `playerctl`, `pamixer`, `libnotify`. Wrapping
+  pattern lives in `modules/flake/nixos/desktop-niri.nix` under
+  `perSystem.packages.niri-wrapped`.
+
+The recipe for an HM-managed program is recipe 3 (option transport +
+`programs.<x>.extraPackages`). For a standalone derivation that *isn't*
+managed by an HM module (compositor, daemon, custom tool), use
+`symlinkJoin + makeWrapper` directly:
+
+```nix
+# modules/flake/nixos/<tool>.nix
+{ config, ... }:
+{
+  perSystem = { pkgs, lib, ... }:
+    let
+      runtimeDeps = with pkgs; [ depA depB depC ];
+    in {
+      packages.<tool>-wrapped = pkgs.symlinkJoin {
+        name = "<tool>-wrapped";
+        paths = [ pkgs.<tool> ] ++ runtimeDeps;
+        nativeBuildInputs = [ pkgs.makeWrapper ];
+        postBuild = ''
+          wrapProgram $out/bin/<tool> \
+            --prefix PATH : ${lib.makeBinPath runtimeDeps}
+        '';
+        # If the upstream package's `passthru` is consumed by NixOS
+        # modules (e.g. session-manager packages need
+        # `passthru.providedSessions`), re-state it here — symlinkJoin
+        # drops passthru from its inputs.
+        passthru.providedSessions = [ "<tool>" ];
+      };
+    };
+
+  flake.modules.nixos.<role> = { pkgs, ... }: {
+    programs.<tool>.package = config.flake.packages.${pkgs.system}.<tool>-wrapped;
+  };
+}
+```
+
+Two gotchas to remember:
+
+- **`symlinkJoin` drops `passthru`.** If the upstream package has
+  `passthru.providedSessions`, `passthru.tests`, `meta.mainProgram`, or
+  anything that downstream NixOS modules read, restate the relevant
+  attrs on the wrapper. NixOS's
+  `services.displayManager.sessionPackages` machinery will reject a
+  session package without `providedSessions`, for instance.
+- **Don't put runtime helpers in `home.packages` instead.** That works
+  by accident — the user's interactive `$PATH` and the compositor's
+  `exec` are different scopes. The wrapped form is correct in both,
+  even if the user has nothing related installed.
+
 ---
 
 ## Neovim LSP servers
@@ -616,6 +720,45 @@ Headlines:
 - C15 — Firefox via NUR (Proton Pass, Tridactyl, uBlock Origin,
   SponsorBlock); `nur` flake input added; `browser-firefox.nix` introduced
   alongside the `browser-` filename category.
+- C16 — `nixos.workstation-common` factored out of `nixos.workstation`:
+  audio (pipewire), xdg portal scaffolding, GDM, printing, font cache —
+  the bits any graphical compositor wants regardless of which WM. Sets
+  the stage for a per-host compositor swap by giving niri something to
+  compose with that *isn't* sway.
+- C17 — niri added as a HM-side role: `niri-flake` flake input wired in,
+  `modules/flake/home/desktop-niri.nix` defines
+  `homeManager.workstation-niri-user` with a sway-styled keymap (Alt
+  mod, Alt+Return → ghostty, Alt+Shift+N move-to-workspace,
+  Alt+Ctrl+N move-and-follow, full media/brightness/screenshot binds).
+  Module is data-only at this point; no host imports it yet.
+- C18 — Noctalia shell integrated as a second contribution to
+  `workstation-niri-user` via `modules/flake/home/shell-noctalia.nix`.
+  HM module installs the package; `xdg.configFile."noctalia"` is a
+  `mkOutOfStoreSymlink` to `${repoPath}/config/noctalia` so JSON state
+  emitted by the in-app GUI configurator shows up as a working-tree
+  diff for selective commit. Niri's `spawn-at-startup` runs
+  `noctalia-shell`; Mod+d binds to `noctalia-shell ipc call launcher
+  toggle`.
+- C19a — niri HM keybind syntax fixes for actions niri-flake's
+  `lib.niri.actions` doesn't expose: `screenshot*` and
+  `move-window-to-workspace N` rewritten as `.action.<name> = …`.
+- C19b — niri-wrapped switched from `pkgs.niri` (which is *not* in
+  cache.nixos.org for fresh releases — forced a 10-minute Rust compile)
+  to `inputs.niri-flake.packages.<sys>.niri-stable` +
+  `xwayland-satellite-stable`, with `niri.cachix.org` declared as a
+  trusted substituter via `nix.settings`. `passthru.providedSessions =
+  [ "niri" ]` re-stated on the wrapper because `symlinkJoin` drops it.
+- C19c — `modules/flake/hosts/nixos.nix` swapped from
+  `nixos.workstation` + `homeManager.workstation-user` to
+  `nixos.workstation-niri` + `homeManager.workstation-niri-user`,
+  making niri the active compositor on the home machine. Sway HM stack
+  remains exercised by WSL.
+- C20 — README updated for the new role taxonomy
+  (`workstation-common` / `workstation-niri` / `workstation-niri-user`),
+  recipe 8 expanded to the lived "switch a compositor per host"
+  workflow with a concrete walkthrough of the niri stack as it exists
+  today, and recipe 12 added covering the `symlinkJoin + makeWrapper`
+  pattern with the `passthru.providedSessions` gotcha.
 
 `specialArgs` is no longer used anywhere; tools and hosts read from
 `config.flake.modules.<class>.<role>` exclusively.

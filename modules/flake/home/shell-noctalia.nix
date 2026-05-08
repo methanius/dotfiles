@@ -20,6 +20,18 @@
 # Replaces the sway stack's per-tool HM modules (waybar, fuzzel, swaylock,
 # swayidle, swww wallpaper rotation) on niri hosts. Those tools remain
 # wired into the `workstation-user` role for the sway stack.
+#
+# Quickshell substitution: Noctalia's flake builds Quickshell from source
+# via the `noctalia-qs` subflake. That source build is in *no* public
+# binary cache (not cache.nixos.org, not niri.cachix.org), so taking it
+# verbatim forces a from-scratch Quickshell compile (~10 min C++/Qt) on
+# every host. nixpkgs ships its own `pkgs.quickshell` that *is* in
+# cache.nixos.org. Noctalia's `nix/package.nix` accepts `quickshell` as a
+# `callPackage` arg, so we override it to the nixpkgs build via
+# `.override`. This trades upstream's "we tested with this exact qs
+# version" guarantee for cache-served builds; if a future Noctalia bump
+# requires features absent from nixpkgs's qs, drop this override and
+# accept the rebuild.
 { inputs, ... }:
 {
   flake.modules.homeManager.workstation-niri-user =
@@ -28,12 +40,19 @@
       config,
       ...
     }:
+    let
+      noctaliaWithCachedQs =
+        (inputs.noctalia.packages.${pkgs.stdenv.hostPlatform.system}.default).override
+          {
+            quickshell = pkgs.quickshell;
+          };
+    in
     {
       imports = [ inputs.noctalia.homeModules.default ];
 
       programs.noctalia-shell = {
         enable = true;
-        package = inputs.noctalia.packages.${pkgs.stdenv.hostPlatform.system}.default;
+        package = noctaliaWithCachedQs;
       };
 
       # Live symlink: Noctalia's own writes land in the repo working tree.

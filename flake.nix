@@ -22,6 +22,9 @@
   # modules that build homeConfigurations / nixosConfigurations.
   outputs = inputs:
     inputs.flake-parts.lib.mkFlake {inherit inputs;} {
-      imports = [(inputs.import-tree ./modules/flake)];
+      imports = [
+        inputs.flake-parts.flakeModules.modules
+        (inputs.import-tree ./modules/flake)
+      ];
     };
 }

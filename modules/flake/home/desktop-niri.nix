@@ -115,31 +115,31 @@
             "Mod+0".action = focus-workspace 10;
 
             # Move-window-to-workspace, no follow.
-            "Mod+Shift+1".action = move-window-to-workspace 1;
-            "Mod+Shift+2".action = move-window-to-workspace 2;
-            "Mod+Shift+3".action = move-window-to-workspace 3;
-            "Mod+Shift+4".action = move-window-to-workspace 4;
-            "Mod+Shift+5".action = move-window-to-workspace 5;
-            "Mod+Shift+6".action = move-window-to-workspace 6;
-            "Mod+Shift+7".action = move-window-to-workspace 7;
-            "Mod+Shift+8".action = move-window-to-workspace 8;
-            "Mod+Shift+9".action = move-window-to-workspace 9;
-            "Mod+Shift+0".action = move-window-to-workspace 10;
+            "Mod+Shift+1".action.move-window-to-workspace = 1;
+            "Mod+Shift+2".action.move-window-to-workspace = 2;
+            "Mod+Shift+3".action.move-window-to-workspace = 3;
+            "Mod+Shift+4".action.move-window-to-workspace = 4;
+            "Mod+Shift+5".action.move-window-to-workspace = 5;
+            "Mod+Shift+6".action.move-window-to-workspace = 6;
+            "Mod+Shift+7".action.move-window-to-workspace = 7;
+            "Mod+Shift+8".action.move-window-to-workspace = 8;
+            "Mod+Shift+9".action.move-window-to-workspace = 9;
+            "Mod+Shift+0".action.move-window-to-workspace = 10;
 
             # Move-and-follow (Mod+Ctrl+N) — niri's `move-window-to-workspace`
             # already focuses the destination workspace by default, which is
             # the same behavior as sway's chained "move … ; workspace …".
             # Bind these the same as Mod+Shift+N for muscle memory.
-            "Mod+Ctrl+1".action = move-window-to-workspace 1;
-            "Mod+Ctrl+2".action = move-window-to-workspace 2;
-            "Mod+Ctrl+3".action = move-window-to-workspace 3;
-            "Mod+Ctrl+4".action = move-window-to-workspace 4;
-            "Mod+Ctrl+5".action = move-window-to-workspace 5;
-            "Mod+Ctrl+6".action = move-window-to-workspace 6;
-            "Mod+Ctrl+7".action = move-window-to-workspace 7;
-            "Mod+Ctrl+8".action = move-window-to-workspace 8;
-            "Mod+Ctrl+9".action = move-window-to-workspace 9;
-            "Mod+Ctrl+0".action = move-window-to-workspace 10;
+            "Mod+Ctrl+1".action.move-window-to-workspace = 1;
+            "Mod+Ctrl+2".action.move-window-to-workspace = 2;
+            "Mod+Ctrl+3".action.move-window-to-workspace = 3;
+            "Mod+Ctrl+4".action.move-window-to-workspace = 4;
+            "Mod+Ctrl+5".action.move-window-to-workspace = 5;
+            "Mod+Ctrl+6".action.move-window-to-workspace = 6;
+            "Mod+Ctrl+7".action.move-window-to-workspace = 7;
+            "Mod+Ctrl+8".action.move-window-to-workspace = 8;
+            "Mod+Ctrl+9".action.move-window-to-workspace = 9;
+            "Mod+Ctrl+0".action.move-window-to-workspace = 10;
 
             # Move workspace between monitors --------------------------------
             "Mod+n".action = move-workspace-to-monitor-left;
@@ -163,11 +163,14 @@
             "XF86MonBrightnessDown".action = spawn "brightnessctl" "s" "5%-";
             "XF86MonBrightnessUp".action = spawn "brightnessctl" "s" "5%+";
 
-            # Screenshot (region → clipboard) — niri ships its own screenshot
-            # UI, but keep the sway-style grim+slurp+wl-copy bind for parity.
-            "Print".action = screenshot;
-            "Shift+Print".action = screenshot-screen;
-            "Ctrl+Print".action = screenshot-window;
+            # Screenshot — niri ships its own screenshot UI. These actions
+            # are flag-style (no args), expressed via the `.action.<name>`
+            # form because niri-flake's `lib.niri.actions` doesn't expose
+            # screenshot variants (they're handled by the underlying KDL
+            # leaf encoding).
+            "Print".action.screenshot = [ ];
+            "Shift+Print".action.screenshot-screen = [ ];
+            "Ctrl+Print".action.screenshot-window = [ ];
           };
         };
       };

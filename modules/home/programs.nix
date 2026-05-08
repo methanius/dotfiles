@@ -2,7 +2,8 @@
   pkgs,
   config,
   ...
-}: {
+}:
+{
   home.packages = [
     pkgs.btop
     pkgs.htop
@@ -18,9 +19,9 @@
       enableFishIntegration = true;
       defaultCommand = "fd --type f";
       fileWidgetCommand = "fd --type f";
-      fileWidgetOptions = ["--preview 'bat --color=always {}'"];
+      fileWidgetOptions = [ "--preview 'bat --color=always {}'" ];
       changeDirWidgetCommand = "fd --type d";
-      changeDirWidgetOptions = ["--preview 'tree -C {} | head -200'"];
+      changeDirWidgetOptions = [ "--preview 'tree -C {} | head -200'" ];
     };
     atuin = {
       enable = true;
@@ -52,5 +53,6 @@
 
   xdg.configFile."atuin".source =
     config.lib.file.mkOutOfStoreSymlink "${config.my.repoPath}/config/atuin";
-  xdg.configFile."zsh/completions/nix.zsh".source = "${pkgs.nix}/share/zsh/vendor_completions.d/nix.zsh";
+  xdg.configFile."zsh/completions/nix.zsh".source =
+    "${pkgs.nix}/share/zsh/vendor_completions.d/nix.zsh";
 }

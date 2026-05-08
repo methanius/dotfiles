@@ -11,7 +11,8 @@
   config,
   lib,
   ...
-}: let
+}:
+let
   mod = "Mod1";
   wallpaperDir = "${config.home.homeDirectory}/Pictures/wallpapers";
   rotateScript = pkgs.writeShellScript "swww-rotate" ''
@@ -26,7 +27,8 @@
       --transition-type random \
       --transition-duration 1
   '';
-in {
+in
+{
   home.packages = with pkgs; [
     fuzzel
     awww
@@ -67,7 +69,7 @@ in {
       window.titlebar = false;
 
       # waybar handles the bar; suppress sway's built-in.
-      bars = [];
+      bars = [ ];
 
       keybindings = lib.mkOptionDefault {
         # Launchers
@@ -183,9 +185,9 @@ in {
 
       startup = [
         # swww-daemon must be running before swww-rotate fires.
-        {command = "${pkgs.awww}/bin/swww-daemon";}
+        { command = "${pkgs.awww}/bin/swww-daemon"; }
         # NetworkManager tray applet (waybar's "tray" module hosts it).
-        {command = "${pkgs.networkmanagerapplet}/bin/nm-applet --indicator";}
+        { command = "${pkgs.networkmanagerapplet}/bin/nm-applet --indicator"; }
       ];
     };
   };
@@ -196,7 +198,7 @@ in {
     # comes up automatically when sway starts and goes down with it.
     systemd = {
       enable = true;
-      targets = ["sway-session.target"];
+      targets = [ "sway-session.target" ];
     };
     settings.mainBar = {
       layer = "bottom";
@@ -204,7 +206,10 @@ in {
       height = 28;
       spacing = 6;
 
-      modules-left = ["sway/workspaces" "sway/window"];
+      modules-left = [
+        "sway/workspaces"
+        "sway/window"
+      ];
       modules-right = [
         "tray"
         "pulseaudio"
@@ -381,8 +386,8 @@ in {
   systemd.user.services.swww-rotate = {
     Unit = {
       Description = "Rotate desktop wallpaper via swww";
-      After = ["graphical-session.target"];
-      PartOf = ["graphical-session.target"];
+      After = [ "graphical-session.target" ];
+      PartOf = [ "graphical-session.target" ];
     };
     Service = {
       Type = "oneshot";
@@ -393,13 +398,13 @@ in {
   systemd.user.timers.swww-rotate = {
     Unit = {
       Description = "Rotate desktop wallpaper every 15 minutes";
-      PartOf = ["graphical-session.target"];
+      PartOf = [ "graphical-session.target" ];
     };
     Timer = {
       OnBootSec = "30s";
       OnUnitActiveSec = "15min";
       Unit = "swww-rotate.service";
     };
-    Install.WantedBy = ["timers.target"];
+    Install.WantedBy = [ "timers.target" ];
   };
 }

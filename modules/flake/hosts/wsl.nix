@@ -9,8 +9,10 @@
   inputs,
   withSystem,
   ...
-}: {
-  flake.homeConfigurations."clausormann@wsl" = withSystem "x86_64-linux" ({pkgs, ...}:
+}:
+{
+  flake.homeConfigurations."clausormann@wsl" = withSystem "x86_64-linux" (
+    { pkgs, ... }:
     inputs.home-manager.lib.homeManagerConfiguration {
       inherit pkgs;
       modules = [
@@ -34,5 +36,6 @@
           ];
         }
       ];
-    });
+    }
+  );
 }

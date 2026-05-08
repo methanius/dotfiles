@@ -2,14 +2,14 @@
 #
 # Fill in the rest when commissioning the box:
 
-{pkgs, ...}: {
+{ pkgs, ... }:
+{
   networking.hostName = "nixos";
 
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-
-  networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
+  networking.wireless.enable = true; # Enables wireless support via wpa_supplicant.
   networking.networkmanager.enable = true;
 
   time.timeZone = "Europe/Copenhagen";
@@ -69,14 +69,14 @@
   xdg.portal = {
     enable = true;
     wlr.enable = true;
-    extraPortals = [pkgs.xdg-desktop-portal-gtk];
+    extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
     config.common.default = "*";
   };
 
   # PAM file required for swaylock to actually authenticate. The HM-side
   # programs.swaylock only writes ~/.config/swaylock/config; the PAM
   # service itself has to be declared at the system level.
-  security.pam.services.swaylock = {};
+  security.pam.services.swaylock = { };
 
   environment.systemPackages = with pkgs; [
     vim
@@ -94,7 +94,7 @@
     bash
     zsh
     gnumake
-  #  wget
+    #  wget
   ];
 
   # GDM (Wayland greeter) — keeps the existing login flow; sway shows up as

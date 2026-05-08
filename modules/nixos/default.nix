@@ -5,14 +5,18 @@
   pkgs,
   config,
   ...
-}: {
+}:
+{
   imports = [
     ./_options.nix
     ./home-manager.nix
   ];
 
   nix.settings = {
-    experimental-features = ["nix-command" "flakes"];
+    experimental-features = [
+      "nix-command"
+      "flakes"
+    ];
     auto-optimise-store = true;
 
     # Extra binary caches. `extra-substituters`/`extra-trusted-public-keys`
@@ -36,7 +40,12 @@
   users.users.${config.my.user.name} = {
     isNormalUser = true;
     description = config.my.user.name;
-    extraGroups = ["wheel" "networkmanager" "video" "audio"];
+    extraGroups = [
+      "wheel"
+      "networkmanager"
+      "video"
+      "audio"
+    ];
     shell = pkgs.zsh;
   };
 

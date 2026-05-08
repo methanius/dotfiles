@@ -20,8 +20,9 @@
   # (./modules/home, ./modules/nixos, ./hosts) are intentionally outside the
   # import-tree scope; they are referenced by file path from the flake-parts
   # modules that build homeConfigurations / nixosConfigurations.
-  outputs = inputs:
-    inputs.flake-parts.lib.mkFlake {inherit inputs;} {
+  outputs =
+    inputs:
+    inputs.flake-parts.lib.mkFlake { inherit inputs; } {
       imports = [
         inputs.flake-parts.flakeModules.modules
         (inputs.import-tree ./modules/flake)

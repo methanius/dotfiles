@@ -2,7 +2,8 @@
 #
 # Files prefixed with `_` are skipped by import-tree by default; this one is
 # imported explicitly by modules/home/default.nix.
-{lib, ...}: {
+{ lib, ... }:
+{
   options.my = {
     repoPath = lib.mkOption {
       type = lib.types.str;
@@ -19,7 +20,7 @@
 
     editor.neovim.extraRuntimePackages = lib.mkOption {
       type = lib.types.listOf lib.types.package;
-      default = [];
+      default = [ ];
       description = ''
         Extra packages prepended to the wrapped `nvim` binary's PATH only
         (not the user's shell PATH). Intended for runtime toolchains that

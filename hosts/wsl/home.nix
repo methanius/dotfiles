@@ -1,4 +1,5 @@
-{config, ...}: {
+{ config, ... }:
+{
   targets.genericLinux.enable = true;
 
   programs.zsh.envExtra = ''

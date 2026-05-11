@@ -138,7 +138,7 @@ What this costs:
 │   │   │   ├── options.nix         #  → base role (my.user.name, etc.)
 │   │   │   ├── workstation-common.nix # → workstation-common (audio/portal/GDM/...)
 │   │   │   ├── workstation.nix     #  → workstation (sway-specific) — unused on hosts today
-│   │   │   ├── desktop-niri.nix    #  → workstation-niri (niri + niri.cachix.org); also exposes packages.niri-wrapped
+│   │   │   ├── desktop-niri.nix    #  → workstation-niri (niri via upstream niri-flake.nixosModules.niri)
 │   │   │   ├── server.nix          #  → server role (placeholder)
 │   │   │   └── host-nixos.nix      #  → host-nixos (hostname, locale, packages, ...)
 │   │   └── hosts/
@@ -530,13 +530,21 @@ compositor-specific roles.
 - `modules/flake/nixos/workstation-common.nix` — shared graphical-host
   bits (composed by `workstation` and `workstation-niri`).
 - `modules/flake/nixos/desktop-niri.nix` — `flake.modules.nixos.workstation-niri`:
-  imports `workstation-common`, sets `programs.niri.enable`, declares
-  `niri.cachix.org` as a substituter, and exposes
-  `flake.packages.<sys>.niri-wrapped` (see recipe 12).
+  imports `workstation-common` and the upstream
+  `inputs.niri-flake.nixosModules.niri` (sodiboo's flake, which
+  `disabledModules`s the nixpkgs `programs/wayland/niri.nix` and sets
+  up the surrounding session scaffolding — polkit-kde-agent user
+  service, gnome-keyring, hardware.graphics, dconf, fonts,
+  pam.swaylock, and `niri.cachix.org` as a substituter). Sets
+  `programs.niri.package = inputs.niri-flake.packages.<sys>.niri-stable`
+  so the binary comes from the flake's cachix instead of a local
+  Rust compile. Also adds the user to the `input` group.
 - `modules/flake/home/desktop-niri.nix` —
-  `flake.modules.homeManager.workstation-niri-user`: imports
-  `inputs.niri-flake.homeModules.niri`, declares all keybinds and niri
-  settings.
+  `flake.modules.homeManager.workstation-niri-user`: declares keybinds
+  and niri settings. **Does not import** `inputs.niri-flake.homeModules.niri`
+  — the NixOS module above injects `homeModules.config` (the typed
+  settings schema) via `home-manager.sharedModules`, and a second
+  import duplicates the `programs.niri.finalConfig` declaration.
 - `modules/flake/home/shell-noctalia.nix` — also contributes to
   `workstation-niri-user`: installs the Noctalia shell via its HM
   module and live-symlinks `~/.config/noctalia` to
@@ -552,8 +560,12 @@ compositor-specific roles.
    - turn on the compositor (`programs.<wm>.enable`, package, portals
      specific to it).
    - if the compositor has a flake with a binary cache, declare the
-     substituter in `nix.settings` here (mirror what `workstation-niri`
-     does for `niri.cachix.org`).
+     substituter in `nix.settings` here. (`workstation-niri` doesn't
+     do this manually — the upstream `niri-flake.nixosModules.niri`
+     declares `niri.cachix.org` itself, gated by
+     `niri-flake.cache.enable`. If your compositor's flake offers an
+     equivalent NixOS module, prefer importing it over reimplementing
+     the cache + scaffolding yourself.)
 2. `modules/flake/home/desktop-<wm>.nix`:
    - `flake.modules.homeManager.workstation-<wm>-user = { ... }`,
      importing whatever HM module the compositor's flake provides,
@@ -619,22 +631,17 @@ writes to `flake.modules.<class>.<rolename>` and a host imports it.
 Use this when a tool needs to find auxiliary executables at runtime
 (screenshot helpers, clipboard tools, language servers, etc.) and you
 want the lookup to be deterministic regardless of what the user has in
-`home.packages` or `$PATH`. Two existing examples:
+`home.packages` or `$PATH`. The canonical example here:
 
 - `programs.neovim.extraPackages` (HM-side) — neovim plugins shell out
   to compilers; the wrapped `nvim` has those on PATH only when *it*
   runs. See `modules/flake/home/editor-neovim.nix` and the
   `my.editor.neovim.extraRuntimePackages` option transport in
   `modules/flake/home/options.nix`.
-- `niri-wrapped` (system-side) — the niri compositor shells out to
-  `xwayland-satellite`, `grim`, `slurp`, `wl-clipboard`,
-  `brightnessctl`, `playerctl`, `pamixer`, `libnotify`. Wrapping
-  pattern lives in `modules/flake/nixos/desktop-niri.nix` under
-  `perSystem.packages.niri-wrapped`.
 
 The recipe for an HM-managed program is recipe 3 (option transport +
 `programs.<x>.extraPackages`). For a standalone derivation that *isn't*
-managed by an HM module (compositor, daemon, custom tool), use
+managed by an HM module (daemon, custom tool), use
 `symlinkJoin + makeWrapper` directly:
 
 ```nix
@@ -667,7 +674,7 @@ managed by an HM module (compositor, daemon, custom tool), use
 }
 ```
 
-Two gotchas to remember:
+Three gotchas to remember:
 
 - **`symlinkJoin` drops `passthru`.** If the upstream package has
   `passthru.providedSessions`, `passthru.tests`, `meta.mainProgram`, or
@@ -679,6 +686,20 @@ Two gotchas to remember:
   by accident — the user's interactive `$PATH` and the compositor's
   `exec` are different scopes. The wrapped form is correct in both,
   even if the user has nothing related installed.
+- **`symlinkJoin` does NOT work for packages that ship systemd user
+  units.** This bit us hard with niri (see Migration C19b/C23). The
+  upstream `niri` package ships `share/systemd/user/niri.service`
+  with `ExecStart=/nix/store/.../niri-bin/niri --session` hardcoded.
+  `symlinkJoin` surfaces the unit unchanged (symlinked from the
+  unwrapped output), so when the session starts via
+  `systemctl --user --wait start niri.service`, the unwrapped binary
+  runs — your `wrapProgram` PATH additions are never applied. For
+  such packages, either (a) use an upstream NixOS module that
+  patches the unit's `ExecStart=` to point at the wrapper, or (b)
+  override the package itself (e.g. via `overrideAttrs` adding a
+  `postFixup` that rewrites the unit), or (c) prefer the upstream
+  flake's NixOS module if one exists. We went route (c) for niri in
+  C23, adopting `inputs.niri-flake.nixosModules.niri`.
 
 ---
 
@@ -759,6 +780,42 @@ Headlines:
   workflow with a concrete walkthrough of the niri stack as it exists
   today, and recipe 12 added covering the `symlinkJoin + makeWrapper`
   pattern with the `passthru.providedSessions` gotcha.
+- C21 — replaced all uses of `pkgs.system` with
+  `pkgs.stdenv.hostPlatform.system` across the flake (`desktop-niri.nix`
+  NixOS, `shell-noctalia.nix`, `browser-firefox.nix`, README references)
+  to silence the nixpkgs deprecation warning. Same semantic value, just
+  the supported access path.
+- C22 — `noctalia-shell` now overrides its `quickshell` input to
+  `pkgs.quickshell` from nixpkgs (`noctalia-shell.override { quickshell
+  = pkgs.quickshell; }`). Noctalia's own `noctalia-qs` pins
+  `quickshell-2026-05-03_d3e26cc`, which isn't in any public cache and
+  forces a ~10-minute C++/Qt build per host. nixpkgs's `quickshell-0.3.0`
+  is cache.nixos.org-served, so the override trades upstream version
+  pinning for cached builds.
+- C23 — replaced the `symlinkJoin + wrapProgram` hand-rolled
+  `niri-wrapped` (introduced in C19b) with the upstream
+  `inputs.niri-flake.nixosModules.niri`. The previous approach was
+  silently bypassed at runtime: niri's `share/systemd/user/niri.service`
+  hardcodes `ExecStart=/nix/store/.../niri-bin/niri --session` and
+  `symlinkJoin` surfaces the unit unchanged, so the wrapped binary
+  was never executed. niri-flake's `niri-stable` patches its own
+  unit's `ExecStart=` in `postFixup`, making it consistent when used
+  directly as `programs.niri.package`. The upstream NixOS module also
+  brings polkit-kde-agent user service, gnome-keyring, hardware.graphics,
+  dconf, fonts, pam.swaylock, and `niri.cachix.org` declaration in one
+  import. Also added the user to the `input` group as belt-and-suspenders
+  for udev seat handoff. On the HM side, dropped the
+  `inputs.niri-flake.homeModules.niri` import because the NixOS module
+  pushes `homeModules.config` (the typed settings schema) via
+  `home-manager.sharedModules` — double-importing duplicates the
+  `programs.niri.finalConfig` option declaration.
+- C24 — README brought into line with C21/C22/C23: repo-layout legend
+  no longer mentions `niri-wrapped`; recipe 8 anatomy of the niri
+  stack rewritten around the upstream nixos+home modules and the
+  homeModules deduplication; recipe 12 keeps the `symlinkJoin +
+  makeWrapper` pattern (still correct for neovim) but adds a third
+  gotcha explaining the systemd-user-unit bypass that broke C19b,
+  pointing at C23 as the resolution.
 
 `specialArgs` is no longer used anywhere; tools and hosts read from
 `config.flake.modules.<class>.<role>` exclusively.

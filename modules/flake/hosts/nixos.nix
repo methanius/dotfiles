@@ -20,7 +20,7 @@ in
   flake.nixosConfigurations.nixos = withSystem "x86_64-linux" (
     { pkgs, ... }:
     inputs.nixpkgs.lib.nixosSystem {
-      system = "x86_64-linux";
+      stdenv.hostPlatform.system = "x86_64-linux";
       modules = [
         # Reuse the perSystem pkgs (with overlays + allowUnfree) instead of
         # re-importing nixpkgs inside the NixOS module set.

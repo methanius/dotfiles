@@ -57,10 +57,10 @@ end
 ---@param bufnr integer
 local function on_attach(client, bufnr)
   ---@type LSPKeymapSpec[]
-
   local lsp_keymaps = require("lsp.keymaps")
   set_lsp_keymaps(lsp_keymaps, client, bufnr)
-  --
+
+
   -- I only ever use inlay hints in Rust an a few other languages
   -- Toggler from Snacks is configured
   vim.g.inlay_hints = false

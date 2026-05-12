@@ -18,8 +18,8 @@ return {
         hl.DapLogPoint = { link = "DiagnosticHint" }
         hl.debugPC = { bg = c.bg_highlight }
         hl.DiagnosticUnnecessary = { fg = c.fg_dark }
-        hl.LineNr = {fg = c.orange}
-        hl.LineNrAbove = {fg = c.blue0}
+        hl.LineNr = { fg = c.orange }
+        hl.LineNrAbove = { fg = c.blue0 }
         hl.LineNrBelow = { link = "LineNrAbove" }
       end,
     },
@@ -42,8 +42,8 @@ return {
           DapBreakpointCondition = { link = "DiagnosticWarn" },
           DapBreakpointRejected = { link = "DiagnosticError" },
           DapLogPoint = { link = "DiagnosticHint" },
-          LineNr = {fg = theme.syn.constant },
-          LineNrAbove = {fg = theme.syn.identifier},
+          LineNr = { fg = theme.syn.constant },
+          LineNrAbove = { fg = theme.syn.identifier },
           LineNrBelow = { link = "LineNrAbove" },
         }
       end,

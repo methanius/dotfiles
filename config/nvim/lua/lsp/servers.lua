@@ -46,7 +46,7 @@ local M = {
     filetypes = { "python" },
     root_markers = { "pyproject.toml", "ruff.toml", ".ruff.toml", ".git" },
   },
-  tombi = {},
+  tombi = { cmd = uvx_cmd("tombi", "lsp") },
   ty = {
     cmd = uvx_cmd("ty", "server"),
     filetypes = { "python" },

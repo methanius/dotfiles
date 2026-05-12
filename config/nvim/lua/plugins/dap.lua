@@ -33,7 +33,32 @@ return {
       "mfussenegger/nvim-dap",
       { "stevearc/overseer.nvim", config = true },
       {
-        "igorlfs/nvim-dap-view", opts = { winbar = { sections = { "console", "watches", "scopes", "exceptions", "threads", "repl" } } },
+        "igorlfs/nvim-dap-view",
+        ---@type dapview.Config
+        opts = {
+          winbar = {
+            sections = {
+              "console", "watches", "scopes", "exceptions", "threads", "repl",
+            },
+          },
+          windows = {
+            size = function(_pos)
+              if vim.bo.filetype == "python" then
+                local parser = vim.treesitter.get_parser()
+                if parser ~= nil then
+                  local tree = parser:parse()[1]
+                  local query = vim.treesitter.query.get(vim.bo.filetype, "polars_pandas_module")
+                  if query ~= nil then
+                    if vim.iter(query:iter_matches(tree:root(), vim.api.nvim_get_current_buf(), 0, -1)):next() and true or false then
+                      return 23
+                    end
+                  end
+                end
+              end
+              return 0.25
+            end
+          }
+        },
       },
       {
         "mfussenegger/nvim-dap-python",

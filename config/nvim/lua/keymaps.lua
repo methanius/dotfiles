@@ -180,18 +180,6 @@ function keymaps:set_all()
       dap_view.close()
     else
       dap_view.open()
-      if vim.bo.filetype == "python" then
-        local parser = vim.treesitter.get_parser()
-        if parser ~= nil then
-          local tree = parser:parse()[1]
-          local query = vim.treesitter.query.get(vim.bo.filetype, "polars_pandas_module")
-          if query ~= nil then
-            if vim.iter(query:iter_matches(tree:root(), vim.api.nvim_get_current_buf(), 0, -1)):next() and true or false then
-              vim.api.nvim_win_set_height(require("dap-view.state").winnr, 23)
-            end
-          end
-        end
-      end
       dap_view.jump_to_view("repl")
       vim.api.nvim_set_current_win(require("dap-view.state").winnr)
     end

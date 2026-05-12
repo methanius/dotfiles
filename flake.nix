@@ -25,9 +25,8 @@
   # are gone — every tool/role/host is now a flake-parts module
   # contributing to flake.modules.<class>.<role> via
   # flake-parts.flakeModules.modules.
-  outputs =
-    inputs:
-    inputs.flake-parts.lib.mkFlake { inherit inputs; } {
+  outputs = inputs:
+    inputs.flake-parts.lib.mkFlake {inherit inputs;} {
       imports = [
         inputs.flake-parts.flakeModules.modules
         (inputs.import-tree ./modules/flake)

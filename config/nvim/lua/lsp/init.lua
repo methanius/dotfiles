@@ -5,6 +5,11 @@
 local M = {}
 
 local servers = require("lsp.servers")
+
+---@type vim.lsp.ClientCapabilities
+local default_capabilities = vim.lsp.protocol.make_client_capabilities()
+vim.lsp.config("*", {capabilities=default_capabilities})
+
 for server_name, settings in pairs(servers) do
   vim.lsp.config(server_name, settings)
   vim.lsp.enable(server_name)

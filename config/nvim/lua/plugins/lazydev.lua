@@ -3,7 +3,6 @@ return {
     "folke/lazydev.nvim",
     ft = "lua", -- only load on lua files
     dependencies = {
-      { "gonstoll/wezterm-types" },
       { "Bilal2453/luvit-meta" }, -- optional `vim.uv` typings
       { "DrKJeff16/wezterm-types" },
     },

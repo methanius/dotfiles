@@ -8,7 +8,7 @@
 # homeConfiguration entry from base + workstation-user + this host module.
 {
   flake.modules.homeManager.host-wsl =
-    { config, ... }:
+    { config, pkgs, ... }:
     {
       home = {
         username = "clausormann";
@@ -20,7 +20,12 @@
       # WSL leaves extraRuntimePackages empty: prebuilt plugin binaries can
       # link against system glibc on WSL/Ubuntu, unlike NixOS where the
       # wrapped nvim's PATH must carry gcc/cargo/etc. for plugin builds.
-      my.editor.neovim.extraRuntimePackages = [ ];
+      my.editor.neovim.extraRuntimePackages = with pkgs; [ 
+        nodejs
+        bash-language-server
+        clang-tools
+        lua-language-server
+    ];
 
       targets.genericLinux.enable = true;
 

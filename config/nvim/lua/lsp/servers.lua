@@ -17,6 +17,19 @@ local M = {
   bashls = {},
   clangd = {},
   lua_ls = {
+    cmd = { "lua-language-server" },
+    filetypes = { "lua" },
+    root_markers = {
+      ".luarc.json",
+      ".luarc.jsonc",
+      ".luacheckrc",
+      ".stylua.toml",
+      "stylua.toml",
+      "selene.toml",
+      "selene.yml",
+      ".git",
+    },
+    single_file_support = true,
     settings = {
       Lua = {
         completion = {
@@ -50,7 +63,7 @@ local M = {
   ty = {
     cmd = uvx_cmd("ty", "server"),
     filetypes = { "python" },
-    root_dir = vim.fs.root(0, { ".git/", "pyproject.toml", "ty.toml" }),
+    root_markers = { ".git", "pyproject.toml", "ty.toml" },
     settings = {
       ty = {
         diagnosticMode = "workspace",

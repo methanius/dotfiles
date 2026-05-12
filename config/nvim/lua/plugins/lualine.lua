@@ -75,7 +75,7 @@ return {
         tabline = {},
         winbar = {},
         inactive_winbar = {},
-        extensions = { "lazy", "oil", "fugitive" },
+        extensions = { "lazy", "oil", "fugitive", "quickfix"},
       }
     end,
   },

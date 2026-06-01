@@ -9,7 +9,7 @@ return {
         vim.notify("Installed Rust based blink fuzzy finder", vim.log.levels.INFO)
         require('blink.cmp.fuzzy').set_implementation('rust')
         vim.notify("Switched Blink to Rust based fuzzy finder", vim.log.levels.INFO)
-      end):wait(600000)
+      end):pwait()
   end,
   dependencies = {
     { "L3MON4D3/LuaSnip", version = "v2.*" },

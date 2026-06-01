@@ -25,7 +25,7 @@
   flake.modules.homeManager.workstation-user =
     { pkgs, ... }:
     let
-      addons = inputs.nur.legacyPackages.${pkgs.system}.repos.rycee.firefox-addons;
+      addons = inputs.nur.legacyPackages.${pkgs.stdenv.hostPlatform.system}.repos.rycee.firefox-addons;
     in
     {
       programs.firefox = {

@@ -109,9 +109,8 @@ function keymaps:set_all()
 
   -- Mini diff keymap
   keymap("<leader>go", function() require("mini.diff").toggle_overlay(0) end, "Toggle mini.diff overlay")
-
   -- Snacks keymaps, there are quite a lot :p
-  keymap("<C-/>", function() Snacks.terminal() end, "Toggle terminal", { "n", "t" })
+  keymap("<C-_>", function() Snacks.terminal() end, "Toggle terminal", { "n", "t" })
   keymap("<leader>tt", function() Snacks.terminal() end, "Toggle terminal", { "n", "t" })
   keymap("<leader>gb", function() Snacks.git.blame_line() end, "Git Blame Line")
   keymap("<leader>ff", function() Snacks.picker.files() end, "Fuzzy (f)ind (f)iles")
@@ -159,8 +158,6 @@ function keymaps:set_all()
     end,
     "Neovim News"
   )
-
-  keymap("<leader>M", "<CMD>Mason<CR>", "Open Mason")
 
   -- Neogen keymaps, I've loved these for python
   keymap("<leader>nf", function() require("neogen").generate({ type = "func" }) end,

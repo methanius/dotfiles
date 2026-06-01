@@ -22,6 +22,8 @@ return {
         args = { "-i", "dap" },
       }
 
+
+
       dap.listeners.before.event_terminated.dap_view_config = function()
         require("dap-view").close()
       end
@@ -64,6 +66,25 @@ return {
         "mfussenegger/nvim-dap-python",
         config = function()
           require("dap-python").setup("uv")
+          local dap = require("dap")
+          for _, config in ipairs(dap.configurations.python) do
+            config.justMyCode = false
+            config.subProcess = true
+          end
+          table.insert(dap.configurations.python, {
+            type = "python",
+            request = "launch",
+            name = "Dash app (flat)",
+            program = "${workspaceFolder}/src/app.py",
+            cwd = "${workspaceFolder}",
+            env = {
+              PYTHONPATH = "${workspaceFolder}/src",
+            },
+            console = "integratedTerminal",
+            justMyCode = false,
+            subProcess = true,
+
+          })
         end
       },
     },

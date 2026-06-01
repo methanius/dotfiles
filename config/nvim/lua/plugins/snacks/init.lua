@@ -19,6 +19,7 @@ return {
             { icon = " ", key = "c", desc = "Config", action = "<Cmd>lua Snacks.dashboard.pick('files', {cwd = vim.fn.stdpath('config')})<cr>" },
             { icon = " ", key = "s", desc = "Restore Session", section = "session" },
             { icon = "󰒲 ", key = "L", desc = "Lazy", action = "<Cmd>Lazy<cr>", enabled = package.loaded.lazy ~= nil },
+            { icon = "󱀁 ", key = "N", desc = "Nvim news", action = "<leader>N" },
             { icon = " ", key = "q", desc = "Quit", action = "<Cmd>qa<cr>" },
           },
         },

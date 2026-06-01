@@ -21,10 +21,11 @@
           enableZshIntegration = true;
           enableFishIntegration = true;
           defaultCommand = "fd --type f";
-          fileWidgetCommand = "fd --type f";
-          fileWidgetOptions = [ "--preview 'bat --color=always {}'" ];
-          changeDirWidgetCommand = "fd --type d";
-          changeDirWidgetOptions = [ "--preview 'tree -C {} | head -200'" ];
+          fileWidget.command = "fd --type f";
+          fileWidget.options = [ "--preview 'bat --color=always {}'" ];
+          historyWidget.command = "";
+          changeDirWidget.command = "fd --type d";
+          changeDirWidget.options = [ "--preview 'tree -C {} | head -200'" ];
         };
         atuin = {
           enable = true;

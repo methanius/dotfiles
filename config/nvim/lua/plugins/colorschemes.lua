@@ -32,12 +32,11 @@ return {
       statementStyle = { bold = false },
       overrides = function(colors)
         local theme = colors.theme
+        local palette = colors.palette
         return {
           NormalFloat = { bg = "none" },
           FloatBorder = { bg = "none" },
           FloatTitle = { bg = "none" },
-          TelescopeTitle = { bg = "none", fg = theme.ui.special, bold = true },
-          TelescopeBorder = { bg = "none" },
           DapBreakpoint = { link = "DiagnosticWarn" },
           DapBreakpointCondition = { link = "DiagnosticWarn" },
           DapBreakpointRejected = { link = "DiagnosticError" },
@@ -45,6 +44,11 @@ return {
           LineNr = { fg = theme.syn.constant },
           LineNrAbove = { fg = theme.syn.identifier },
           LineNrBelow = { link = "LineNrAbove" },
+
+          -- Snakcs picker overries
+          SnacksPickerDir = { fg = theme.syn.comment },
+          SnacksPickerDirectory = { fg = theme.syn.identifier },
+          SnacksPickerFile = { fg = theme.syn.identifier },
         }
       end,
       colors = {

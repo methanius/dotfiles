@@ -255,3 +255,98 @@ vim.keymap.set("n", "<leader>tr", function()
 end, {
   desc = "Run ruff check into quickfix",
 })
+
+
+local ty = {}
+
+local ty_errorformat = table.concat({
+  -- path.py:2:12: error[code] message
+  "%f:%l:%c: %trror%*[^ ] %m",
+  -- path.py:2:12: warning[code] message
+  "%f:%l:%c: %tarning%*[^ ] %m",
+  -- Without column numbers
+  "%f:%l: %trror%*[^ ] %m",
+  "%f:%l: %tarning%*[^ ] %m",
+  -- Ignore "Found N diagnostics" and everything else
+  "%-G%.%#",
+}, ",")
+
+function ty.run(args)
+  args = args or {}
+
+  local cmd = {
+    "uv",
+    "run",
+    "ty",
+    "check",
+    "--output-format",
+    "concise",
+    "--color",
+    "never",
+  }
+
+  if #args == 0 then
+    table.insert(cmd, ".")
+  else
+    vim.list_extend(cmd, args)
+  end
+
+  vim.system(
+    cmd,
+    {
+      text = true,
+      cwd = project_root(),
+    },
+    function(result)
+      local output = table.concat({
+        result.stdout or "",
+        result.stderr or "",
+      }, "\n")
+
+      local lines = vim.split(output, "\n", {
+        plain = true,
+        trimempty = true,
+      })
+
+      vim.schedule(function()
+        vim.fn.setqflist({}, "r", {
+          title = table.concat(cmd, " "),
+          lines = lines,
+          efm = ty_errorformat,
+        })
+
+        local qf = vim.fn.getqflist()
+
+        if #qf == 0 then
+          vim.cmd.cclose()
+
+          if result.code == 0 then
+            vim.notify("ty: no issues", vim.log.levels.INFO)
+          else
+            vim.notify(
+              output ~= "" and output or "ty failed without parseable output",
+              vim.log.levels.ERROR
+            )
+          end
+
+          return
+        end
+
+        vim.cmd.copen()
+      end)
+    end
+  )
+end
+
+vim.api.nvim_create_user_command("Ty", function(opts)
+  ty.run(opts.fargs)
+end, {
+  nargs = "*",
+  complete = "file",
+})
+
+vim.keymap.set("n", "<leader>tT", function()
+  ty.run()
+end, {
+  desc = "Run ty check into quickfix",
+})

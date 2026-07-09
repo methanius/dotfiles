@@ -5,6 +5,8 @@
   perSystem =
     { pkgs, ... }:
     {
+      formatter = pkgs.nixfmt-tree;
+
       checks.nixfmt = pkgs.runCommand "nixfmt-check" { nativeBuildInputs = [ pkgs.nixfmt ]; } ''
         cd ${inputs.self}
         nixfmt --check $(find . -name '*.nix' -not -path './.*')

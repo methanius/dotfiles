@@ -2,6 +2,7 @@
 {
   flake.modules.homeManager.base =
     {
+      lib,
       pkgs,
       config,
       ...
@@ -31,6 +32,15 @@
           enable = true;
           enableZshIntegration = true;
           enableFishIntegration = true;
+          settings = {
+            auto_sync = true;
+            enter_accept = true;
+            sync.records = true;
+            ai.enabled = false;
+          }
+          // lib.optionalAttrs (config.my.atuin.syncServer != null) {
+            sync_address = config.my.atuin.syncServer;
+          };
         };
         eza = {
           enable = true;
@@ -55,8 +65,6 @@
         fastfetch.enable = true;
       };
 
-      xdg.configFile."atuin".source =
-        config.lib.file.mkOutOfStoreSymlink "${config.my.repoPath}/config/atuin";
       xdg.configFile."zsh/completions/nix.zsh".source =
         "${pkgs.nix}/share/zsh/vendor_completions.d/nix.zsh";
     };

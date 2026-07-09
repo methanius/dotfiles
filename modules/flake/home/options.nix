@@ -13,7 +13,7 @@
             Absolute path to this dotfiles repo on the current machine.
 
             Consumed by modules that live-symlink config/<tool>/ via
-            mkOutOfStoreSymlink (nvim, ghostty, wezterm, alacritty, atuin) so
+            mkOutOfStoreSymlink (nvim, ghostty, wezterm, alacritty) so
             edits to those subdirs apply without a Home-Manager rebuild. Each
             host sets its own value; no default to force the choice to be
             explicit per host.
@@ -33,6 +33,16 @@
             Hosts opt in per-host: WSL leaves this empty, NixOS sets the
             compile toolchain it needs at runtime since prebuilt plugin
             binaries can't link against system glibc on NixOS.
+          '';
+        };
+
+        atuin.syncServer = lib.mkOption {
+          type = lib.types.nullOr lib.types.str;
+          default = null;
+          description = ''
+            Optional Atuin sync server URL. Hosts that leave this unset use
+            Atuin's default sync server behavior; private hosts can set it to
+            their self-hosted sync endpoint.
           '';
         };
       };

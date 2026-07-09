@@ -26,7 +26,7 @@
 
             Mirrored into the HM submodule via modules/flake/hosts/nixos.nix
             so Home-Manager modules that consume `my.repoPath` (out-of-store
-            symlinks for nvim, terminals, atuin) get the host-specific value.
+            symlinks for nvim and terminals) get the host-specific value.
           '';
         };
 
@@ -41,6 +41,18 @@
             modules/flake/hosts/nixos.nix. Has no NixOS-side semantic effect
             on its own; the actual consumer is the HM-scope option of the
             same name.
+          '';
+        };
+
+        atuin.syncServer = lib.mkOption {
+          type = lib.types.nullOr lib.types.str;
+          default = null;
+          description = ''
+            Optional Atuin sync server URL for this NixOS host.
+
+            Transport option: forwarded into the HM submodule by
+            modules/flake/hosts/nixos.nix. Leave null on hosts that should not
+            point at the private sync server.
           '';
         };
       };

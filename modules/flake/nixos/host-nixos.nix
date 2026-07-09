@@ -57,6 +57,7 @@
       # Identity and repo location on this host.
       my.user.name = "normann";
       my.repoPath = "/home/normann/dotfiles";
+      my.atuin.syncServer = "http://atuin.wibrand.dev";
 
       # Runtime toolchains for nvim plugin builds (treesitter parsers via gcc,
       # blink.cmp via cargo). Consumed via the shared

@@ -20,7 +20,7 @@ in
   flake.nixosConfigurations.nixos = withSystem "x86_64-linux" (
     { pkgs, ... }:
     inputs.nixpkgs.lib.nixosSystem {
-      stdenv.hostPlatform.system = "x86_64-linux";
+      system = "x86_64-linux";
       modules = [
         # Reuse the perSystem pkgs (with overlays + allowUnfree) instead of
         # re-importing nixpkgs inside the NixOS module set.
@@ -48,6 +48,7 @@ in
                 {
                   my.repoPath = config.my.repoPath;
                   my.editor.neovim.extraRuntimePackages = config.my.editor.neovim.extraRuntimePackages;
+                  my.atuin.syncServer = config.my.atuin.syncServer;
                 }
               ];
             };

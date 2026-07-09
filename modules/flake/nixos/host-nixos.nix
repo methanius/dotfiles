@@ -64,13 +64,15 @@
       # scope by modules/flake/hosts/nixos.nix).
       my.editor.neovim.extraRuntimePackages = with pkgs; [
         gcc
-        gnumake
         cargo
         rustc
         nodejs
-        bash-language-server
+        gnumake
+        shellcheck
         clang-tools
         lua-language-server
+        bash-language-server
+        bash-language-server
       ];
 
       # Bump after first successful rebuild on the target machine.

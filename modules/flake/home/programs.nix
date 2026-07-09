@@ -14,6 +14,7 @@
         pkgs.tealdeer
         pkgs.tree
         pkgs.bluetui
+        pkgs.gnuplot
       ];
 
       programs = {

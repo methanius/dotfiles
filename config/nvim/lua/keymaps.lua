@@ -56,10 +56,10 @@ function keymaps:set_all()
   keymap("<leader>gg", "<CMD>Neogit<CR>", "Open Neogit for current project")
 
   -- Flash.nvim keymaps
-  keymap("s", function() require("flash").jump() end, "Flash", { "n", "x", "o" })
-  keymap("S", function() require("flash").treesitter() end, "Flash Treesitter", { "n", "x", "o" })
-  keymap("r", function() require("flash").remote() end, "Remote Flash", "o")
-  keymap("R", function() require("flash").treesitter_search() end, "Treesitter Search", { "o", "x" })
+  -- keymap("s", function() require("flash").jump() end, "Flash", { "n", "x", "o" })
+  -- keymap("S", function() require("flash").treesitter() end, "Flash Treesitter", { "n", "x", "o" })
+  -- keymap("r", function() require("flash").remote() end, "Remote Flash", "o")
+  -- keymap("R", function() require("flash").treesitter_search() end, "Treesitter Search", { "o", "x" })
   keymap("<C-space>", function()
     local bufnr = vim.api.nvim_get_current_buf()
     local lsp_selection_range_available = vim.iter(vim.lsp.get_clients({ bufnr = bufnr })):any(

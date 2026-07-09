@@ -3,14 +3,14 @@ local M = {
   { "gd",         function() Snacks.picker.lsp_definitions({ on_show = function() vim.cmd.stopinsert() end, layout = { preset = "dropdown" } }) end,     "Goto Definition",                    has = "definition" },
   { "K",          vim.lsp.buf.hover,                                                                                                                     "Show workspace symbol under cursor", has = "hover" },
   { "gr",         function() Snacks.picker.lsp_references({ on_show = function() vim.cmd.stopinsert() end, layout = { preset = "sidebar" } }) end,       "Get references",                     extra_opts = { nowait = true } },
-  { "gt",         function() Snacks.picker.lsp_type_definitions({ on_show = function() vim.cmd.stopinsert() end, layout = { preset = "ivy" } }) end,     "Go to type defition",                "typeDefinition" },
+  { "gt",         function() Snacks.picker.lsp_type_definitions({ on_show = function() vim.cmd.stopinsert() end, layout = { preset = "ivy" } }) end,     "Go to type defition",                has = "typeDefinition" },
   { "gI",         function() Snacks.picker.lsp_implementations({ on_show = function() vim.cmd.stopinsert() end, layout = { preset = "dropdown" } }) end, "Goto Implementation" },
   { "gD",         vim.lsp.buf.declaration,                                                                                                               "Goto Declaration" },
   { "gai",        function() Snacks.picker.lsp_incoming_calls() end,                                                                                     "Incomming calls" },
   { "gao",        function() Snacks.picker.lsp_outgoing_calls() end,                                                                                     "Outgoing calls" },
   { "<leader>cc", vim.lsp.codelens.run,                                                                                                                  "Run Codelens",                       mode = { "n", "v" },           has = "codeLens" },
   { "<leader>cC", function() vim.lsp.codelens.enable(true) end,                                                                                          "Refresh & Display Codelens",         mode = { "n", "v" },           has = "codeLens" },
-  { "<F4>",       vim.lsp.buf.code_action,                                                                                                               "Code Actions",                       has = "codeAction" },
+  { "<F4>",       vim.lsp.buf.code_action,                                                                                                               "Code Actions",                       mode = { "n", "v" },           has = "codeAction" },
   { "<leader>fd", Snacks.picker.diagnostics_buffer,                                                                                                      "Diagnostics current buffer" },
   { "<leader>fD", Snacks.picker.diagnostics,                                                                                                             "Diagnostics workspace" },
   { "<leader>fs", function() Snacks.picker.lsp_symbols({ layout = { preset = "sidebar" } }) end,                                                         "(f)ind document (s)ymbols",          has = "documentSymbol" },
@@ -35,7 +35,7 @@ local M = {
     vim.lsp.buf.format,
     "Format range",
     mode = "v",
-    has = { "rangesFormatting", "rangeFormatting" }
+    has = "rangeFormatting"
   },
   {
     "<C-h>",

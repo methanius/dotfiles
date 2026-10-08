@@ -24,7 +24,7 @@
         # opencode: installed outside Nix via the official installer
         # (`curl -fsSL https://opencode.ai/install | bash`), which drops the
         # binary at ~/.opencode/bin/opencode. We symlink it into ~/.local/bin/
-        # (already on PATH via hosts/wsl/home.nix) so `opencode` resolves.
+        # (on PATH via home.sessionPath in base.nix) so `opencode` resolves.
         #
         # The nixpkgs build of opencode segfaults inside ld-linux against
         # glibc 2.42 (upstream packaging issue); the official binary pins its

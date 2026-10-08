@@ -9,6 +9,7 @@
       home = {
         stateVersion = "26.11";
         sessionVariables.EDITOR = "nvim";
+        sessionPath = [ "$HOME/.local/bin" ];
         packages = [
           pkgs.nerd-fonts.jetbrains-mono
           pkgs.nerd-fonts.victor-mono

@@ -8,7 +8,7 @@
 # homeConfiguration entry from base + workstation-user + this host module.
 {
   flake.modules.homeManager.host-wsl =
-    { config, pkgs, ... }:
+    { pkgs, ... }:
     {
       home = {
         username = "clausormann";

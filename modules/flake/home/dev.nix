@@ -20,6 +20,7 @@
         pkgs.jujutsu
         pkgs.mergiraf
         pkgs.gh
+        pkgs.gcx
         # opencode: installed outside Nix via the official installer
         # (`curl -fsSL https://opencode.ai/install | bash`), which drops the
         # binary at ~/.opencode/bin/opencode. We symlink it into ~/.local/bin/
